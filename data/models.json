@@ -1,0 +1,282 @@
+{
+  "trio-57": {
+    "slug": "trio-57",
+    "series": "Trio",
+    "name": "Trio 57",
+    "hero": "/images/hero.jpg",
+    "breadcrumb": ["Home", "Series", "Trio", "Trio 57"],
+    "intro": { "title": "Compact, practical living", "text": "Trio 57 balances comfort and footprint for simple, efficient builds." },
+    "stats": [
+      { "label": "TOTAL FLOOR AREA", "value": "65.7 m² / 707 ft²", "icon": "Ruler" },
+      { "label": "ACCOMMODATES",     "value": "1–4 People",        "icon": "Users" },
+      { "label": "BEDROOMS",         "value": "2",                 "icon": "BedDouble" },
+      { "label": "BATHROOMS",        "value": "1",                 "icon": "ShowerHead" }
+    ],
+   "floorPlans": [
+    { "img": "/images/floor/trio-57-floor-1.png", "caption": "I FLOOR" },
+    { "img": "/images/floor/trio-57-floor-2.png", "caption": "II FLOOR" }
+  ],
+    "sections": [
+      { "title": "Size and space", "lines": ["Optimized for smaller sites without sacrificing comfort."] },
+      { "title": "Recommended use", "lines": ["Great for starter homes or compact cabins."] }
+    ]
+  },
+
+  "trio-75": {
+    "slug": "trio-75",
+    "series": "Trio",
+    "name": "Trio 75",
+    "hero": "/images/hero.jpg",
+    "breadcrumb": ["Home", "Series", "Trio", "Trio 75"],
+    "intro": {
+      "title": "The Best Compact Solution",
+      "text": "For those who dream of a quiet escape or a manageable primary home, the Trio 75 seamlessly blends compact design with functionality."
+    },
+    "stats": [
+      { "label": "TOTAL FLOOR AREA", "value": "77.6 m² / 835 ft²", "icon": "Ruler" },
+      { "label": "ACCOMMODATES",     "value": "1–5 People",        "icon": "Users" },
+      { "label": "BEDROOMS",         "value": "2",                 "icon": "BedDouble" },
+      { "label": "BATHROOMS",        "value": "1",                 "icon": "ShowerHead" }
+    ],
+    "floorPlans": [
+      { "img": "/images/trio-floor.webp",   "caption": "I FLOOR" },
+      { "img": "/images/trio-floor-2.webp", "caption": "II FLOOR" }
+    ],
+    "sections": [
+      { "title": "Size and space", "lines": [
+        "Mid-sized footprint with a length of 7.5 meters (24.6 ft).",
+        "Harmonious balance between space and simplicity."
+      ]},
+      { "title": "Key features", "lines": [
+        "<strong>Ground Floor:</strong> compact entrance; option for open ceiling in living area.",
+        "<strong>First Floor:</strong> two main bedrooms plus a flexible room downstairs.",
+        "Despite its modest size, the upstairs does not compromise on functionality or comfort."
+      ]},
+      { "title": "Recommended use", "lines": [
+        "Perfect as a summer home or small family residence.",
+        "A smaller footprint without sacrificing comfort."
+      ]}
+    ]
+  },
+
+  "trio-100": {
+    "slug": "trio-100",
+    "series": "Trio",
+    "name": "Trio 100",
+    "hero": "/images/hero.jpg",
+    "breadcrumb": ["Home", "Series", "Trio", "Trio 100"],
+    "intro": { "title": "Spacious family-ready A-frame", "text": "More floor area and flexible layouts for growing families." },
+    "stats": [
+      { "label": "TOTAL FLOOR AREA", "value": "101.9 m² / 1097 ft²", "icon": "Ruler" },
+      { "label": "ACCOMMODATES",     "value": "2–6 People",          "icon": "Users" },
+      { "label": "BEDROOMS",         "value": "3",                   "icon": "BedDouble" },
+      { "label": "BATHROOMS",        "value": "1",                   "icon": "ShowerHead" }
+    ],
+    "floorPlans": [
+    { "img": "/images/floor/trio-57-floor-1.png", "caption": "I FLOOR" },
+    { "img": "/images/floor/trio-57-floor-2.png", "caption": "II FLOOR" }
+  ],
+    "sections": [
+      { "title": "Highlights", "lines": ["Great balance of bedrooms and living volume."] }
+    ]
+  },
+
+  "trio-120": {
+    "slug": "trio-120",
+    "series": "Trio",
+    "name": "Trio 120",
+    "hero": "/images/hero.jpg",
+    "breadcrumb": ["Home", "Series", "Trio", "Trio 120"],
+    "intro": { "title": "Larger living, more comfort", "text": "Adds extra bedroom and bathroom options." },
+    "stats": [
+      { "label": "TOTAL FLOOR AREA", "value": "118.7 m² / 1278 ft²", "icon": "Ruler" },
+      { "label": "ACCOMMODATES",     "value": "3–7 People",          "icon": "Users" },
+      { "label": "BEDROOMS",         "value": "3",                   "icon": "BedDouble" },
+      { "label": "BATHROOMS",        "value": "2",                   "icon": "ShowerHead" }
+    ],
+    "floorPlans": [
+    { "img": "/images/floor/trio-57-floor-1.png", "caption": "I FLOOR" },
+    { "img": "/images/floor/trio-57-floor-2.png", "caption": "II FLOOR" }
+  ],
+    "sections": [
+      { "title": "Highlights", "lines": ["Extra space for larger families and entertaining."] }
+    ]
+  },
+
+  "trio-150": {
+    "slug": "trio-150",
+    "series": "Trio",
+    "name": "Trio 150",
+    "hero": "/images/hero.jpg",
+    "breadcrumb": ["Home", "Series", "Trio", "Trio 150"],
+    "intro": { "title": "Maximum volume, same iconic profile", "text": "The biggest Trio model with generous living zones." },
+    "stats": [
+      { "label": "TOTAL FLOOR AREA", "value": "140.9 m² / 1517 ft²", "icon": "Ruler" },
+      { "label": "ACCOMMODATES",     "value": "4–8 People",          "icon": "Users" },
+      { "label": "BEDROOMS",         "value": "3",                   "icon": "BedDouble" },
+      { "label": "BATHROOMS",        "value": "2",                   "icon": "ShowerHead" }
+    ],
+    "floorPlans": [
+    { "img": "/images/floor/trio-57-floor-1.png", "caption": "I FLOOR" },
+    { "img": "/images/floor/trio-57-floor-2.png", "caption": "II FLOOR" }
+  ],
+    "sections": [
+      { "title": "Highlights", "lines": ["Ideal for multi-generational living or hosting."] }
+    ]
+  },
+
+  "duo-57": {
+    "slug": "duo-57",
+    "series": "Duo",
+    "name": "Duo 57",
+    "hero": "/images/hero.jpg",
+    "breadcrumb": ["Home", "Series", "Duo", "Duo 57"],
+    "intro": { "title": "Small footprint, cozy loft", "text": "Efficient living with a compact plan and lofted sleeping." },
+    "stats": [
+      { "label": "TOTAL FLOOR AREA", "value": "30,8 m2 / 331,0 ft2", "icon": "Ruler" },
+      { "label": "ACCOMMODATES",     "value": "1-2 People",          "icon": "Users" },
+      { "label": "BEDROOMS",         "value": "loft",                "icon": "BedDouble" },
+      { "label": "BATHROOMS",        "value": "1",                   "icon": "ShowerHead" }
+    ],
+    "floorPlans": [
+    { "img": "/images/floor/trio-57-floor-1.png", "caption": "I FLOOR" },
+    { "img": "/images/floor/trio-57-floor-2.png", "caption": "II FLOOR" }
+  ],
+    "sections": [
+      { "title": "Size and space", "lines": ["1+ loft configuration makes the most of the A-frame volume."] },
+      { "title": "Recommended use", "lines": ["Perfect as a micro-cabin or guest retreat."] }
+    ]
+  },
+
+  "duo-75": {
+    "slug": "duo-75",
+    "series": "Duo",
+    "name": "Duo 75",
+    "hero": "/images/hero.jpg",
+    "breadcrumb": ["Home", "Series", "Duo", "Duo 75"],
+    "intro": { "title": "Compact plus loft flexibility", "text": "Adds space and versatility while keeping the build simple." },
+    "stats": [
+      { "label": "TOTAL FLOOR AREA", "value": "39,8 m2 / 428,0 ft2", "icon": "Ruler" },
+      { "label": "ACCOMMODATES",     "value": "1-4 People",          "icon": "Users" },
+      { "label": "BEDROOMS",         "value": "1 + loft",            "icon": "BedDouble" },
+      { "label": "BATHROOMS",        "value": "1",                   "icon": "ShowerHead" }
+    ],
+    "floorPlans": [
+    { "img": "/images/floor/trio-57-floor-1.png", "caption": "I FLOOR" },
+    { "img": "/images/floor/trio-57-floor-2.png", "caption": "II FLOOR" }
+  ],
+    "sections": [
+      { "title": "Highlights", "lines": ["Great as a weekend cabin or minimal primary home."] }
+    ]
+  },
+
+  "duo-100": {
+    "slug": "duo-100",
+    "series": "Duo",
+    "name": "Duo 100",
+    "hero": "/images/hero.jpg",
+    "breadcrumb": ["Home", "Series", "Duo", "Duo 100"],
+    "intro": { "title": "More breathing room", "text": "A larger Duo with generous living and sleeping zones." },
+    "stats": [
+      { "label": "TOTAL FLOOR AREA", "value": "54,4 m2 / 585,0 ft2", "icon": "Ruler" },
+      { "label": "ACCOMMODATES",     "value": "2-5 People",          "icon": "Users" },
+      { "label": "BEDROOMS",         "value": "1 + loft",            "icon": "BedDouble" },
+      { "label": "BATHROOMS",        "value": "1",                   "icon": "ShowerHead" }
+    ],
+    "floorPlans": [
+    { "img": "/images/floor/trio-57-floor-1.png", "caption": "I FLOOR" },
+    { "img": "/images/floor/trio-57-floor-2.png", "caption": "II FLOOR" }
+  ],
+    "sections": [
+      { "title": "Highlights", "lines": ["Comfortable for couples or small families."] }
+    ]
+  },
+
+  "duo-120": {
+    "slug": "duo-120",
+    "series": "Duo",
+    "name": "Duo 120",
+    "hero": "/images/hero.jpg",
+    "breadcrumb": ["Home", "Series", "Duo", "Duo 120"],
+    "intro": { "title": "Largest Duo in the line-up", "text": "Adds volume for longer stays and more storage." },
+    "stats": [
+      { "label": "TOTAL FLOOR AREA", "value": "67,6 m2 / 727,0 ft2", "icon": "Ruler" },
+      { "label": "ACCOMMODATES",     "value": "3-6 People",          "icon": "Users" },
+      { "label": "BEDROOMS",         "value": "1 + loft",            "icon": "BedDouble" },
+      { "label": "BATHROOMS",        "value": "1",                   "icon": "ShowerHead" }
+    ],
+    "floorPlans": [
+    { "img": "/images/floor/trio-57-floor-1.png", "caption": "I FLOOR" },
+    { "img": "/images/floor/trio-57-floor-2.png", "caption": "II FLOOR" }
+  ],
+    "sections": [
+      { "title": "Highlights", "lines": ["Ideal for extended family getaways."] }
+    ]
+  },
+
+  "solo-plus-42": {
+    "slug": "solo-plus-42",
+    "series": "Solo+",
+    "name": "Solo+ 42",
+    "hero": "/images/hero.jpg",
+    "breadcrumb": ["Home", "Series", "Solo+", "Solo+ 42"],
+    "intro": { "title": "Tiny footprint, big character", "text": "A compact A-frame with a cozy lofted sleeping area." },
+    "stats": [
+      { "label": "TOTAL FLOOR AREA", "value": "17,1 m2 / 184,0 ft2", "icon": "Ruler" },
+      { "label": "ACCOMMODATES",     "value": "1-2 People",          "icon": "Users" },
+      { "label": "BEDROOMS",         "value": "loft",                "icon": "BedDouble" },
+      { "label": "BATHROOMS",        "value": "0",                   "icon": "ShowerHead" }
+    ],
+    "floorPlans": [
+    { "img": "/images/floor/trio-57-floor-1.png", "caption": "I FLOOR" },
+    { "img": "/images/floor/trio-57-floor-2.png", "caption": "II FLOOR" }
+  ],
+    "sections": [
+      { "title": "Highlights", "lines": ["Great as a studio, office or guest pod."] }
+    ]
+  },
+
+  "solo-plus-75": {
+    "slug": "solo-plus-75",
+    "series": "Solo+",
+    "name": "Solo+ 75",
+    "hero": "/images/hero.jpg",
+    "breadcrumb": ["Home", "Series", "Solo+", "Solo+ 75"],
+    "intro": { "title": "Simple + comfortable", "text": "Adds a bathroom while keeping the Solo’s minimal vibe." },
+    "stats": [
+      { "label": "TOTAL FLOOR AREA", "value": "33,9 m2 / 365,0 ft2", "icon": "Ruler" },
+      { "label": "ACCOMMODATES",     "value": "2-3 People",          "icon": "Users" },
+      { "label": "BEDROOMS",         "value": "loft",                "icon": "BedDouble" },
+      { "label": "BATHROOMS",        "value": "1",                   "icon": "ShowerHead" }
+    ],
+    "floorPlans": [
+    { "img": "/images/floor/trio-57-floor-1.png", "caption": "I FLOOR" },
+    { "img": "/images/floor/trio-57-floor-2.png", "caption": "II FLOOR" }
+  ],
+    "sections": [
+      { "title": "Highlights", "lines": ["Balanced for weekend stays and short-term living."] }
+    ]
+  },
+
+  "solo-plus-100": {
+    "slug": "solo-plus-100",
+    "series": "Solo+",
+    "name": "Solo+ 100",
+    "hero": "/images/hero.jpg",
+    "breadcrumb": ["Home", "Series", "Solo+", "Solo+ 100"],
+    "intro": { "title": "Tiny, but truly livable", "text": "More floor area with a proper loft bedroom and amenities." },
+    "stats": [
+      { "label": "TOTAL FLOOR AREA", "value": "38,4 m2 / 413 ft2", "icon": "Ruler" },
+      { "label": "ACCOMMODATES",     "value": "2-4 People",        "icon": "Users" },
+      { "label": "BEDROOMS",         "value": "1 + loft",          "icon": "BedDouble" },
+      { "label": "BATHROOMS",        "value": "1",                 "icon": "ShowerHead" }
+    ],
+    "floorPlans": [
+    { "img": "/images/floor/trio-57-floor-1.png", "caption": "I FLOOR" },
+    { "img": "/images/floor/trio-57-floor-2.png", "caption": "II FLOOR" }
+  ],
+    "sections": [
+      { "title": "Highlights", "lines": ["Comfortable for a couple or small family."] }
+    ]
+  }
+}
