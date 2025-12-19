@@ -18,6 +18,7 @@ import {
   AlertTriangle,
   FileText,
   Hash,
+  Link2,
 } from 'lucide-react';
 
 export default function AdminBlogPage() {
@@ -32,6 +33,9 @@ export default function AdminBlogPage() {
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
   const [content, setContent] = useState('');
   const [rating, setRating] = useState(0);
+
+  // ✅ linkedin url
+  const [linkedinUrl, setLinkedinUrl] = useState('');
 
   // ✅ media
   const [media, setMedia] = useState([]); // [{type,url,path,name,mime,size}]
@@ -63,7 +67,11 @@ export default function AdminBlogPage() {
   }, [title]);
 
   const formatDate = (iso) =>
-    new Date(iso).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+    new Date(iso).toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    });
 
   const showToast = (type, message) => {
     setToast({ type, message });
@@ -79,6 +87,7 @@ export default function AdminBlogPage() {
     setDate(new Date().toISOString().slice(0, 10));
     setContent('');
     setRating(0);
+    setLinkedinUrl('');
     setMedia([]);
   };
 
@@ -87,20 +96,21 @@ export default function AdminBlogPage() {
     setRefreshing(true);
 
     try {
-      const res = await fetch('/api/admin/blog?status=draft', { cache: 'no-store' });
+      // ✅ no status filter (because you said no status column)
+      const res = await fetch('/api/admin/blog', { cache: 'no-store' });
       const json = await res.json();
 
       if (!res.ok) {
         console.error(json.error);
-        showToast('error', json.error || 'Failed to load drafts');
+        showToast('error', json.error || 'Failed to load posts');
         setSavedPosts([]);
         return;
       }
 
       setSavedPosts(Array.isArray(json.data) ? json.data : []);
     } catch (e) {
-      console.error('Load drafts failed:', e);
-      showToast('error', 'Failed to load drafts');
+      console.error('Load posts failed:', e);
+      showToast('error', 'Failed to load posts');
     } finally {
       setLoadingPosts(false);
       setRefreshing(false);
@@ -205,9 +215,9 @@ export default function AdminBlogPage() {
           excerpt: excerpt?.trim() || null,
           content: content || null,
           rating,
-          status: 'draft',
           post_date: date,
           media, // ✅ save media list
+          linkedin_url: linkedinUrl?.trim() || null, // ✅ save linkedin url
         }),
       });
 
@@ -218,7 +228,7 @@ export default function AdminBlogPage() {
         return;
       }
 
-      showToast('success', editingId ? 'Draft updated' : 'Draft saved');
+      showToast('success', editingId ? 'Post updated' : 'Post saved');
 
       if (editingId) {
         setSavedPosts((prev) => prev.map((p) => (p.id === editingId ? json.data : p)));
@@ -243,10 +253,13 @@ export default function AdminBlogPage() {
     setContent(post.content || '');
     setRating(post.rating || 0);
     setMedia(Array.isArray(post.media) ? post.media : []);
+    setLinkedinUrl(post.linkedin_url || '');
 
     const d = post.post_date
       ? String(post.post_date)
-      : (post.created_at ? String(post.created_at).slice(0, 10) : new Date().toISOString().slice(0, 10));
+      : post.created_at
+        ? String(post.created_at).slice(0, 10)
+        : new Date().toISOString().slice(0, 10);
     setDate(d);
 
     showToast('success', 'Loaded into editor');
@@ -287,7 +300,7 @@ export default function AdminBlogPage() {
       setSavedPosts((prev) => prev.filter((p) => p.id !== id));
       if (editingId === id) resetForm();
 
-      showToast('success', 'Draft deleted');
+      showToast('success', 'Post deleted');
       setDeleteId(null);
     } catch (e) {
       console.error(e);
@@ -305,26 +318,24 @@ export default function AdminBlogPage() {
               <p className="text-xs font-semibold tracking-[0.22em] uppercase text-slate-400">
                 Admin Studio
               </p>
-              <h1 className="text-xl sm:text-2xl font-semibold text-slate-900">
-                Blog Posts
-              </h1>
+              <h1 className="text-xl sm:text-2xl font-semibold text-slate-900">Blog Posts</h1>
             </div>
 
             <div className="flex items-center gap-2">
               <span className="hidden sm:inline-flex text-xs px-3 py-1 rounded-full border border-slate-200 bg-slate-50 text-slate-700">
-                Drafts: {savedPosts.length}
+                Posts: {savedPosts.length}
               </span>
 
               <button
                 type="button"
                 onClick={() => {
                   resetForm();
-                  showToast('success', 'New draft');
+                  showToast('success', 'New post');
                 }}
                 className="inline-flex items-center gap-2 rounded-full bg-slate-900 text-white px-4 py-2 text-sm hover:bg-slate-800"
               >
                 <FileText className="w-4 h-4" />
-                New Draft
+                New Post
               </button>
             </div>
           </div>
@@ -336,7 +347,7 @@ export default function AdminBlogPage() {
               <input
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
-                placeholder="Search drafts by title, excerpt, category..."
+                placeholder="Search posts by title, excerpt, category..."
                 className="w-full rounded-xl border border-slate-200 bg-white pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300"
               />
             </div>
@@ -411,11 +422,9 @@ export default function AdminBlogPage() {
             <div className="px-6 py-5 border-b border-slate-100 flex items-start justify-between gap-3">
               <div>
                 <h2 className="text-base font-semibold text-slate-900">
-                  {editingId ? 'Update draft' : 'Create draft'}
+                  {editingId ? 'Update post' : 'Create post'}
                 </h2>
-                <p className="text-xs text-slate-500 mt-1">
-                  Saved to Supabase as <span className="font-semibold">Draft</span>.
-                </p>
+                <p className="text-xs text-slate-500 mt-1">Saved to Supabase.</p>
               </div>
 
               {editingId && (
@@ -509,6 +518,21 @@ export default function AdminBlogPage() {
                 </div>
               </div>
 
+              {/* ✅ LinkedIn URL */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-semibold text-slate-600">LinkedIn URL (optional)</label>
+                <div className="relative">
+                  <Link2 className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="url"
+                    value={linkedinUrl}
+                    onChange={(e) => setLinkedinUrl(e.target.value)}
+                    placeholder="https://www.linkedin.com/..."
+                    className="w-full rounded-xl border border-slate-200 pl-9 pr-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-slate-300"
+                  />
+                </div>
+              </div>
+
               {/* Content */}
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold text-slate-600">Content</label>
@@ -558,7 +582,10 @@ export default function AdminBlogPage() {
                 {media.length > 0 && (
                   <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                     {media.map((m) => (
-                      <div key={m.path} className="rounded-2xl border border-slate-200 bg-white overflow-hidden">
+                      <div
+                        key={m.path}
+                        className="rounded-2xl border border-slate-200 bg-white overflow-hidden"
+                      >
                         <div className="relative">
                           {m.type === 'video' ? (
                             <video src={m.url} controls className="w-full h-40 object-cover bg-black" />
@@ -596,7 +623,7 @@ export default function AdminBlogPage() {
                   }}
                   className="rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
                 >
-                  {editingId ? 'New draft' : 'Reset'}
+                  {editingId ? 'New post' : 'Reset'}
                 </button>
 
                 <button
@@ -604,7 +631,7 @@ export default function AdminBlogPage() {
                   disabled={saving}
                   className="inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-5 py-2 text-sm font-semibold text-white hover:bg-slate-800 disabled:opacity-60"
                 >
-                  {saving ? 'Saving...' : editingId ? 'Update Draft' : 'Save Draft'}
+                  {saving ? 'Saving...' : editingId ? 'Update Post' : 'Save Post'}
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -635,16 +662,31 @@ export default function AdminBlogPage() {
                 </span>
                 <span className="inline-flex items-center gap-1">
                   <Clock className="w-3 h-3" />
-                  Draft
+                  Preview
                 </span>
               </div>
+
+              {/* ✅ LinkedIn button preview */}
+              {linkedinUrl?.trim() && (
+                <a
+                  href={linkedinUrl.trim()}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mb-4 inline-flex items-center gap-2 rounded-lg bg-blue-600 text-white px-4 py-2 text-sm font-semibold hover:bg-blue-700"
+                >
+                  <Link2 className="w-4 h-4" />
+                  Subscribe on LinkedIn
+                </a>
+              )}
 
               {rating > 0 && (
                 <div className="mb-2 flex items-center gap-1">
                   {[1, 2, 3, 4, 5].map((v) => (
                     <Star
                       key={v}
-                      className={`w-3.5 h-3.5 ${v <= rating ? 'fill-[#fbbc04] text-[#fbbc04]' : 'text-slate-300'}`}
+                      className={`w-3.5 h-3.5 ${
+                        v <= rating ? 'fill-[#fbbc04] text-[#fbbc04]' : 'text-slate-300'
+                      }`}
                     />
                   ))}
                   <span className="text-[11px] text-slate-600 ml-2">{rating}.0</span>
@@ -677,17 +719,19 @@ export default function AdminBlogPage() {
 
               <div className="border-t border-slate-200 pt-4">
                 <div className="text-sm text-slate-800 whitespace-pre-line">
-                  {content ? content : <p className="text-slate-500">Start typing your blog content to see how it will look.</p>}
+                  {content ? content : (
+                    <p className="text-slate-500">Start typing your blog content to see how it will look.</p>
+                  )}
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Drafts list */}
+          {/* Posts list */}
           <div className="rounded-3xl border border-slate-200 bg-white shadow-lg overflow-hidden">
             <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between">
               <div>
-                <p className="text-xs font-semibold tracking-[0.18em] uppercase text-slate-400">Drafts</p>
+                <p className="text-xs font-semibold tracking-[0.18em] uppercase text-slate-400">Posts</p>
                 <h3 className="text-sm font-semibold text-slate-900">{filteredPosts.length} showing</h3>
               </div>
 
@@ -714,13 +758,13 @@ export default function AdminBlogPage() {
                 </div>
               ) : filteredPosts.length === 0 ? (
                 <div className="rounded-2xl border border-dashed border-slate-200 p-6 text-center">
-                  <p className="text-sm font-semibold text-slate-900">No drafts found</p>
+                  <p className="text-sm font-semibold text-slate-900">No posts found</p>
                   <p className="text-xs text-slate-500 mt-1">Try changing search or category filter.</p>
                 </div>
               ) : (
                 <div className="space-y-2 max-h-[420px] overflow-auto pr-1">
                   {filteredPosts.map((post) => {
-                    const initial = (post.title?.[0]?.toUpperCase()) || 'P';
+                    const initial = post.title?.[0]?.toUpperCase() || 'P';
                     const postRating = post.rating || 0;
 
                     return (
@@ -792,11 +836,20 @@ export default function AdminBlogPage() {
                               {post.excerpt || 'No short description yet.'}
                             </p>
 
-                            {Array.isArray(post.media) && post.media.length > 0 && (
-                              <div className="mt-2 text-[10px] text-slate-500">
-                                Media: <span className="font-semibold text-slate-700">{post.media.length}</span>
-                              </div>
-                            )}
+                            <div className="mt-2 flex flex-wrap gap-2 text-[10px] text-slate-500">
+                              {Array.isArray(post.media) && post.media.length > 0 && (
+                                <span>
+                                  Media:{' '}
+                                  <span className="font-semibold text-slate-700">{post.media.length}</span>
+                                </span>
+                              )}
+                              {post.linkedin_url && (
+                                <span className="inline-flex items-center gap-1">
+                                  <Link2 className="w-3 h-3" />
+                                  LinkedIn
+                                </span>
+                              )}
+                            </div>
                           </div>
                         </div>
                       </article>
@@ -815,10 +868,14 @@ export default function AdminBlogPage() {
           <div className="w-full max-w-md rounded-3xl bg-white shadow-2xl border border-slate-200 overflow-hidden">
             <div className="px-6 py-5 border-b border-slate-100 flex items-start justify-between">
               <div>
-                <h3 className="text-base font-semibold text-slate-900">Delete draft?</h3>
+                <h3 className="text-base font-semibold text-slate-900">Delete post?</h3>
                 <p className="text-xs text-slate-500 mt-1">This action cannot be undone.</p>
               </div>
-              <button onClick={() => setDeleteId(null)} className="text-slate-400 hover:text-slate-600" aria-label="Close">
+              <button
+                onClick={() => setDeleteId(null)}
+                className="text-slate-400 hover:text-slate-600"
+                aria-label="Close"
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>

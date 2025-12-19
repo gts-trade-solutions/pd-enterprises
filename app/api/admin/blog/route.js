@@ -6,7 +6,7 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const FIELDS =
-  "id,title,slug,category,excerpt,content,rating,status,created_at,post_date,media";
+  "id,title,slug,category,excerpt,content,rating,created_at,post_date,media,linkedin_url";
 
 const makeSlug = (s) =>
   String(s || "")
@@ -21,7 +21,7 @@ export async function GET(req) {
     const url = new URL(req.url);
 
     const slug = url.searchParams.get("slug"); // optional
-    const id = url.searchParams.get("id");     // optional
+    const id = url.searchParams.get("id"); // optional
 
     let q = supabase.from("blog_posts").select(FIELDS);
 
@@ -48,7 +48,6 @@ export async function GET(req) {
   }
 }
 
-
 export async function POST(req) {
   try {
     const supabase = getSupabaseAdmin();
@@ -63,9 +62,9 @@ export async function POST(req) {
       excerpt: body.excerpt ?? null,
       content: body.content ?? null,
       rating: Number(body.rating) || 0,
-      status: body.status || "draft",
       post_date: body.post_date ?? null,
       media: Array.isArray(body.media) ? body.media : [],
+      linkedin_url: body.linkedin_url ? String(body.linkedin_url).trim() : null,
     };
 
     let { data, error } = await supabase
@@ -108,9 +107,9 @@ export async function PATCH(req) {
       excerpt: body.excerpt ?? null,
       content: body.content ?? null,
       rating: Number(body.rating) || 0,
-      status: body.status ?? undefined,
       post_date: body.post_date ?? null,
       media: Array.isArray(body.media) ? body.media : [],
+      linkedin_url: body.linkedin_url ? String(body.linkedin_url).trim() : null,
       ...(body.slug ? { slug: makeSlug(body.slug) } : {}),
     };
 

@@ -15,6 +15,8 @@ import {
   Play,
   Image as ImageIcon,
   Video as VideoIcon,
+  MessageCircle,
+  Send,
 } from 'lucide-react';
 
 export default function BlogPage() {
@@ -27,6 +29,22 @@ export default function BlogPage() {
   const [sortBy, setSortBy] = useState('latest'); // latest | oldest | rating
 
   const [selectedId, setSelectedId] = useState(null);
+
+  /* ------------------------- COMMENTS ------------------------- */
+  const [comments, setComments] = useState([]);
+  const [cLoading, setCLoading] = useState(false);
+  const [cErr, setCErr] = useState('');
+  const [cOk, setCOk] = useState('');
+  const [commentForm, setCommentForm] = useState({
+    name: '',
+    email: '',
+    comment: '',
+  });
+
+  const [files, setFiles] = useState(null); // UI only
+  const [editId, setEditId] = useState(null);
+  const [editText, setEditText] = useState('');
+  const [editBusy, setEditBusy] = useState(false);
 
   const safeText = (v) => (v == null ? '' : String(v));
 
@@ -44,7 +62,7 @@ export default function BlogPage() {
 
   const getPostDate = (p) => p?.post_date || p?.created_at || null;
 
-  // ✅ FIX 1: media can be array OR json string (depending on DB column type)
+  // media can be array OR json string
   const parseMediaArray = (raw) => {
     if (Array.isArray(raw)) return raw;
     if (typeof raw === 'string') {
@@ -58,7 +76,7 @@ export default function BlogPage() {
     return [];
   };
 
-  // ✅ FIX 2: infer type if "type" missing (from mime / extension)
+  // infer type if "type" missing
   const inferType = (m) => {
     const t = String(m?.type || '').toLowerCase();
     if (t === 'image' || t === 'video') return t;
@@ -102,7 +120,7 @@ export default function BlogPage() {
       .filter(Boolean);
   };
 
-  // ✅ FIX 3: fetch ALL posts (no status filter)
+  // fetch ALL posts
   const loadPosts = async () => {
     setLoading(true);
     setLoadError('');
@@ -124,7 +142,7 @@ export default function BlogPage() {
       const rows = Array.isArray(json.data) ? json.data : [];
       const withMedia = rows.map((p) => ({ ...p, _media: normalizeMedia(p) }));
       setPosts(withMedia);
-    } catch (e) {
+    } catch {
       setPosts([]);
       setLoadError('Failed to load posts');
     } finally {
@@ -221,6 +239,162 @@ export default function BlogPage() {
     if (vid) return { type: 'video', url: vid.posterUrl || '' };
 
     return null;
+  };
+
+  /* ------------------------- COMMENTS functions ------------------------- */
+
+  const onPickFiles = (e) => setFiles(e.target.files || null);
+
+  const loadComments = async (postId) => {
+    if (!postId) return;
+    setCLoading(true);
+    setCErr('');
+    try {
+      const res = await fetch(`/api/blog/comments?post_id=${encodeURIComponent(postId)}`, {
+        cache: 'no-store',
+        headers: { Accept: 'application/json' },
+      });
+      const json = await res.json();
+      if (!res.ok) {
+        setComments([]);
+        setCErr(json?.error || 'Failed to load comments');
+        return;
+      }
+      setComments(Array.isArray(json.data) ? json.data : []);
+    } catch {
+      setComments([]);
+      setCErr('Failed to load comments');
+    } finally {
+      setCLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (selected?.id) {
+      setComments([]);
+      setCErr('');
+      setCOk('');
+      setEditId(null);
+      setEditText('');
+      loadComments(selected.id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected?.id]);
+
+  const submitComment = async (e) => {
+    e.preventDefault();
+    if (!selected?.id) return;
+
+    const message = String(commentForm.comment || '').trim();
+    if (!message) return setCErr('Message is required');
+
+    setCErr('');
+    setCOk('');
+
+    const payload = {
+      post_id: selected.id,
+      name: commentForm.name || null,
+      email: commentForm.email || null,
+      message, // ✅ DB uses "message" NOT NULL
+      // files are UI only (not uploaded here)
+    };
+
+    try {
+      const res = await fetch('/api/blog/comments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const json = await res.json();
+
+      if (!res.ok) {
+        setCErr(json?.error || 'Failed to submit comment');
+        return;
+      }
+
+      setCOk('Posted ✅');
+      setCommentForm((p) => ({ ...p, comment: '' }));
+      setFiles(null);
+
+      // reload list to show immediately
+      loadComments(selected.id);
+    } catch {
+      setCErr('Failed to submit comment');
+    }
+  };
+
+  const deleteComment = async (id) => {
+    if (!id) return;
+    if (!confirm('Delete this comment?')) return;
+
+    setCErr('');
+    setCOk('');
+
+    try {
+      const res = await fetch('/api/blog/comments', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ id }),
+      });
+
+      const json = await res.json();
+      if (!res.ok) {
+        setCErr(json?.error || 'Failed to delete');
+        return;
+      }
+
+      setComments((prev) => prev.filter((c) => c.id !== id));
+      setCOk('Deleted ✅');
+    } catch {
+      setCErr('Failed to delete');
+    }
+  };
+
+  const startEdit = (c) => {
+    setCErr('');
+    setCOk('');
+    setEditId(c.id);
+    setEditText(String(c?.message || c?.comment || '').trim());
+  };
+
+  const cancelEdit = () => {
+    setEditId(null);
+    setEditText('');
+  };
+
+  const saveEdit = async () => {
+    if (!editId) return;
+
+    const message = String(editText || '').trim();
+    if (!message) return setCErr('Message is required');
+
+    setEditBusy(true);
+    setCErr('');
+    setCOk('');
+
+    try {
+      const res = await fetch('/api/blog/comments', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ id: editId, message }),
+      });
+
+      const json = await res.json();
+      if (!res.ok) {
+        setCErr(json?.error || 'Failed to update');
+        return;
+      }
+
+      setComments((prev) =>
+        prev.map((c) => (c.id === editId ? { ...c, message: json.data?.message ?? message } : c))
+      );
+      setCOk('Updated ✅');
+      cancelEdit();
+    } catch {
+      setCErr('Failed to update');
+    } finally {
+      setEditBusy(false);
+    }
   };
 
   return (
@@ -693,13 +867,198 @@ export default function BlogPage() {
                     <div className="mt-4 whitespace-pre-line text-sm leading-7 text-slate-800">
                       {selected.content || 'No content.'}
                     </div>
+
+                    {/* -------------------- COMMENTS (LIKE YOUR SCREENSHOT) -------------------- */}
+                    <div className="mt-8">
+                      <div className="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+                        <div className="px-5 py-4 border-b border-slate-100">
+                          <div className="flex items-center justify-between">
+                            <h4 className="text-lg font-semibold text-slate-900">All Discussions</h4>
+                            <button
+                              type="button"
+                              onClick={() => loadComments(selected.id)}
+                              className="text-sm text-blue-600 hover:underline"
+                            >
+                              View Threads
+                            </button>
+                          </div>
+                        </div>
+
+                        <div className="p-5">
+                          {cErr && (
+                            <div className="mb-3 text-sm text-rose-700 bg-rose-50 border border-rose-200 rounded-2xl p-3">
+                              {cErr}
+                            </div>
+                          )}
+                          {cOk && (
+                            <div className="mb-3 text-sm text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-2xl p-3">
+                              {cOk}
+                            </div>
+                          )}
+
+                          <form onSubmit={submitComment} className="space-y-3">
+                            <textarea
+                              value={commentForm.comment}
+                              onChange={(e) =>
+                                setCommentForm((p) => ({ ...p, comment: e.target.value }))
+                              }
+                              placeholder="Write your thoughts..."
+                              className="w-full min-h-[110px] rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-slate-200"
+                            />
+
+                            <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+                              <div className="flex flex-col sm:flex-row gap-3 w-full">
+                                <input
+                                  value={commentForm.name}
+                                  onChange={(e) =>
+                                    setCommentForm((p) => ({ ...p, name: e.target.value }))
+                                  }
+                                  placeholder="Name (optional)"
+                                  className="w-full sm:w-56 rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm outline-none"
+                                />
+                                <input
+                                  value={commentForm.email}
+                                  onChange={(e) =>
+                                    setCommentForm((p) => ({ ...p, email: e.target.value }))
+                                  }
+                                  placeholder="Email (optional)"
+                                  className="w-full sm:w-64 rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm outline-none"
+                                />
+                              </div>
+
+                              <div className="flex items-center gap-3">
+                                <input type="file" onChange={onPickFiles} className="text-sm" />
+                                <button
+                                  type="submit"
+                                  className="inline-flex items-center justify-center rounded-lg bg-blue-600 text-white px-5 py-2 text-sm font-medium hover:bg-blue-700"
+                                >
+                                  Post
+                                </button>
+                              </div>
+                            </div>
+
+                            {files?.length ? (
+                              <div className="text-xs text-slate-500">
+                                {files.length} file(s) selected (upload not implemented)
+                              </div>
+                            ) : null}
+                          </form>
+                        </div>
+
+                        <div className="border-t border-slate-100">
+                          <div className="p-5">
+                            {cLoading ? (
+                              <div className="text-sm text-slate-500">Loading...</div>
+                            ) : comments.length === 0 ? (
+                              <div className="text-sm text-slate-500">No discussions yet.</div>
+                            ) : (
+                              <div className="space-y-4">
+                                {comments.map((c) => {
+                                  const email = String(c?.email || '').trim();
+                                  const name = String(c?.name || '').trim();
+                                  const msg = String(c?.message || c?.comment || '').trim();
+                                  const header = email || name || 'Anonymous';
+
+                                  return (
+                                    <div
+                                      key={c.id}
+                                      className="rounded-2xl border border-slate-200 bg-white p-4"
+                                    >
+                                      <div className="flex items-start justify-between gap-3">
+                                        <div className="min-w-0">
+                                          <div className="font-medium">
+                                            {email ? (
+                                              <a
+                                                href={`mailto:${email}`}
+                                                className="text-blue-600 hover:underline break-all"
+                                              >
+                                                {email}
+                                              </a>
+                                            ) : (
+                                              <span className="text-slate-900">{header}</span>
+                                            )}
+                                          </div>
+                                          <div className="text-xs text-slate-500 mt-1">
+                                            {formatDate(c.created_at)}
+                                          </div>
+                                        </div>
+
+                                        <div className="flex items-center gap-4 text-sm">
+                                          <button
+                                            type="button"
+                                            onClick={() => startEdit(c)}
+                                            className="text-amber-500 hover:underline"
+                                          >
+                                            Edit
+                                          </button>
+                                          <button
+                                            type="button"
+                                            onClick={() => deleteComment(c.id)}
+                                            className="text-rose-500 hover:underline"
+                                          >
+                                            Delete
+                                          </button>
+                                        </div>
+                                      </div>
+
+                                      {editId === c.id ? (
+                                        <div className="mt-3 space-y-2">
+                                          <textarea
+                                            value={editText}
+                                            onChange={(e) => setEditText(e.target.value)}
+                                            className="w-full min-h-[90px] rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none"
+                                          />
+                                          <div className="flex items-center justify-end gap-2">
+                                            <button
+                                              type="button"
+                                              onClick={cancelEdit}
+                                              className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm hover:bg-slate-50"
+                                            >
+                                              Cancel
+                                            </button>
+                                            <button
+                                              type="button"
+                                              onClick={saveEdit}
+                                              disabled={editBusy}
+                                              className="rounded-lg bg-slate-900 text-white px-4 py-2 text-sm hover:bg-slate-800 disabled:opacity-60"
+                                            >
+                                              {editBusy ? 'Saving...' : 'Save'}
+                                            </button>
+                                          </div>
+                                        </div>
+                                      ) : (
+                                        <div className="mt-3 text-sm text-slate-700 whitespace-pre-line">
+                                          {msg}
+                                        </div>
+                                      )}
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="px-5 py-4 border-t border-slate-100 bg-slate-50 flex items-center justify-between">
+                          <div className="text-xs text-slate-500 inline-flex items-center gap-2">
+                            <MessageCircle className="w-4 h-4" />
+                            {comments.length} comment(s)
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => loadComments(selected.id)}
+                            className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm hover:bg-slate-50"
+                          >
+                            Refresh
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    {/* ------------------ END COMMENTS ------------------ */}
                   </div>
 
                   <div className="p-4 border-t border-slate-100 bg-slate-50 flex items-center justify-between">
-                    <div className="text-xs text-slate-500">
-                      Status:{' '}
-                      <span className="font-medium text-slate-700">{selected.status || '—'}</span>
-                    </div>
+                    <div className="text-xs text-slate-500">Reader</div>
                     <button
                       type="button"
                       onClick={() => setSelectedId(null)}
