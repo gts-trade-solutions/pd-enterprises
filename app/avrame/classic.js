@@ -9,7 +9,7 @@ export default function ClassicHouses() {
       name: 'G118',
       size: '121.2 SQM / 1,304 SQFT',
       desc: 'Easily convertible into 2 apartments',
-      info: 'It’s not an empty nest if you divide it in two and gain a whole extra apartment.',
+      info: "It's not an empty nest if you divide it in two and gain a whole extra apartment.",
       features: [
         { label: '4x', icon: BedDouble, desc: 'Bedrooms' },
         { label: '2x', icon: ShowerHead, desc: 'Bathrooms' },
@@ -21,7 +21,7 @@ export default function ClassicHouses() {
       name: 'G105',
       size: '98,4 sqm / 1059 sqft',
       desc: 'Outperforms most "regular family homes".',
-    //   info: 'A modern classic design with open living areas and large panoramic windows.',
+      // info: 'A modern classic design with open living areas and large panoramic windows.',
       features: [
         { label: '5x', icon: BedDouble, desc: 'Bedrooms' },
         { label: '3x', icon: ShowerHead, desc: 'Bathrooms' },
@@ -33,7 +33,7 @@ export default function ClassicHouses() {
       name: 'G98',
       size: '102 sqm / 1097 sqft',
       desc: 'Classic model closest to an a-frame.',
-    //   info: 'It’s not an empty nest if you divide it in two and gain a whole extra apartment.',
+      // info: "It's not an empty nest if you divide it in two and gain a whole extra apartment.",
       features: [
         { label: '4x', icon: BedDouble, desc: 'Bedrooms' },
         { label: '2x', icon: ShowerHead, desc: 'Bathrooms' },
@@ -41,7 +41,7 @@ export default function ClassicHouses() {
       ],
       images: ['/images/classic-3.jpeg'],
     },
-     {
+    {
       name: 'G70',
       size: '70,5 sqm / 758,8 sqft',
       desc: 'Build with 2 people without a crane',
@@ -53,11 +53,11 @@ export default function ClassicHouses() {
       ],
       images: ['/images/classic-4.jpeg'],
     },
-     {
+    {
       name: 'G49',
       size: '37,3 sqm / 404,4 sqft',
       desc: 'Move it to another location on a trailer.',
-      info: 'It’s often best to begin from the beginning here’s the perfect starter home or downsize.',
+      info: "It's often best to begin from the beginning—here's the perfect starter home or downsize.",
       features: [
         { label: '2x', icon: BedDouble, desc: 'Bedrooms' },
         { label: '1x', icon: ShowerHead, desc: 'Bathrooms' },
@@ -128,9 +128,11 @@ function HouseCard({ house, reverse }) {
           ))}
         </div>
 
-        <p className="mt-6 text-gray-600 text-base max-w-md bg-white/60 p-3 rounded-md shadow-sm">
-          {house.info}
-        </p>
+        {house.info && (
+          <p className="mt-6 text-gray-600 text-base max-w-md bg-white/60 p-3 rounded-md shadow-sm">
+            {house.info}
+          </p>
+        )}
 
         <button className="mt-6 inline-block bg-green-700 hover:bg-green-800 text-white font-semibold px-6 py-3 rounded-md shadow-md w-fit">
           PLANS & PRICES

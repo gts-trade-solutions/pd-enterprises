@@ -1,6 +1,5 @@
-"use client";
-
-import Link from "next/link";
+// app/page.js
+import dynamic from "next/dynamic";
 import AnimatedSection from "@/components/AnimatedSection";
 import {
   Building2,
@@ -20,19 +19,39 @@ import {
   Leaf,
 } from "lucide-react";
 
-// -----------------------------
-// Data (moved to arrays for clean rendering)
-// -----------------------------
+// Hero slider (client-side only)
+const HeroSwiper = dynamic(() => import("@/components/HeroSwiper"), { ssr: false });
+
+export const metadata = {
+  title: "Infrastructure Development Company in South Africa | PD Enterprise",
+  description:
+    "PD Enterprise is an infrastructure development company in South Africa providing infrastructure development consulting, business planning, feasibility studies, engineering design, and project & construction management for bankable infrastructure projects.",
+  keywords: [
+    "infrastructure development company in South Africa",
+    "infrastructure development company",
+    "infrastructure development consultants",
+    "infrastructure development and business planning",
+    "infrastructure development services",
+    "infrastructure consulting firm",
+    "infrastructure project development",
+    "feasibility studies for infrastructure projects",
+    "due diligence for infrastructure projects",
+    "engineering design and construction management",
+    "project and construction management services",
+  ],
+};
+
+const slides = ["/images/1.png", "/images/2.png", "/images/3.png", "/images/4.png"];
 
 const services = [
   {
     icon: FileSearch,
     title: "Due Diligence",
     points: [
-      "Verification of technical condition of systems and products.",
+      "Verification of technical condition of systems and products for infrastructure projects.",
       "In-depth analysis of strengths and weaknesses of systems, services, and products.",
-      "Reliability analysis of systems and services.",
-      "Risk assessments and reporting for systems or products.",
+      "Reliability analysis of systems and services for investors and project sponsors.",
+      "Risk assessments and reporting for infrastructure assets and products.",
     ],
     color: "from-crimson to-primary-700",
   },
@@ -41,9 +60,9 @@ const services = [
     title: "Business Planning",
     points: [
       "Strategic formulation to advance and execute bankable, feasible infrastructure developments.",
-      "Business forecasts (financial and other resources).",
-      "Business resource strategic planning.",
-      "Development funding principles and investor mapping/analysis.",
+      "Business forecasts (financial and other resources) for infrastructure projects.",
+      "Business resource strategic planning for public and private sector clients.",
+      "Development funding principles and investor mapping/analysis for infrastructure development.",
     ],
     color: "from-primary-600 to-primary-800",
   },
@@ -51,10 +70,10 @@ const services = [
     icon: ClipboardCheck,
     title: "Feasibility Studies",
     points: [
-      "Technical viability analysis.",
-      "Commercial viability analysis.",
-      "Financial viability analysis.",
-      "Bankability review and related analysis.",
+      "Technical viability analysis for infrastructure projects.",
+      "Commercial viability analysis for new developments and expansions.",
+      "Financial viability analysis and modelling for bankable projects.",
+      "Bankability review and related analysis for infrastructure investments.",
     ],
     color: "from-crimson-dark to-primary-900",
   },
@@ -62,10 +81,10 @@ const services = [
     icon: Wrench,
     title: "Infrastructure Engineering",
     points: [
-      "Engineering research, audits, planning, and design across disciplines.",
-      "Design documentation, material, and system specifications.",
-      "Project contract documentation.",
-      "Construction control documentation.",
+      "Engineering research, audits, planning, and design across infrastructure disciplines.",
+      "Design documentation, material, and system specifications for infrastructure systems.",
+      "Project contract documentation for engineering and construction projects.",
+      "Construction control documentation for infrastructure development and upgrades.",
     ],
     color: "from-primary-700 to-crimson",
   },
@@ -73,12 +92,12 @@ const services = [
     icon: PenTool,
     title: "Architectural System Design",
     points: [
-      "Development conceptual plans.",
-      "Masterplans and spatial analysis.",
-      "Urban design.",
-      "Built environment discipline integration.",
-      "Interior design and related analysis.",
-      "Documentation and reporting.",
+      "Development conceptual plans for infrastructure and building projects.",
+      "Masterplans and spatial analysis for precincts and developments.",
+      "Urban design for residential, commercial, and mixed-use environments.",
+      "Built environment discipline integration for holistic infrastructure solutions.",
+      "Interior design and related analysis aligned with project objectives.",
+      "Documentation and reporting for stakeholders and approvals.",
     ],
     color: "from-crimson-light to-crimson",
   },
@@ -86,10 +105,10 @@ const services = [
     icon: Building2,
     title: "Project & Construction Management",
     points: [
-      "Construction scheduling and planning.",
-      "Budgeting and activity management.",
-      "Works certification and contractor management.",
-      "Site activity management.",
+      "Construction scheduling and planning for infrastructure projects.",
+      "Budgeting and activity management from concept to completion.",
+      "Works certification and contractor management for quality assurance.",
+      "Site activity management and coordination of project stakeholders.",
     ],
     color: "from-primary-800 to-primary-900",
   },
@@ -98,49 +117,43 @@ const services = [
 const sectors = [
   {
     icon: Zap,
-    title: "Energy",
+    title: "Energy Infrastructure",
     description:
-      "Renewables and oil & gas infrastructure development and engineering solutions.",
+      "Renewable energy and oil & gas infrastructure development, feasibility studies, and engineering solutions for power and energy projects in South Africa.",
     color: "bg-gradient-to-br from-crimson/20 to-primary-900/20",
   },
   {
     icon: Factory,
-    title: "Food Production",
-    description: "Agricultural and food processing facility planning and development.",
+    title: "Food Production & Agro-Processing",
+    description:
+      "Agricultural and food processing facility planning, agro-processing infrastructure development, and plant design for scalable food production projects.",
     color: "bg-gradient-to-br from-primary-800/20 to-crimson/20",
   },
   {
     icon: HomeIcon,
     title: "Buildings & Housing",
-    description: "Residential and commercial building projects across all scales.",
+    description:
+      "Residential, commercial, and mixed-use building projects, housing development planning, and built environment infrastructure across all scales.",
     color: "bg-gradient-to-br from-crimson-dark/20 to-primary-700/20",
   },
 ];
 
 const values = [
-  { icon: Lightbulb, name: "Novelty", description: "Innovative solutions" },
-  { icon: Heart, name: "Dedication", description: "Committed excellence" },
-  { icon: Target, name: "Goals", description: "Clear objectives" },
-  { icon: HandshakeIcon, name: "Collaboration", description: "Partnership approach" },
-  { icon: Users, name: "Inclusivity", description: "Diverse perspectives" },
-  { icon: Leaf, name: "Commitment", description: "Sustainable impact" },
+  { icon: Lightbulb, name: "Novelty", description: "Innovative infrastructure solutions" },
+  { icon: Heart, name: "Dedication", description: "Committed excellence on every project" },
+  { icon: Target, name: "Goals", description: "Clear objectives and measurable outcomes" },
+  { icon: HandshakeIcon, name: "Collaboration", description: "Partnership approach with clients and stakeholders" },
+  { icon: Users, name: "Inclusivity", description: "Diverse perspectives in infrastructure development" },
+  { icon: Leaf, name: "Commitment", description: "Sustainable, long-term infrastructure impact" },
 ];
 
-// const stats = [
-//   { number: "2016", label: "Founded" },
-//   { number: "100+", label: "Projects Completed" },
-//   { number: "3", label: "Key Sectors" },
-//   { number: "6", label: "Core Services" },
-// ];
+// Allows using <h1> or <h2> while keeping styles
+function SectionHeader({ title, subtitle, invert = false, as = "h2" }) {
+  const HeadingTag = as; // 'h1' or 'h2'
 
-// -----------------------------
-// Small presentational helpers
-// -----------------------------
-
-function SectionHeader({ title, subtitle, invert = false }) {
   return (
     <div className={invert ? "text-center mb-16 text-white" : "text-center mb-16"}>
-      <h2
+      <HeadingTag
         className={
           invert
             ? "text-3xl md:text-4xl lg:text-5xl font-bold mb-4"
@@ -148,9 +161,13 @@ function SectionHeader({ title, subtitle, invert = false }) {
         }
       >
         {title}
-      </h2>
+      </HeadingTag>
       {subtitle && (
-        <p className={invert ? "text-xl text-gray-200 max-w-3xl mx-auto" : "text-xl text-gray-600 max-w-3xl mx-auto"}>
+        <p
+          className={
+            invert ? "text-xl text-gray-200 max-w-3xl mx-auto" : "text-xl text-gray-600 max-w-3xl mx-auto"
+          }
+        >
           {subtitle}
         </p>
       )}
@@ -158,100 +175,38 @@ function SectionHeader({ title, subtitle, invert = false }) {
   );
 }
 
-// -----------------------------
-// Page
-// -----------------------------
-
 export default function Home() {
   return (
     <div className="overflow-hidden">
-      {/* Hero */}
-      <section
-        className="relative min-h-screen flex items-center justify-center hero-gradient overflow-hidden"
-        aria-label="PD Enterprises hero"
-      >
-        <div className="absolute inset-0 bg-black/40" />
-
-        {/* Floating blobs */}
-        <div className="absolute inset-0" aria-hidden>
-          <div className="absolute top-20 left-10 w-72 h-72 bg-crimson rounded-full mix-blend-multiply blur-xl opacity-20 animate-float" />
-          <div
-            className="absolute top-40 right-10 w-72 h-72 bg-primary-600 rounded-full mix-blend-multiply blur-xl opacity-20 animate-float"
-            style={{ animationDelay: "2s" }}
-          />
-          <div
-            className="absolute bottom-20 left-1/2 w-72 h-72 bg-crimson-dark rounded-full mix-blend-multiply blur-xl opacity-20 animate-float"
-            style={{ animationDelay: "4s" }}
-          />
-        </div>
-
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <div className="animate-slide-up">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-              Welcome to PD Enterprises
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto">
-              We strive to promote economic growth through a wider stakeholder development platform
-            </p>
-            <nav aria-label="Primary">
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link
-                  href=""
-                  className="bg-crimson text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-crimson-light transition-all duration-300 hover:scale-105 shadow-lg glow-red"
-                >
-                  PD Hub
-                </Link>
-                <Link
-                  href=""
-                  className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-black transition-all duration-300 hover:scale-105"
-                >
-                 PD Invest
-                </Link>
-                 <Link
-                  href=""
-                  className="bg-crimson text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-crimson-light transition-all duration-300 hover:scale-105 shadow-lg glow-red"
-                >
-                 Khulisa
-                </Link>
-              </div>
-            </nav>
-          </div>
-        </div>
-
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce" aria-hidden>
-          <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-white rounded-full mt-2 animate-pulse" />
-          </div>
-        </div>
-      </section>
-
-      {/* Stats */}
-      {/* <AnimatedSection className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <ul className="grid grid-cols-2 md:grid-cols-4 gap-8" aria-label="Company stats">
-            {stats.map((stat) => (
-              <li key={stat.label} className="text-center">
-                <div className="text-4xl md:text-5xl font-bold text-crimson mb-2">{stat.number}</div>
-                <div className="text-gray-600 font-medium">{stat.label}</div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </AnimatedSection> */}
+      {/* Hero Swiper (client-side) */}
+      <HeroSwiper slides={slides} />
 
       {/* Services */}
       <AnimatedSection className="py-20 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Main H1 for SEO */}
           <SectionHeader
-            title="What We Offer"
-            subtitle="Due Diligence | Business Planning | Feasibility Studies | Infrastructure Engineering | Architectural System Design | Project & Construction Management"
+            as="h1"
+            title="Infrastructure Development Company in South Africa"
+            subtitle="Infrastructure development services, business planning, feasibility studies, engineering design, and project & construction management delivered by experienced infrastructure development consultants."
           />
+
+          {/* Intro paragraph with targeted keywords */}
+          <p className="text-lg text-gray-700 max-w-4xl mx-auto mb-10 text-center">
+            PD Enterprise is an infrastructure development company and consulting firm based in South Africa.
+            We provide end-to-end infrastructure development and business planning support, including due diligence,
+            feasibility studies for infrastructure projects, infrastructure business planning and funding strategies,
+            infrastructure engineering and architectural system design, and project and construction management
+            for bankable, sustainable infrastructure developments.
+          </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
               <AnimatedSection key={service.title} delay={index * 100}>
                 <article className="bg-white rounded-2xl p-8 shadow-md card-hover h-full border border-gray-100">
-                  <div className={`w-16 h-16 bg-gradient-to-br ${service.color} rounded-xl flex items-center justify-center mb-6`}>
+                  <div
+                    className={`w-16 h-16 bg-gradient-to-br ${service.color} rounded-xl flex items-center justify-center mb-6`}
+                  >
                     <service.icon className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-2xl font-bold text-gray-900 mb-4">{service.title}</h3>
@@ -270,12 +225,16 @@ export default function Home() {
       {/* Sectors */}
       <AnimatedSection className="py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader title="Key Sectors" subtitle="Specialized infrastructure development across three critical sectors" />
-
+          <SectionHeader
+            title="Key Sectors in Infrastructure Development"
+            subtitle="Specialized infrastructure development across energy, food production, and buildings & housing sectors in South Africa."
+          />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {sectors.map((sector, index) => (
               <AnimatedSection key={sector.title} delay={index * 150}>
-                <article className={`${sector.color} rounded-2xl p-8 shadow-md card-hover h-full border border-crimson/10`}>
+                <article
+                  className={`${sector.color} rounded-2xl p-8 shadow-md card-hover h-full border border-crimson/10`}
+                >
                   <div className="w-16 h-16 bg-crimson rounded-xl flex items-center justify-center mb-6">
                     <sector.icon className="w-8 h-8 text-white" />
                   </div>
@@ -291,8 +250,11 @@ export default function Home() {
       {/* Values */}
       <AnimatedSection className="py-20 gradient-red-black">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader title="Our Core Values" subtitle="Principles that guide our approach to infrastructure development" invert />
-
+          <SectionHeader
+            title="Our Core Values"
+            subtitle="Principles that guide our approach to infrastructure development consulting, project delivery, and long-term client partnerships."
+            invert
+          />
           <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6" aria-label="Core values">
             {values.map((value, index) => (
               <AnimatedSection key={value.name} delay={index * 100}>
@@ -306,86 +268,6 @@ export default function Home() {
               </AnimatedSection>
             ))}
           </ul>
-        </div>
-      </AnimatedSection>
-
-      {/* Quote */}
-      <AnimatedSection className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <figure className="max-w-4xl mx-auto text-center">
-            <blockquote className="bg-white rounded-3xl shadow-xl p-12 border border-crimson/10">
-              <div className="text-6xl text-crimson mb-6" aria-hidden>&ldquo;</div>
-              <p className="text-2xl md:text-3xl font-serif text-gray-800 mb-6 italic">
-                Failure is the condiment that gives success its flavour
-              </p>
-              <figcaption className="text-lg text-gray-600 font-semibold">— Truman Capote</figcaption>
-            </blockquote>
-          </figure>
-        </div>
-      </AnimatedSection>
-
-      {/* Approach */}
-      <AnimatedSection className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Why Choose Us?
-</h2>
-              <p className="text-xl text-gray-600 mb-6 leading-relaxed">
-                We are passionate about economic development, and its emphasis on infrastructure as its chief enabler. We believe that with proper development extended meaningfully into the rural environment, a lot of ills plaguing nations worldwide can be alleviated. With our delivery method, we place the success of our stakeholders’ business ahead of anything else. Our delivery method provides the added benefit of empowering our stakeholders, particularly those whose livelihood relies on the success of the venture, by encouraging their involvement in the process and placing emphasis on partnerships. When you choose us you will observe that we uphold and work by the following principles (core values):
-Novelty: We operate in an environment that is constantly experiencing change, therefore we understand that the needs of our stakeholders can differ and we are prepared to adapt and be innovative in tailoring our services to advance your cause.
-
-
-              </p>
-              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                Collaboration: As developments are often quite complex in nature, we rely on collaborative efforts with other professionals to safeguard your success.
-Inclusivity: one of our key strengths is the ability to bring marginalized parties (sometimes considered to be on the fringes of mainstream economic participation) to participate in what we do.
-              </p>
-              <Link
-                href="/about"
-                className="inline-block bg-crimson text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-crimson-light transition-all duration-300 hover:scale-105 glow-red"
-              >
-                Learn More About Us
-              </Link>
-            </div>
-
-            <div className="relative" aria-hidden>
-              <div className="aspect-square gradient-red-black rounded-3xl shadow-2xl overflow-hidden">
-                <div className="absolute inset-0 grid grid-cols-2 gap-4 p-8 place-content-center">
-                  <div className="bg-white/20 backdrop-blur-lg rounded-xl p-6 flex items-center justify-center card-hover">
-                    <Zap className="w-12 h-12 text-white" />
-                  </div>
-                  <div className="bg-white/20 backdrop-blur-lg rounded-xl p-6 flex items-center justify-center card-hover">
-                    <Factory className="w-12 h-12 text-white" />
-                  </div>
-                  <div className="bg-white/20 backdrop-blur-lg rounded-xl p-6 flex items-center justify-center card-hover">
-                    <Building2 className="w-12 h-12 text-white" />
-                  </div>
-                  <div className="bg-white/20 backdrop-blur-lg rounded-xl p-6 flex items-center justify-center card-hover">
-                    <HomeIcon className="w-12 h-12 text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </AnimatedSection>
-
-      {/* CTA */}
-      <AnimatedSection className="py-20 gradient-black-red">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-           Have a Project in mind?
-          </h2>
-          <p className="text-xl text-gray-200 mb-10 max-w-3xl mx-auto">
-          We can help you bring your ideas to life. Let’s talk about what we can build and raise together.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-block bg-white text-crimson px-10 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105 shadow-lg"
-          >
-            Contact Us
-          </Link>
         </div>
       </AnimatedSection>
     </div>

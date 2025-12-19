@@ -1,8 +1,37 @@
-'use client';
-
+// app/services/page.jsx
 import Link from 'next/link';
 import AnimatedSection from '@/components/AnimatedSection';
-import { FileSearch, TrendingUp, ClipboardCheck, Wrench, PenTool, Building2, Zap, Factory, Chrome as HomeIcon, CircleCheck as CheckCircle2, ArrowRight, ChartLine as LineChart, Users } from 'lucide-react';
+import {
+  FileSearch, TrendingUp, ClipboardCheck, Wrench, PenTool, Building2,
+  Zap, Factory, Chrome as HomeIcon, CircleCheck as CheckCircle2,
+  ArrowRight, ChartLine as LineChart, Users
+} from 'lucide-react';
+
+/** Page-level SEO (your layout applies "%s | PD Enterprises") */
+export const metadata = {
+  title: "Infrastructure Development Services – Due Diligence, Business Planning, Engineering",
+  description:
+    "Explore PD Enterprise' core services: due diligence, business planning, feasibility studies, infrastructure engineering, architectural system design, and project & construction management in South Africa.",
+  alternates: { canonical: "/services" },
+  openGraph: {
+    title: "Infrastructure Development Services – Due Diligence, Business Planning, Engineering",
+    description:
+      "End-to-end solutions for large-scale infrastructure projects: analysis, planning, design and construction management.",
+    url: "/services",
+    type: "website",
+    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "PD Enterprise" }],
+    locale: "en_ZA",
+    siteName: "PD Enterprise",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Infrastructure Development Services – Due Diligence, Business Planning, Engineering",
+    description:
+      "Comprehensive services across analysis, planning, design and delivery.",
+    images: ["/og.jpg"],
+  },
+  robots: { index: true, follow: true },
+};
 
 export default function Services() {
   const services = [
@@ -93,21 +122,9 @@ export default function Services() {
   ];
 
   const sectors = [
-    {
-      icon: Zap,
-      title: 'Energy Sector',
-      description: 'Renewable energy, oil & gas, and power generation infrastructure'
-    },
-    {
-      icon: Factory,
-      title: 'Food Production',
-      description: 'Agricultural facilities and food processing infrastructure'
-    },
-    {
-      icon: HomeIcon,
-      title: 'Buildings & Housing',
-      description: 'Residential, commercial, and mixed-use developments'
-    }
+    { icon: Zap,     title: 'Energy Sector',       description: 'Renewable energy, oil & gas, and power generation infrastructure' },
+    { icon: Factory, title: 'Food Production',     description: 'Agricultural facilities and food processing infrastructure' },
+    { icon: HomeIcon,title: 'Buildings & Housing', description: 'Residential, commercial, and mixed-use developments' },
   ];
 
   return (

@@ -15,7 +15,7 @@ import {
 
 export default function Trio75Page() {
   // ---------- content you can tweak ----------
-  const hero = '/images/hero.jpg'; 
+  const hero = '/images/hero.jpg';
   const floor1 = '/images/trio-floor.webp';
   const floor2 = '/images/trio-floor-2.webp';
 
@@ -36,8 +36,10 @@ export default function Trio75Page() {
         <Image src={hero} alt="TRIO 75 hero" fill priority className="object-cover" />
         <div className="absolute inset-0 bg-black/10" />
         <div className="absolute left-6 sm:left-10 bottom-8">
-          <h1 className="text-white font-serif font-extrabold leading-none"
-              style={{ fontSize: 'clamp(2.75rem, 6vw, 5rem)' }}>
+          <h1
+            className="text-white font-serif font-extrabold leading-none"
+            style={{ fontSize: 'clamp(2.75rem, 6vw, 5rem)' }}
+          >
             TRIO 75
           </h1>
         </div>
@@ -48,7 +50,9 @@ export default function Trio75Page() {
         <ol className="flex items-center gap-2 text-gray-800">
           <li className="inline-flex items-center gap-2">
             <Home className="w-5 h-5 text-yellow-500" />
-            <Link href="/" className="hover:underline">Home</Link>
+            <Link href="/" className="hover:underline">
+              Home
+            </Link>
           </li>
           <ChevronRight className="w-5 h-5 text-yellow-500" />
           <li className="text-gray-700">Series</li>
@@ -115,8 +119,15 @@ export default function Trio75Page() {
         <ChecklistBlock
           title="Key features"
           lines={[
-            <span key="1"><strong>Ground Floor:</strong> while compact, the entrance is designed to usher guests into the home efficiently. An option to have an open ceiling in the living area, bringing an airy spaciousness.</span>,
-            <span key="2"><strong>First Floor:</strong> the model features two main bedrooms. Additionally, a smaller room downstairs can be adapted to various needs.</span>,
+            <span key="1">
+              <strong>Ground Floor:</strong> while compact, the entrance is designed to usher guests
+              into the home efficiently. An option to have an open ceiling in the living area,
+              bringing an airy spaciousness.
+            </span>,
+            <span key="2">
+              <strong>First Floor:</strong> the model features two main bedrooms. Additionally, a
+              smaller room downstairs can be adapted to various needs.
+            </span>,
             'Despite its modest size, the upstairs does not compromise on functionality or comfort.',
           ]}
         />
@@ -125,7 +136,7 @@ export default function Trio75Page() {
           lines={[
             'The Trio 75 boasts a unique compactness making it perfect as a summer home or for a small family.',
             "Yet, its design ensures that it doesn't feel restrictive.",
-            'The Trio 75 is a testament to the fact that a smaller footprint doesn’t mean sacrificing comfort. It’s an excellent pick for those who value both simplicity and practicality.',
+            "The Trio 75 is a testament to the fact that a smaller footprint doesn't mean sacrificing comfort. It's an excellent pick for those who value both simplicity and practicality.",
           ]}
         />
       </section>
@@ -145,17 +156,22 @@ export default function Trio75Page() {
 
         <div className="max-w-4xl text-[17px] text-gray-800 space-y-4">
           <p>
-            Avrame provides the fastest and most affordable way of building your home.
-            Our house kits will allow you to get the structure of the house up in about 2 weeks (with just 2 men).
+            Avrame provides the fastest and most affordable way of building your home. Our house
+            kits will allow you to get the structure of the house up in about 2 weeks (with just 2
+            men).
           </p>
           <p>
             The cost of the finished project depends on many variables and we recommend to use our{' '}
-            <a className="text-green-700 underline" href="#">Budgeting Guide</a> to
-            calculate it in detail before ordering the house.
+            <a className="text-green-700 underline" href="#">
+              Budgeting Guide
+            </a>{' '}
+            to calculate it in detail before ordering the house.
           </p>
           <p>
             When thinking about the price, you shall take into account that{' '}
-            <a className="text-green-700 underline" href="#">Avrame provides only the house kit</a>{' '}
+            <a className="text-green-700 underline" href="#">
+              Avrame provides only the house kit
+            </a>{' '}
             and that all the material for finishing the house must be sourced locally.
           </p>
           <p>
@@ -164,8 +180,9 @@ export default function Trio75Page() {
           </p>
         </div>
 
-        {/* tabs + panel */}
-        {/* <div className="mt-8 border rounded-md">
+        {/* tabs + panel (optional, currently commented out) */}
+        {/*
+        <div className="mt-8 border rounded-md">
           <div className="flex">
             <button
               className={`px-6 py-3 font-serif text-xl border-r ${
@@ -212,7 +229,8 @@ export default function Trio75Page() {
               </ul>
             </div>
           )}
-        </div> */}
+        </div>
+        */}
       </section>
 
       {/* bottom spacing */}

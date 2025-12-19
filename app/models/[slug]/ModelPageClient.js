@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -27,15 +26,22 @@ export default function ModelPageClient({ model }) {
     series = 'Models',
   } = model || {};
 
-  const crumbs = Array.isArray(breadcrumb) && breadcrumb.length
-    ? breadcrumb
-    : ['Home', 'Series', series, name];
+  const crumbs =
+    Array.isArray(breadcrumb) && breadcrumb.length
+      ? breadcrumb
+      : ['Home', 'Series', series, name];
 
   return (
     <main className="min-h-screen bg-white text-gray-900">
       {/* HERO */}
       <section className="relative w-full h-[52vh] sm:h-[60vh] lg:h-[64vh]">
-        <Image src={hero || '/images/hero.jpg'} alt={`${name} hero`} fill priority className="object-cover" />
+        <Image
+          src={hero || '/images/hero.jpg'}
+          alt={`${name || 'Model'} hero`}
+          fill
+          priority
+          className="object-cover"
+        />
         <div className="absolute inset-0 bg-black/10" />
         <div className="absolute left-6 sm:left-10 bottom-8">
           <h1
@@ -48,11 +54,13 @@ export default function ModelPageClient({ model }) {
       </section>
 
       {/* BREADCRUMB */}
-      <nav className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <nav className="container mx-auto px-4 sm:px-6 lg:px-8 py-6" aria-label="Breadcrumb">
         <ol className="flex items-center gap-2 text-gray-800">
           <li className="inline-flex items-center gap-2">
             <Home className="w-5 h-5 text-yellow-500" />
-            <Link href="/" className="hover:underline">Home</Link>
+            <Link href="/" className="hover:underline">
+              Home
+            </Link>
           </li>
           {crumbs.slice(1).map((item, i) => (
             <BreadcrumbBit key={`${item}-${i}`} text={item} isLast={i === crumbs.length - 2} />
@@ -76,7 +84,9 @@ export default function ModelPageClient({ model }) {
                 <div key={s.label} className="flex items-start gap-3">
                   <Icon className="w-6 h-6 text-green-600 mt-0.5" />
                   <div>
-                    <div className="uppercase tracking-wide text-gray-800 font-semibold">{s.label}</div>
+                    <div className="uppercase tracking-wide text-gray-800 font-semibold">
+                      {s.label}
+                    </div>
                     <div className="text-gray-700">{s.value}</div>
                   </div>
                 </div>
@@ -92,16 +102,17 @@ export default function ModelPageClient({ model }) {
               <div className="relative w-full aspect-[4/3] rounded-md overflow-hidden border">
                 <Image
                   src={fp?.img || '/images/placeholder.png'}
-                  alt={`${name} ${fp?.caption || ''}`}
+                  alt={`${name || 'Model'} ${fp?.caption || ''}`.trim()}
                   fill
                   className="object-contain bg-white"
                 />
               </div>
-              <figcaption className="mt-3 text-sm text-gray-600">{fp?.caption || ''}</figcaption>
+              <figcaption className="mt-3 text-sm text-gray-600">
+                {fp?.caption || ''}
+              </figcaption>
             </figure>
           ))}
         </div>
-
       </section>
 
       {/* SECTIONS */}
@@ -118,10 +129,10 @@ export default function ModelPageClient({ model }) {
 
 function BreadcrumbBit({ text, isLast }) {
   return (
-    <>
+    <li className={`inline-flex items-center gap-2 ${isLast ? 'font-medium' : 'text-gray-700'}`}>
       <ChevronRight className="w-5 h-5 text-yellow-500" />
-      <li className={isLast ? 'font-medium' : 'text-gray-700'}>{text}</li>
-    </>
+      <span>{text}</span>
+    </li>
   );
 }
 
@@ -136,9 +147,11 @@ function ChecklistBlock({ title, lines }) {
       </div>
       <div className="mt-3 space-y-2 text-[17px] text-gray-800 leading-relaxed max-w-5xl">
         {(lines || []).map((l, i) =>
-          typeof l === 'string' && l.includes('<')
-            ? <p key={i} dangerouslySetInnerHTML={{ __html: l }} />
-            : <p key={i}>{l}</p>
+          typeof l === 'string' && l.includes('<') ? (
+            <p key={i} dangerouslySetInnerHTML={{ __html: l }} />
+          ) : (
+            <p key={i}>{l}</p>
+          )
         )}
       </div>
     </div>
