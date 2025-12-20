@@ -16,7 +16,6 @@ import {
   Image as ImageIcon,
   Video as VideoIcon,
   MessageCircle,
-  Send,
 } from 'lucide-react';
 
 export default function BlogPage() {
@@ -61,6 +60,86 @@ export default function BlogPage() {
   };
 
   const getPostDate = (p) => p?.post_date || p?.created_at || null;
+
+  // ✅ Turn plain URLs into clickable links (https://, www., linkedin.com/)
+  const linkify = (text) => {
+    const s = safeText(text);
+    if (!s) return null;
+
+    const re = /((?:https?:\/\/|www\.|linkedin\.com\/)[^\s<]+)/gi;
+    const nodes = [];
+    let last = 0;
+    let k = 0;
+
+    for (const m of s.matchAll(re)) {
+      const start = m.index ?? 0;
+      const raw = m[1];
+
+      if (start > last) nodes.push(s.slice(last, start));
+
+      // strip trailing punctuation (keep it as normal text)
+      let url = raw;
+      let trail = '';
+      while (url && /[)\],.!;:]/.test(url.slice(-1))) {
+        trail = url.slice(-1) + trail;
+        url = url.slice(0, -1);
+      }
+
+      let href = url;
+      if (/^www\./i.test(href)) href = `https://${href}`;
+      if (/^linkedin\.com\//i.test(href)) href = `https://${href}`;
+
+      nodes.push(
+        <a
+          key={`lnk-${k++}`}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer nofollow"
+          className="text-blue-600 hover:underline break-all"
+          onClick={(e) => e.stopPropagation()} // ✅ don’t trigger card open
+        >
+          {url}
+        </a>
+      );
+
+      if (trail) nodes.push(trail);
+
+      last = start + raw.length;
+    }
+
+    if (last < s.length) nodes.push(s.slice(last));
+    return nodes;
+  };
+
+  // ✅ Extract first URL / LinkedIn URL (so you can show it in Featured even if excerpt doesn't contain it)
+  const getFirstUrl = (text) => {
+    const s = safeText(text);
+    const m = s.match(/(?:https?:\/\/|www\.|linkedin\.com\/)[^\s<]+/i);
+    if (!m) return '';
+
+    let url = m[0];
+
+    // remove trailing punctuation
+    url = url.replace(/[)\],.!;:]+$/g, '');
+
+    // normalize
+    if (/^www\./i.test(url)) url = `https://${url}`;
+    if (/^linkedin\.com\//i.test(url)) url = `https://${url}`;
+
+    return url;
+  };
+
+  const getFirstLinkedInUrl = (text) => {
+    const url = getFirstUrl(text);
+    return /linkedin\.com/i.test(url) ? url : '';
+  };
+
+  const onKeyOpen = (e, cb) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      cb();
+    }
+  };
 
   // media can be array OR json string
   const parseMediaArray = (raw) => {
@@ -295,8 +374,7 @@ export default function BlogPage() {
       post_id: selected.id,
       name: commentForm.name || null,
       email: commentForm.email || null,
-      message, // ✅ DB uses "message" NOT NULL
-      // files are UI only (not uploaded here)
+      message, // DB uses "message" NOT NULL
     };
 
     try {
@@ -316,7 +394,6 @@ export default function BlogPage() {
       setCommentForm((p) => ({ ...p, comment: '' }));
       setFiles(null);
 
-      // reload list to show immediately
       loadComments(selected.id);
     } catch {
       setCErr('Failed to submit comment');
@@ -525,10 +602,13 @@ export default function BlogPage() {
                     <span className="text-xs text-slate-500">Click to open</span>
                   </div>
 
-                  <button
-                    type="button"
+                  {/* ✅ NOT <button> so links inside can be clicked */}
+                  <div
+                    role="button"
+                    tabIndex={0}
                     onClick={() => openPost(featured)}
-                    className={`w-full text-left rounded-3xl border bg-white shadow-sm hover:shadow-md transition overflow-hidden ${
+                    onKeyDown={(e) => onKeyOpen(e, () => openPost(featured))}
+                    className={`w-full text-left rounded-3xl border bg-white shadow-sm hover:shadow-md transition overflow-hidden cursor-pointer ${
                       selectedId === featured.id
                         ? 'border-slate-900 ring-2 ring-slate-200'
                         : 'border-slate-200'
@@ -595,9 +675,32 @@ export default function BlogPage() {
                           )}
                         </div>
 
+                        {/* ✅ Preview text */}
                         <p className="mt-4 text-sm text-slate-700 leading-relaxed line-clamp-4">
-                          {featured.excerpt || featured.content || 'No description available.'}
+                          {linkify(featured.excerpt || featured.content || 'No description available.')}
                         </p>
+
+                        {/* ✅ ALWAYS show LinkedIn URL here (if exists in excerpt/content) */}
+                        {(() => {
+                          const li = getFirstLinkedInUrl(
+                            `${featured.excerpt || ''}\n${featured.content || ''}`
+                          );
+                          if (!li) return null;
+
+                          return (
+                            <div className="mt-2 text-xs">
+                              <a
+                                href={li}
+                                target="_blank"
+                                rel="noopener noreferrer nofollow"
+                                className="text-blue-600 hover:underline break-all"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                {li}
+                              </a>
+                            </div>
+                          );
+                        })()}
 
                         <div className="mt-4 flex items-center gap-2 text-xs text-slate-600">
                           <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 px-3 py-1 bg-white">
@@ -611,7 +714,7 @@ export default function BlogPage() {
                         </div>
                       </div>
                     </div>
-                  </button>
+                  </div>
                 </div>
               )}
 
@@ -634,11 +737,14 @@ export default function BlogPage() {
                     const vidCount = (post._media || []).filter((m) => m.type === 'video').length;
 
                     return (
-                      <button
+                      // ✅ NOT <button> so links inside can be clicked
+                      <div
                         key={post.id}
-                        type="button"
+                        role="button"
+                        tabIndex={0}
                         onClick={() => openPost(post)}
-                        className={`text-left rounded-3xl border bg-white shadow-sm hover:shadow-md transition overflow-hidden ${
+                        onKeyDown={(e) => onKeyOpen(e, () => openPost(post))}
+                        className={`text-left rounded-3xl border bg-white shadow-sm hover:shadow-md transition overflow-hidden cursor-pointer ${
                           active ? 'border-slate-900 ring-2 ring-slate-200' : 'border-slate-200'
                         }`}
                       >
@@ -713,15 +819,16 @@ export default function BlogPage() {
                             </div>
                           )}
 
+                          {/* ✅ linkify in All Posts preview */}
                           <p className="mt-3 text-sm text-slate-700 line-clamp-3">
-                            {post.excerpt || 'No short description.'}
+                            {linkify(post.excerpt || post.content || 'No short description.')}
                           </p>
 
                           <div className="mt-4 text-xs text-slate-500">
                             {active ? 'Reading now' : 'Open in reader'}
                           </div>
                         </div>
-                      </button>
+                      </div>
                     );
                   })}
                 </div>
@@ -858,17 +965,19 @@ export default function BlogPage() {
                       </div>
                     )}
 
+                    {/* ✅ linkify excerpt */}
                     {selected.excerpt && (
                       <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">
-                        {selected.excerpt}
+                        {linkify(selected.excerpt)}
                       </div>
                     )}
 
+                    {/* ✅ linkify full content */}
                     <div className="mt-4 whitespace-pre-line text-sm leading-7 text-slate-800">
-                      {selected.content || 'No content.'}
+                      {linkify(selected.content || 'No content.')}
                     </div>
 
-                    {/* -------------------- COMMENTS (LIKE YOUR SCREENSHOT) -------------------- */}
+                    {/* -------------------- COMMENTS -------------------- */}
                     <div className="mt-8">
                       <div className="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
                         <div className="px-5 py-4 border-b border-slate-100">
@@ -1028,7 +1137,7 @@ export default function BlogPage() {
                                         </div>
                                       ) : (
                                         <div className="mt-3 text-sm text-slate-700 whitespace-pre-line">
-                                          {msg}
+                                          {linkify(msg)}
                                         </div>
                                       )}
                                     </div>
