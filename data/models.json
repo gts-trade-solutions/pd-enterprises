@@ -13,8 +13,8 @@
       { "label": "BATHROOMS",        "value": "1",                 "icon": "ShowerHead" }
     ],
    "floorPlans": [
-    { "img": "/images/trio-57-floor.webp", "caption": "I FLOOR" },
-    { "img": "/images/trio-57-floor1.webp", "caption": "II FLOOR" }
+    { "img": "/images/trio-57-floor.webp" }
+ 
   ],
     "sections": [
       { "title": "Size and space", "lines": ["Optimized for smaller sites without sacrificing comfort."] },
@@ -39,8 +39,7 @@
       { "label": "BATHROOMS",        "value": "1",                 "icon": "ShowerHead" }
     ],
     "floorPlans": [
-      { "img": "/images/trio-75-floor.webp",   "caption": "I FLOOR" },
-      { "img": "/images/trio-75-floor1.webp", "caption": "II FLOOR" }
+      { "img": "/images/trio-75-floor.webp" }
     ],
     "sections": [
       { "title": "Size and space", "lines": [
@@ -73,8 +72,7 @@
       { "label": "BATHROOMS",        "value": "1",                   "icon": "ShowerHead" }
     ],
     "floorPlans": [
-    { "img": "/images/trio-100-floor.webp", "caption": "I FLOOR" },
-    { "img": "/images/trio-100-floor1.webp", "caption": "II FLOOR" }
+    { "img": "/images/trio-100-floor.webp" }
   ],
     "sections": [
       { "title": "Highlights", "lines": ["Great balance of bedrooms and living volume."] }
@@ -95,8 +93,7 @@
       { "label": "BATHROOMS",        "value": "2",                   "icon": "ShowerHead" }
     ],
     "floorPlans": [
-    { "img": "/images/trio-120-floor.webp", "caption": "I FLOOR" },
-    { "img": "/images/trio-120-floor1.webp", "caption": "II FLOOR" }
+    { "img": "/images/trio-120-floor.webp" }
   ],
     "sections": [
       { "title": "Highlights", "lines": ["Extra space for larger families and entertaining."] }
@@ -117,8 +114,7 @@
       { "label": "BATHROOMS",        "value": "2",                   "icon": "ShowerHead" }
     ],
     "floorPlans": [
-    { "img": "/images/trio-150-floor.webp", "caption": "I FLOOR" },
-    { "img": "/images/trio-150-floor1.webp", "caption": "II FLOOR" }
+    { "img": "/images/trio-150-floor.webp" }
   ],
     "sections": [
       { "title": "Highlights", "lines": ["Ideal for multi-generational living or hosting."] }
@@ -139,7 +135,7 @@
       { "label": "BATHROOMS",        "value": "1",                   "icon": "ShowerHead" }
     ],
     "floorPlans": [
-     { "img": "/images/duo-57-floor.webp", "caption": "I FLOOR" }
+     { "img": "/images/duo-57-floor.webp" }
   ],
     "sections": [
       { "title": "Size and space", "lines": ["1+ loft configuration makes the most of the A-frame volume."] },
@@ -161,7 +157,7 @@
       { "label": "BATHROOMS",        "value": "1",                   "icon": "ShowerHead" }
     ],
     "floorPlans": [
-    { "img": "/images/duo-75-floor.webp", "caption": "I FLOOR" }
+    { "img": "/images/duo-75-floor.webp" }
    
   ],
     "sections": [
@@ -183,7 +179,7 @@
       { "label": "BATHROOMS",        "value": "1",                   "icon": "ShowerHead" }
     ],
     "floorPlans": [
-    { "img": "/images/duo-120-floor.jpg", "caption": "I FLOOR" }
+    { "img": "/images/duo-120-floor.jpg" }
    
   ],
     "sections": [
@@ -205,7 +201,7 @@
       { "label": "BATHROOMS",        "value": "1",                   "icon": "ShowerHead" }
     ],
     "floorPlans": [
-    { "img": "/images/duo-120-floor.jpg", "caption": "I FLOOR" }
+    { "img": "/images/duo-120-floor.jpg" }
    
   ],
     "sections": [
@@ -227,7 +223,7 @@
       { "label": "BATHROOMS",        "value": "0",                   "icon": "ShowerHead" }
     ],
     "floorPlans": [
-    { "img": "/images/solo-floor-1.jpeg", "caption": "I FLOOR" }
+    { "img": "/images/solo-floor-1.jpeg" }
   ],
     "sections": [
       { "title": "Highlights", "lines": ["Great as a studio, office or guest pod."] }
@@ -248,7 +244,7 @@
       { "label": "BATHROOMS",        "value": "1",                   "icon": "ShowerHead" }
     ],
     "floorPlans": [
-    { "img": "/images/solo-floor-2.png", "caption": "I FLOOR" }
+    { "img": "/images/solo-floor-2.png" }
   ],
     "sections": [
       { "title": "Highlights", "lines": ["Balanced for weekend stays and short-term living."] }
@@ -269,7 +265,7 @@
       { "label": "BATHROOMS",        "value": "1",                 "icon": "ShowerHead" }
     ],
     "floorPlans": [
-    { "img": "/images/solo-floor-3.png", "caption": "I FLOOR" }
+    { "img": "/images/solo-floor-3.png" }
   ],
     "sections": [
       { "title": "Highlights", "lines": ["Comfortable for a couple or small family."] }

@@ -96,13 +96,13 @@ export default function Trio75Page() {
             <div className="relative w-full aspect-[4/3] rounded-md overflow-hidden border">
               <Image src={floor1} alt="Trio 75 Floor I" fill className="object-contain bg-white" />
             </div>
-            <figcaption className="mt-3 text-sm text-gray-600">I FLOOR</figcaption>
+         
           </figure>
           <figure className="w-full">
             <div className="relative w-full aspect-[4/3] rounded-md overflow-hidden border">
               <Image src={floor2} alt="Trio 75 Floor II" fill className="object-contain bg-white" />
             </div>
-            <figcaption className="mt-3 text-sm text-gray-600">II FLOOR</figcaption>
+           
           </figure>
         </div>
       </section>

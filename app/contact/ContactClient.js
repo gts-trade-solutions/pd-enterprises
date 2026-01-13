@@ -64,7 +64,7 @@ export default function ContactClient() {
     {
       icon: Phone,
       title: 'Call Us',
-      details: ['079 289 2609'],
+      details: ['+27 79-289-2609'],
       color: 'from-crimson to-primary-700'
     },
     {
@@ -348,7 +348,7 @@ export default function ContactClient() {
                       href="tel:0792892609"
                       className="inline-block bg-crimson text-white px-6 py-3 rounded-lg font-semibold hover:bg-crimson-light transition-colors"
                     >
-                      Call 079 289 2609
+                      Call +27 79-289-2609
                     </a>
                   </div>
                 </div>

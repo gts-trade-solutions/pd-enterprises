@@ -87,7 +87,7 @@ export default function Footer() {
               <li className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-crimson flex-shrink-0" />
                 <a href="tel:+27792892609" className="text-sm hover:text-crimson transition-colors">
-                 079 289 2609
+                 +27 79-289-2609
                 </a>
               </li>
 
