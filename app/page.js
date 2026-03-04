@@ -23,9 +23,9 @@ import {
 const HeroSwiper = dynamic(() => import("@/components/HeroSwiper"), { ssr: false });
 
 export const metadata = {
-  title: "Infrastructure Development Company in South Africa | PD Enterprise",
+  title: "Infrastructure Development Company in South Africa | PD enterprises",
   description:
-    "PD Enterprise is an infrastructure development company in South Africa providing infrastructure development consulting, business planning, feasibility studies, engineering design, and project & construction management for bankable infrastructure projects.",
+    "PD enterprises is an infrastructure development company in South Africa providing infrastructure development consulting, business planning, feasibility studies, engineering design, and project & construction management for bankable infrastructure projects.",
   keywords: [
     "infrastructure development company in South Africa",
     "infrastructure development company",
@@ -193,7 +193,7 @@ export default function Home() {
 
           {/* Intro paragraph with targeted keywords */}
           <p className="text-lg text-gray-700 max-w-4xl mx-auto mb-10 text-center">
-            PD Enterprise is an infrastructure development company and consulting firm based in South Africa.
+            PD enterprises is an infrastructure development company and consulting firm based in South Africa.
             We provide end-to-end infrastructure development and business planning support, including due diligence,
             feasibility studies for infrastructure projects, infrastructure business planning and funding strategies,
             infrastructure engineering and architectural system design, and project and construction management

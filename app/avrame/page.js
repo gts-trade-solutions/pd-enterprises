@@ -42,13 +42,13 @@ export default function Page() {
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: "https://www.pdenterprise.co.za/",
+        item: "https://www.pdenterprises.co.za/",
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "Avrame", // <- this was missing
-        item: "https://www.pdenterprise.co.za/avrame/",
+        item: "https://www.pdenterprises.co.za/avrame/",
       },
     ],
   };

@@ -7,11 +7,11 @@ import {
   ArrowRight, ChartLine as LineChart, Users
 } from 'lucide-react';
 
-/** Page-level SEO (your layout applies "%s | PD Enterprises") */
+/** Page-level SEO (your layout applies "%s | PD enterprises") */
 export const metadata = {
   title: "Infrastructure Development Services – Due Diligence, Business Planning, Engineering",
   description:
-    "Explore PD Enterprise' core services: due diligence, business planning, feasibility studies, infrastructure engineering, architectural system design, and project & construction management in South Africa.",
+    "Explore PD enterprises' core services: due diligence, business planning, feasibility studies, infrastructure engineering, architectural system design, and project & construction management in South Africa.",
   alternates: { canonical: "/services" },
   openGraph: {
     title: "Infrastructure Development Services – Due Diligence, Business Planning, Engineering",
@@ -19,9 +19,9 @@ export const metadata = {
       "End-to-end solutions for large-scale infrastructure projects: analysis, planning, design and construction management.",
     url: "/services",
     type: "website",
-    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "PD Enterprise" }],
+    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "PD enterprises" }],
     locale: "en_ZA",
-    siteName: "PD Enterprise",
+    siteName: "PD enterprises",
   },
   twitter: {
     card: "summary_large_image",

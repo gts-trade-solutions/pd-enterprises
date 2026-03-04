@@ -1,25 +1,25 @@
 // app/contact/page.jsx
 import ContactClient from "./ContactClient";
 
-/** Page-level SEO (your layout applies "%s | PD Enterprises") */
+/** Page-level SEO (your layout applies "%s | PD enterprises") */
 export const metadata = {
-  title: "Contact PD Enterprise — Johannesburg Offices & Enquiries",
+  title: "Contact PD enterprises — Johannesburg Offices & Enquiries",
   description:
-    "Contact PD Enterprise for infrastructure development, business analysis, feasibility studies and project planning. Call +27-79-289-2609 or email info@pdenterprise.co.za.",
+    "Contact PD enterprises for infrastructure development, business analysis, feasibility studies and project planning. Call +27-79-289-2609 or email info@pdenterprises.co.za.",
   alternates: { canonical: "/contact" },
   openGraph: {
-    title: "Contact PD Enterprise — Johannesburg Offices & Enquiries",
+    title: "Contact PD enterprises — Johannesburg Offices & Enquiries",
     description:
       "Get in touch about infrastructure development, business analysis, planning and engineering. Offices in Edenburg and Sandton, Johannesburg.",
     url: "/contact",
     type: "website",
-    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "PD Enterprise" }],
+    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "PD enterprises" }],
     locale: "en_ZA",
-    siteName: "PD Enterprise",
+    siteName: "PD enterprises",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Contact PD Enterprise — Johannesburg Offices & Enquiries",
+    title: "Contact PD enterprises — Johannesburg Offices & Enquiries",
     description:
       "Speak to our team about analysis, planning, feasibility and engineering for infrastructure projects.",
     images: ["/og.jpg"],
@@ -32,19 +32,19 @@ export default function Page() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ContactPage",
-    name: "Contact PD Enterprise",
-    url: "https://www.pdenterprise.co.za/contact",
+    name: "Contact PD enterprises",
+    url: "https://www.pdenterprises.co.za/contact",
     description:
-      "Contact PD Enterprise for infrastructure development, business analysis, feasibility studies and project planning.",
+      "Contact PD enterprises for infrastructure development, business analysis, feasibility studies and project planning.",
     about: {
       "@type": "Organization",
-      name: "PD Enterprise",
-      url: "https://www.pdenterprise.co.za",
+      name: "PD enterprises",
+      url: "https://www.pdenterprises.co.za",
       contactPoint: [{
         "@type": "ContactPoint",
         contactType: "customer support",
         telephone: "+27-79-289-2609",
-        email: "info@pdenterprise.co.za",
+        email: "info@pdenterprises.co.za",
         areaServed: "ZA",
         availableLanguage: ["en"]
       }],

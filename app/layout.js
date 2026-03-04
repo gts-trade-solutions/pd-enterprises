@@ -71,28 +71,28 @@ const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "G-HWRH0W93YX";
 const ENABLE_GA = !!GA_ID && process.env.NODE_ENV === "production";
 
 export const metadata = {
-  metadataBase: new URL("https://pdenterprise.co.za"),
+  metadataBase: new URL("https://pdenterprises.co.za"),
 
   title: {
-    default: "PD Enterprise",
-    template: "%s | PD Enterprise",
+    default: "PD enterprises",
+    template: "%s | PD enterprises",
   },
 
-  description: "PD Enterprise — Professional supply and project services in South Africa.",
+  description: "PD enterprises — Professional supply and project services in South Africa.",
 
   // OPEN GRAPH (Facebook, LinkedIn, WhatsApp)
   openGraph: {
-    title: "PD Enterprise",
-    description: "PD Enterprise — Professional supply and project services in South Africa.",
-    url: "https://pdenterprise.co.za",
-    siteName: "PD Enterprise",
+    title: "PD enterprises",
+    description: "PD enterprises — Professional supply and project services in South Africa.",
+    url: "https://pdenterprises.co.za",
+    siteName: "PD enterprises",
     type: "website",
     images: [
       {
         url: "/images/og.png", // place this image in /public
         width: 1200,
         height: 630,
-        alt: "PD Enterprise",
+        alt: "PD enterprises",
       },
     ],
   },
@@ -100,8 +100,8 @@ export const metadata = {
   // TWITTER CARD
   twitter: {
     card: "summary_large_image",
-    title: "PD Enterprise",
-    description: "PD Enterprise — Professional supply and project services in South Africa.",
+    title: "PD enterprises",
+    description: "PD enterprises — Professional supply and project services in South Africa.",
     images: ["/og-image.jpg"],
   },
 
@@ -116,9 +116,9 @@ export default function RootLayout({ children }) {
   const orgLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "PD Enterprise",
-    url: "https://pdenterprise.co.za",
-    logo: "https://pdenterprise.co.za/logo.png",
+    name: "PD enterprises",
+    url: "https://pdenterprises.co.za",
+    logo: "https://pdenterprises.co.za/logo.png",
   };
 
   return (

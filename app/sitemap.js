@@ -1,6 +1,6 @@
 /** @type {import('next').MetadataRoute.Sitemap} */
 export default function sitemap() {
-  const base = 'https://www.pdenterprise.co.za';
+  const base = 'https://www.pdenterprises.co.za';
   const pages = [
     '/',
     '/about',

@@ -10,7 +10,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           <div>
             <h3 className="text-white text-xl font-bold mb-4">
-              <span className="text-crimson">PD</span>Enterprise
+              <span className="text-crimson">PD</span>enterprises
             </h3>
             <p className="text-sm mb-4">
               Infrastructure development company founded in 2016, providing comprehensive project development and investment solutions across South Africa.
@@ -94,7 +94,7 @@ export default function Footer() {
               <li className="flex items-start space-x-3">
                 <Mail className="w-5 h-5 text-crimson flex-shrink-0 mt-0.5" />
                 <div className="text-sm">
-                  <a href="mailto:info@pdenterprise.co.za" className="hover:text-crimson transition-colors">info@pdenterprise.co.za</a>
+                  <a href="mailto:info@pdenterprises.co.za" className="hover:text-crimson transition-colors">info@pdenterprises.co.za</a>
                   <div className="mt-1">
                     <a href="mailto:eric@pdserve.co.za" className="hover:text-crimson transition-colors">eric@pdserve.co.za</a>
                   </div>
@@ -107,7 +107,7 @@ export default function Footer() {
         <div className="border-t border-gray-800 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-sm text-center md:text-left mb-4 md:mb-0">
-              &copy; {currentYear} PD Enterprise. All rights reserved.
+              &copy; {currentYear} PD enterprises. All rights reserved.
             </p>
             <p>
               <Link href="/privacy-policy" className="">

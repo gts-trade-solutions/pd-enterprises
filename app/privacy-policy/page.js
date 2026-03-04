@@ -13,7 +13,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary",
-    title: "Privacy Policy — PD Enterprise",
+    title: "Privacy Policy — PD enterprises",
     description:
       "How we collect, use and protect your information, in simple terms.",
   },
@@ -30,15 +30,15 @@ export default function PrivacyPolicyPage() {
       <section className="prose prose-lg max-w-none">
         <h2>Who we are</h2>
         <p>
-          PD Enterprise (“we”, “us”, “our”) provides infrastructure development
+          PD enterprises (“we”, “us”, “our”) provides infrastructure development
           and related services. This policy explains what information we collect,
           how we use it, and the choices you have.
         </p>
         <ul>
-          <li><strong>Website:</strong> pdenterprise.co.za</li>
+          <li><strong>Website:</strong> pdenterprises.co.za</li>
           <li>
             <strong>Email:</strong>{" "}
-            <a href="mailto:info@pdenterprise.co.za">info@pdenterprise.co.za</a>
+            <a href="mailto:info@pdenterprises.co.za">info@pdenterprises.co.za</a>
           </li>
           <li>
             <strong>Phone:</strong>{" "}
@@ -148,7 +148,7 @@ export default function PrivacyPolicyPage() {
         <p>Questions or requests? We’d love to help.</p>
         <ul>
           <li>
-            <a href="mailto:info@pdenterprise.co.za">info@pdenterprise.co.za</a>
+            <a href="mailto:info@pdenterprises.co.za">info@pdenterprises.co.za</a>
           </li>
           <li>
             <a href="tel:+27792892609">079 289 2609</a>

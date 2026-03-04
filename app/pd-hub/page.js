@@ -70,7 +70,7 @@ export default function PDHubProfilePage() {
           <div className="space-y-4 text-sm sm:text-base leading-relaxed text-zinc-700">
             <p>
               Project Development Hub, Pty Ltd (PD Hub) is a wholly black-owned
-              development consultancy and part of PD Enterprises, founded by
+              development consultancy and part of PD enterprises, founded by
               Eric Tshwele in 2016. The group supports clients who need
               assistance to develop infrastructure projects with limited
               in-house experience.

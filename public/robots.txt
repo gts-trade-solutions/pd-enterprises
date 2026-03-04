@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.pdenterprise.co.za/sitemap.xml
+Sitemap: https://www.pdenterprises.co.za/sitemap.xml

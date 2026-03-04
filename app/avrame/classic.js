@@ -114,7 +114,7 @@ export default function ClassicHouses() {
         message.trim(),
       ].join("\n");
 
-      const mailto = `mailto:info@pdenterprise.co.za?subject=${encodeURIComponent(
+      const mailto = `mailto:info@pdenterprises.co.za?subject=${encodeURIComponent(
         subject
       )}&body=${encodeURIComponent(body)}`;
 
@@ -253,7 +253,7 @@ export default function ClassicHouses() {
               </div>
 
               <p className="text-xs text-gray-500">
-                This will open your email app with a pre-filled message to PD Enterprise.
+                This will open your email app with a pre-filled message to PD enterprises.
               </p>
             </form>
           </div>

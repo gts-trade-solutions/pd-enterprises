@@ -33,7 +33,7 @@ export default function HeroSwiper({ slides = [] }) {
               <div className="relative w-full h-full">
                 <Image
                   src={src}
-                  alt={`PD Enterprise infrastructure project ${i + 1}`}
+                  alt={`PD enterprises infrastructure project ${i + 1}`}
                   fill
                   priority={i === 0}         
                   className="object-cover"     

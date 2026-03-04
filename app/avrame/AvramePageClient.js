@@ -128,7 +128,7 @@ export default function AvramePageClient() {
         message.trim(),
       ].join("\n");
 
-      const mailto = `mailto:info@pdenterprise.co.za?subject=${encodeURIComponent(
+      const mailto = `mailto:info@pdenterprises.co.za?subject=${encodeURIComponent(
         subject
       )}&body=${encodeURIComponent(body)}`;
 
@@ -445,7 +445,7 @@ export default function AvramePageClient() {
 
               <p className="text-xs text-gray-500">
                 This will open your email app with a pre-filled message to PD
-                Enterprise.
+                enterprises.
               </p>
             </form>
           </div>
