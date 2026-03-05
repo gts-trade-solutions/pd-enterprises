@@ -111,18 +111,15 @@ export default function BlogPage() {
     return nodes;
   };
 
-  // ✅ Extract first URL / LinkedIn URL (so you can show it in Featured even if excerpt doesn't contain it)
+  // ✅ Extract first URL / LinkedIn URL
   const getFirstUrl = (text) => {
     const s = safeText(text);
     const m = s.match(/(?:https?:\/\/|www\.|linkedin\.com\/)[^\s<]+/i);
     if (!m) return '';
 
     let url = m[0];
-
-    // remove trailing punctuation
     url = url.replace(/[)\],.!;:]+$/g, '');
 
-    // normalize
     if (/^www\./i.test(url)) url = `https://${url}`;
     if (/^linkedin\.com\//i.test(url)) url = `https://${url}`;
 
@@ -374,7 +371,7 @@ export default function BlogPage() {
       post_id: selected.id,
       name: commentForm.name || null,
       email: commentForm.email || null,
-      message, // DB uses "message" NOT NULL
+      message,
     };
 
     try {
@@ -475,30 +472,44 @@ export default function BlogPage() {
   };
 
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-900 pt-24 pb-16">
-      <div className="border-b border-slate-200 bg-gradient-to-b from-white to-slate-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-            <div>
-              <p className="text-xs font-medium tracking-[0.25em] uppercase text-slate-400">Blog</p>
-              <h1 className="text-2xl sm:text-3xl font-semibold text-slate-900 mt-2">
+    <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white text-slate-900 pt-0 pb-16">
+      {/* HERO HEADER (black → red gradient, premium controls) */}
+      <div className="relative overflow-hidden border-b border-slate-200">
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-zinc-950 to-[#6a0b14]" />
+          <div className="absolute -top-24 -right-24 h-80 w-80 rounded-full bg-[#b10f23]/30 blur-3xl" />
+          <div className="absolute -bottom-28 -left-28 h-96 w-96 rounded-full bg-[#7a0c18]/25 blur-3xl" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/60" />
+        </div>
+
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-2xl mt-10">
+              <p className="text-xs font-medium tracking-[0.25em] uppercase text-white/70">
+                Blog
+              </p>
+
+              <h1 className="text-3xl sm:text-4xl font-semibold text-white mt-2">
                 Insights & Updates
               </h1>
-              <p className="text-sm text-slate-600 mt-2 max-w-2xl">
+
+              <p className="text-sm sm:text-base text-white/80 mt-3">
                 Click any post to read it inside this page (reader shows photos/videos too).
               </p>
 
-              <div className="mt-4 flex flex-wrap items-center gap-2 text-xs">
-                <span className="rounded-full border border-slate-200 bg-white px-3 py-1 text-slate-600">
-                  Total: <span className="font-semibold text-slate-900">{posts.length}</span>
+              <div className="mt-5 flex flex-wrap items-center gap-2 text-xs">
+                <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-white/80">
+                  Total: <span className="font-semibold text-white">{posts.length}</span>
                 </span>
-                <span className="rounded-full border border-slate-200 bg-white px-3 py-1 text-slate-600">
-                  Showing: <span className="font-semibold text-slate-900">{processed.length}</span>
+
+                <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-white/80">
+                  Showing: <span className="font-semibold text-white">{processed.length}</span>
                 </span>
+
                 {activeCategory !== 'All' && (
                   <button
                     onClick={() => setActiveCategory('All')}
-                    className="rounded-full border border-slate-200 bg-white px-3 py-1 text-slate-600 hover:bg-slate-50"
+                    className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-white hover:bg-white/15"
                     type="button"
                   >
                     Clear category ✕
@@ -507,60 +518,72 @@ export default function BlogPage() {
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
-              <div className="relative">
-                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                <input
-                  value={q}
-                  onChange={(e) => setQ(e.target.value)}
-                  placeholder="Search posts..."
-                  className="w-full sm:w-80 max-w-[85vw] rounded-full border border-slate-200 bg-white pl-9 pr-3 py-2 text-sm outline-none focus:ring-2 focus:ring-slate-200"
-                />
-              </div>
+            <div className="w-full lg:w-[520px]">
+              <div className="rounded-3xl border border-white/15 bg-white/5 p-4 backdrop-blur-md shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
+                <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
+                  <div className="relative flex-1">
+                    <Search className="w-4 h-4 text-white/55 absolute left-3 top-1/2 -translate-y-1/2" />
+                    <input
+                      value={q}
+                      onChange={(e) => setQ(e.target.value)}
+                      placeholder="Search posts..."
+                      className="w-full rounded-2xl border border-white/15 bg-black/25 pl-9 pr-3 py-2.5 text-sm text-white placeholder:text-white/45
+                                 outline-none focus:ring-2 focus:ring-[#ff2a3a]/30 focus:border-[#ff2a3a]/40"
+                    />
+                  </div>
 
-              <div className="flex items-center gap-2">
-                <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-2">
-                  <SlidersHorizontal className="w-4 h-4 text-slate-500" />
-                  <select
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value)}
-                    className="bg-transparent text-sm outline-none"
-                  >
-                    <option value="latest">Latest</option>
-                    <option value="oldest">Oldest</option>
-                    <option value="rating">Top rated</option>
-                  </select>
+                  <div className="flex items-center gap-2">
+                    <div className="inline-flex items-center gap-2 rounded-2xl border border-white/15 bg-black/25 px-3 py-2.5">
+                      <SlidersHorizontal className="w-4 h-4 text-white/70" />
+                      <select
+                        value={sortBy}
+                        onChange={(e) => setSortBy(e.target.value)}
+                        className="text-sm bg-transparent text-white outline-none"
+                      >
+                        <option className="text-slate-900" value="latest">
+                          Latest
+                        </option>
+                        <option className="text-slate-900" value="oldest">
+                          Oldest
+                        </option>
+                        <option className="text-slate-900" value="rating">
+                          Top rated
+                        </option>
+                      </select>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={loadPosts}
+                      className="text-sm px-4 py-2.5 rounded-2xl border border-white/15 bg-white/10 text-white
+                                 hover:bg-white/15 hover:border-white/25 transition"
+                    >
+                      Refresh
+                    </button>
+                  </div>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={loadPosts}
-                  className="text-sm px-4 py-2 rounded-full border border-slate-200 bg-white hover:bg-slate-50"
-                >
-                  Refresh
-                </button>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {categories.map((c) => {
+                    const active = c === activeCategory;
+
+                    return (
+                      <button
+                        key={c}
+                        type="button"
+                        onClick={() => setActiveCategory(c)}
+                        className={`rounded-full px-5 py-2 text-xs border transition font-semibold ${active
+                          ? 'border-[#ff2a3a] bg-[#ff2a3a]/20 text-white shadow-[0_0_0_3px_rgba(255,42,58,0.18)]'
+                          : 'border-white/30 bg-black/25 text-white hover:bg-white/10 hover:border-white/45'
+                          }`}
+                      >
+                        {c}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             </div>
-          </div>
-
-          <div className="mt-6 flex flex-wrap gap-2">
-            {categories.map((c) => {
-              const active = c === activeCategory;
-              return (
-                <button
-                  key={c}
-                  type="button"
-                  onClick={() => setActiveCategory(c)}
-                  className={`rounded-full px-4 py-2 text-xs border transition ${
-                    active
-                      ? 'border-slate-900 bg-slate-900 text-white'
-                      : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
-                  }`}
-                >
-                  {c}
-                </button>
-              );
-            })}
           </div>
         </div>
       </div>
@@ -602,17 +625,15 @@ export default function BlogPage() {
                     <span className="text-xs text-slate-500">Click to open</span>
                   </div>
 
-                  {/* ✅ NOT <button> so links inside can be clicked */}
                   <div
                     role="button"
                     tabIndex={0}
                     onClick={() => openPost(featured)}
                     onKeyDown={(e) => onKeyOpen(e, () => openPost(featured))}
-                    className={`w-full text-left rounded-3xl border bg-white shadow-sm hover:shadow-md transition overflow-hidden cursor-pointer ${
-                      selectedId === featured.id
-                        ? 'border-slate-900 ring-2 ring-slate-200'
-                        : 'border-slate-200'
-                    }`}
+                    className={`w-full text-left rounded-3xl border bg-white shadow-sm hover:shadow-lg transition-all overflow-hidden cursor-pointer ${selectedId === featured.id
+                      ? 'border-slate-900 ring-2 ring-slate-200'
+                      : 'border-slate-200'
+                      }`}
                   >
                     <div className="grid lg:grid-cols-[1fr_1fr]">
                       <div className="relative min-h-[220px] bg-slate-900">
@@ -675,12 +696,10 @@ export default function BlogPage() {
                           )}
                         </div>
 
-                        {/* ✅ Preview text */}
                         <p className="mt-4 text-sm text-slate-700 leading-relaxed line-clamp-4">
                           {linkify(featured.excerpt || featured.content || 'No description available.')}
                         </p>
 
-                        {/* ✅ ALWAYS show LinkedIn URL here (if exists in excerpt/content) */}
                         {(() => {
                           const li = getFirstLinkedInUrl(
                             `${featured.excerpt || ''}\n${featured.content || ''}`
@@ -737,16 +756,14 @@ export default function BlogPage() {
                     const vidCount = (post._media || []).filter((m) => m.type === 'video').length;
 
                     return (
-                      // ✅ NOT <button> so links inside can be clicked
                       <div
                         key={post.id}
                         role="button"
                         tabIndex={0}
                         onClick={() => openPost(post)}
                         onKeyDown={(e) => onKeyOpen(e, () => openPost(post))}
-                        className={`text-left rounded-3xl border bg-white shadow-sm hover:shadow-md transition overflow-hidden cursor-pointer ${
-                          active ? 'border-slate-900 ring-2 ring-slate-200' : 'border-slate-200'
-                        }`}
+                        className={`text-left rounded-3xl border bg-white shadow-sm hover:shadow-lg transition-all overflow-hidden cursor-pointer ${active ? 'border-slate-900 ring-2 ring-slate-200' : 'border-slate-200'
+                          }`}
                       >
                         <div className="relative aspect-[16/9] bg-slate-100">
                           {thumb?.type === 'image' && thumb.url ? (
@@ -808,9 +825,8 @@ export default function BlogPage() {
                               {[1, 2, 3, 4, 5].map((v) => (
                                 <Star
                                   key={v}
-                                  className={`w-3.5 h-3.5 ${
-                                    v <= rating ? 'fill-[#fbbc04] text-[#fbbc04]' : 'text-slate-300'
-                                  }`}
+                                  className={`w-3.5 h-3.5 ${v <= rating ? 'fill-[#fbbc04] text-[#fbbc04]' : 'text-slate-300'
+                                    }`}
                                 />
                               ))}
                               <span className="text-[11px] text-slate-600 ml-1">
@@ -819,7 +835,6 @@ export default function BlogPage() {
                             </div>
                           )}
 
-                          {/* ✅ linkify in All Posts preview */}
                           <p className="mt-3 text-sm text-slate-700 line-clamp-3">
                             {linkify(post.excerpt || post.content || 'No short description.')}
                           </p>
@@ -965,14 +980,12 @@ export default function BlogPage() {
                       </div>
                     )}
 
-                    {/* ✅ linkify excerpt */}
                     {selected.excerpt && (
                       <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">
                         {linkify(selected.excerpt)}
                       </div>
                     )}
 
-                    {/* ✅ linkify full content */}
                     <div className="mt-4 whitespace-pre-line text-sm leading-7 text-slate-800">
                       {linkify(selected.content || 'No content.')}
                     </div>

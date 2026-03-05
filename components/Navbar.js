@@ -60,18 +60,18 @@ export default function Navbar() {
   const b2bLinks = [
     {
       name: ' Energy Optimization & Emergency Systems',
-      sub: '(Solar systems, battery storage, generators)',
-      href: '/b2b/energy-optimization',
+      
+      href: '',
     },
     {
       name: ' Energy Efficient Lighting Systems',
-      sub: '(HPWINNER lighting systems)',
-      href: '/b2b/lighting-systems',
+      sub: '',
+      href: '',
     },
     {
       name: ' Business Efficiency Measures',
       sub: '',
-      href: '/b2b/business-efficiency',
+      href: '',
     },
   ];
 
@@ -82,7 +82,7 @@ export default function Navbar() {
   const isB2CSection = pathname.startsWith('/avrame') || pathname.startsWith('/b2c');
 
   const isPdSection =
-    pathname.startsWith('/pd-hub') || pathname.startsWith('/pd-invest');
+    pathname.startsWith('') || pathname.startsWith('');
 
   // ✅ Strong border style (desktop buttons)
   const desktopDropdownBtnBase =

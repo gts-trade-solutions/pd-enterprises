@@ -326,7 +326,7 @@ export default function AboutClient() {
             </Link>
             <Link
               href="/contact"
-              className="inline-block bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-crimson transition-all duration-300 hover:scale-105"
+              className="inline-block  border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-crimson transition-all duration-300 hover:scale-105"
             >
               Get In Touch
             </Link>

@@ -3,19 +3,31 @@ import React from "react";
 
 export default function PDHubProfilePage() {
   return (
-    <main className="min-h-screen bg-zinc-50 text-zinc-900">
-      {/* HERO */}
-      <section className="border-b border-zinc-200 bg-white">
-        <div className="w-full px-4 sm:px-8 lg:px-12 py-10 sm:py-14">
-          <p className="text-xs uppercase tracking-[0.3em] text-crimson/70">
+    <main className="min-h-screen bg-zinc-50 text-zinc-900 ">
+      {/* HERO (with dark gradient background only for this part) */}
+      <section className="relative overflow-hidden border-b border-zinc-200 ">
+        {/* Background */}
+        <div className="absolute inset-0 ">
+          {/* base gradient */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-zinc-950 to-[#6a0b14] " />
+          {/* soft glow */}
+          <div className="absolute -top-24 -right-24 h-80 w-80 rounded-full bg-[#b10f23]/30 blur-3xl" />
+          <div className="absolute -bottom-28 -left-28 h-96 w-96 rounded-full bg-[#7a0c18]/25 blur-3xl" />
+          {/* vignette */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/60" />
+        </div>
+
+        {/* Content */}
+        <div className="relative w-full px-4 sm:px-8 lg:px-12 py-10 sm:py-14 mt-10">
+          <p className="text-xs uppercase tracking-[0.3em] text-white/70">
             Excellence • Creativity • Innovation
           </p>
 
-          <h1 className="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight">
+          <h1 className="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight text-white">
             PD Hub – Development Profile
           </h1>
 
-          <p className="mt-3 max-w-3xl text-sm sm:text-base text-zinc-600">
+          <p className="mt-3 max-w-3xl text-sm sm:text-base text-white/80">
             Project Development Hub (PD Hub) is a wholly black-owned development
             consultancy supporting infrastructure, energy, agriculture and
             consumer projects across Africa.
@@ -25,25 +37,36 @@ export default function PDHubProfilePage() {
           <nav className="mt-6 flex flex-wrap gap-3 text-xs sm:text-sm">
             <a
               href="#company-intro"
-              className="rounded-full border border-zinc-200 bg-zinc-50 px-3 py-1.5 hover:border-crimson hover:text-crimson transition"
+              className="rounded-full border border-white/40 bg-black/30 px-4 py-2
+               text-white font-medium tracking-wide
+               hover:border-[#ff2a3a] hover:bg-[#ff2a3a]/15 hover:text-white transition"
             >
               Company Introduction
             </a>
+
             <a
               href="#scope-projects"
-              className="rounded-full border border-zinc-200 bg-zinc-50 px-3 py-1.5 hover:border-crimson hover:text-crimson transition"
+              className="rounded-full border border-white/40 bg-black/30 px-4 py-2
+               text-white font-medium tracking-wide
+               hover:border-[#ff2a3a] hover:bg-[#ff2a3a]/15 hover:text-white transition"
             >
               Scope &amp; Projects
             </a>
+
             <a
               href="#other-services"
-              className="rounded-full border border-zinc-200 bg-zinc-50 px-3 py-1.5 hover:border-crimson hover:text-crimson transition"
+              className="rounded-full border border-white/40 bg-black/30 px-4 py-2
+               text-white font-medium tracking-wide
+               hover:border-[#ff2a3a] hover:bg-[#ff2a3a]/15 hover:text-white transition"
             >
               Consultancy Services
             </a>
+
             <a
               href="#principals"
-              className="rounded-full border border-zinc-200 bg-zinc-50 px-3 py-1.5 hover:border-crimson hover:text-crimson transition"
+              className="rounded-full border border-white/40 bg-black/30 px-4 py-2
+               text-white font-medium tracking-wide
+               hover:border-[#ff2a3a] hover:bg-[#ff2a3a]/15 hover:text-white transition"
             >
               Principals &amp; Management
             </a>

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Mail, Phone, MapPin, Linkedin, Instagram, Youtube } from 'lucide-react';
+import Image from 'next/image';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -9,8 +10,16 @@ export default function Footer() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           <div>
-            <h3 className="text-white text-xl font-bold mb-4">
-              <span className="text-crimson">PD</span>enterprises
+            <h3 className="text-white text-xl font-bold mb-4 flex items-center gap-2">
+              <Image
+                src="/images/pd-logo.png"
+                alt="PD logo"
+                width={48}
+                height={48}
+                className="rounded-full"
+                priority
+              />
+              <span>Enterprises</span>
             </h3>
             <p className="text-sm mb-4">
               Infrastructure development company founded in 2016, providing comprehensive project development and investment solutions across South Africa.
@@ -87,7 +96,7 @@ export default function Footer() {
               <li className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-crimson flex-shrink-0" />
                 <a href="tel:+27792892609" className="text-sm hover:text-crimson transition-colors">
-                 +27 79-289-2609
+                  +27 79-289-2609
                 </a>
               </li>
 
