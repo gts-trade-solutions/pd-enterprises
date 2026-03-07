@@ -5,7 +5,7 @@ import ContactClient from "./ContactClient";
 export const metadata = {
   title: "Contact PD enterprises — Johannesburg Offices & Enquiries",
   description:
-    "Contact PD enterprises for infrastructure development, business analysis, feasibility studies and project planning. Call +27-79-289-2609 or email info@pdenterprises.co.za.",
+    "Contact PD enterprises for infrastructure development, business analysis, feasibility studies and project planning. Call +27-79-289-2609 or email info@pdenterprise.co.za.",
   alternates: { canonical: "/contact" },
   openGraph: {
     title: "Contact PD enterprises — Johannesburg Offices & Enquiries",
@@ -44,7 +44,7 @@ export default function Page() {
         "@type": "ContactPoint",
         contactType: "customer support",
         telephone: "+27-79-289-2609",
-        email: "info@pdenterprises.co.za",
+        email: "info@pdenterprise.co.za",
         areaServed: "ZA",
         availableLanguage: ["en"]
       }],

@@ -38,7 +38,7 @@ export default function PrivacyPolicyPage() {
           <li><strong>Website:</strong> pdenterprises.co.za</li>
           <li>
             <strong>Email:</strong>{" "}
-            <a href="mailto:info@pdenterprises.co.za">info@pdenterprises.co.za</a>
+            <a href="mailto:info@pdenterprise.co.za">info@pdenterprise.co.za</a>
           </li>
           <li>
             <strong>Phone:</strong>{" "}
@@ -148,7 +148,7 @@ export default function PrivacyPolicyPage() {
         <p>Questions or requests? We’d love to help.</p>
         <ul>
           <li>
-            <a href="mailto:info@pdenterprises.co.za">info@pdenterprises.co.za</a>
+            <a href="mailto:info@pdenterprise.co.za">info@pdenterprise.co.za</a>
           </li>
           <li>
             <a href="tel:+27792892609">079 289 2609</a>

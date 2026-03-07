@@ -128,7 +128,7 @@ export default function AvramePageClient() {
         message.trim(),
       ].join("\n");
 
-      const mailto = `mailto:info@pdenterprises.co.za?subject=${encodeURIComponent(
+      const mailto = `mailto:info@pdenterprise.co.za?subject=${encodeURIComponent(
         subject
       )}&body=${encodeURIComponent(body)}`;
 

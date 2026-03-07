@@ -70,7 +70,7 @@ export default function ContactClient() {
     {
       icon: Mail,
       title: 'Email Us',
-      details: ['info@pdenterprises.co.za', 'eric@pdserve.co.za'],
+      details: ['info@pdenterprise.co.za', 'eric@pdserve.co.za'],
       color: 'from-primary-700 to-crimson'
     }
   ];

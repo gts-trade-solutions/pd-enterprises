@@ -103,7 +103,7 @@ export default function Footer() {
               <li className="flex items-start space-x-3">
                 <Mail className="w-5 h-5 text-crimson flex-shrink-0 mt-0.5" />
                 <div className="text-sm">
-                  <a href="mailto:info@pdenterprises.co.za" className="hover:text-crimson transition-colors">info@pdenterprises.co.za</a>
+                  <a href="mailto:info@pdenterprise.co.za" className="hover:text-crimson transition-colors">info@pdenterprise.co.za</a>
                   <div className="mt-1">
                     <a href="mailto:eric@pdserve.co.za" className="hover:text-crimson transition-colors">eric@pdserve.co.za</a>
                   </div>
