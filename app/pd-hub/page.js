@@ -24,7 +24,7 @@ export default function PDHubProfilePage() {
           </p>
 
           <h1 className="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight text-white">
-            PD Hub – Development Profile
+           PD-HUB
           </h1>
 
           <p className="mt-3 max-w-3xl text-sm sm:text-base text-white/80">

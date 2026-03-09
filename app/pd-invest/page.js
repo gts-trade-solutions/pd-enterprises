@@ -1,12 +1,12 @@
 // app/pd-invest/page.jsx
 import React from "react";
+import Image from "next/image";
 
 export default function PDInvestPage() {
   return (
     <main className="min-h-screen bg-zinc-50 text-zinc-900">
       {/* HERO */}
       <section className="relative overflow-hidden border-b border-zinc-200">
-        {/* Background */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-r from-black via-zinc-950 to-[#6a0b14]" />
           <div className="absolute -top-24 -right-24 h-80 w-80 rounded-full bg-[#b10f23]/30 blur-3xl" />
@@ -15,9 +15,7 @@ export default function PDInvestPage() {
         </div>
 
         <div className="relative w-full px-4 sm:px-8 lg:px-12 py-12 sm:py-16">
-          
-
-          <h1 className="mt-3 text-3xl sm:text-5xl font-semibold tracking-tight text-white mt-5">
+          <h1 className="text-3xl sm:text-5xl font-semibold tracking-tight text-white mt-5">
             PD INVEST
           </h1>
 
@@ -29,39 +27,33 @@ export default function PDInvestPage() {
             long-term institutional investment.
           </p>
 
-          {/* Index pills */}
           <nav className="mt-7 flex flex-wrap gap-3 text-xs sm:text-sm">
             <a
               href="#overview"
-              className="rounded-full border border-white/30 bg-black/25 px-4 py-2 text-white font-semibold
-                         hover:border-[#ff2a3a]/70 hover:bg-[#ff2a3a]/15 transition"
+              className="rounded-full border border-white/30 bg-black/25 px-4 py-2 text-white font-semibold hover:border-[#ff2a3a]/70 hover:bg-[#ff2a3a]/15 transition"
             >
               Overview
             </a>
             <a
               href="#mindset"
-              className="rounded-full border border-white/30 bg-black/25 px-4 py-2 text-white font-semibold
-                         hover:border-[#ff2a3a]/70 hover:bg-[#ff2a3a]/15 transition"
+              className="rounded-full border border-white/30 bg-black/25 px-4 py-2 text-white font-semibold hover:border-[#ff2a3a]/70 hover:bg-[#ff2a3a]/15 transition"
             >
               Investment Mindset
             </a>
             <a
               href="#passive"
-              className="rounded-full border border-white/30 bg-black/25 px-4 py-2 text-white font-semibold
-                         hover:border-[#ff2a3a]/70 hover:bg-[#ff2a3a]/15 transition"
+              className="rounded-full border border-white/30 bg-black/25 px-4 py-2 text-white font-semibold hover:border-[#ff2a3a]/70 hover:bg-[#ff2a3a]/15 transition"
             >
               Passive Sectors
             </a>
             <a
               href="#developments"
-              className="rounded-full border border-white/30 bg-black/25 px-4 py-2 text-white font-semibold
-                         hover:border-[#ff2a3a]/70 hover:bg-[#ff2a3a]/15 transition"
+              className="rounded-full border border-white/30 bg-black/25 px-4 py-2 text-white font-semibold hover:border-[#ff2a3a]/70 hover:bg-[#ff2a3a]/15 transition"
             >
               Latest Developments
             </a>
           </nav>
 
-          {/* Quick stats chips */}
           <div className="mt-7 flex flex-wrap gap-2 text-xs">
             <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-white/85">
               Focus: <span className="font-semibold text-white">Energy + Food</span>
@@ -79,7 +71,6 @@ export default function PDInvestPage() {
 
       {/* CONTENT */}
       <div className="w-full px-4 sm:px-8 lg:px-12 py-10 sm:py-14 space-y-12">
-        {/* OVERVIEW */}
         <section
           id="overview"
           className="rounded-2xl bg-white shadow-sm border border-zinc-100 px-6 py-8"
@@ -106,7 +97,6 @@ export default function PDInvestPage() {
           </div>
         </section>
 
-        {/* INVESTMENT MINDSET */}
         <section
           id="mindset"
           className="rounded-2xl bg-white shadow-sm border border-zinc-100 px-6 py-8"
@@ -152,7 +142,6 @@ export default function PDInvestPage() {
           </div>
         </section>
 
-        {/* PASSIVE SECTORS */}
         <section
           id="passive"
           className="rounded-2xl bg-gradient-to-br from-zinc-900 to-zinc-800 text-zinc-50 px-6 py-8"
@@ -179,7 +168,6 @@ export default function PDInvestPage() {
           </div>
         </section>
 
-        {/* LATEST DEVELOPMENTS */}
         <section
           id="developments"
           className="rounded-2xl bg-white shadow-sm border border-zinc-100 px-6 py-8"
@@ -195,6 +183,7 @@ export default function PDInvestPage() {
 
           <div className="grid gap-6 lg:grid-cols-2">
             <ProjectCardLight
+              image="/images/0001174876_resized_ambribatterystorage06221022.jpg"
               title="Amersfoort (Mpumalanga) Solar PV (& BESS)"
               client="Ndawebanzi (developer)"
               phase="EPC initiation phase"
@@ -207,6 +196,7 @@ export default function PDInvestPage() {
             />
 
             <ProjectCardLight
+              image="/images/IMG_0219.jpeg"
               title="Dundee (KZN) Solar PV (& BESS)"
               client="Ndawebanzi (developer)"
               phase="EPC initiation phase"
@@ -219,6 +209,7 @@ export default function PDInvestPage() {
             />
 
             <ProjectCardLight
+              image="/images/images (1).jpg"
               title="Indoor Atlantic Salmon Production (Aquaculture)"
               client="ENIDC (eSwatini)"
               phase="Post feasibility phase (investment stage)"
@@ -231,6 +222,7 @@ export default function PDInvestPage() {
             />
 
             <ProjectCardLight
+              image="/images/coal-bed-methane-gas-extraction-process.jpg"
               title="Coal Bed Methane Extraction (CBM)"
               client="Twala Mnyamande Minerals"
               phase="Exploration phase"
@@ -271,18 +263,27 @@ function DarkPillCard({ title }) {
   return (
     <div className="rounded-2xl border border-white/15 bg-white/5 px-5 py-4 backdrop-blur-sm hover:bg-white/10 hover:border-white/25 transition">
       <p className="text-sm font-semibold text-white">{title}</p>
-      <p className="mt-1 text-xs text-zinc-200">Community-oriented development focus</p>
+      <p className="mt-1 text-xs text-zinc-200">
+        Community-oriented development focus
+      </p>
     </div>
   );
 }
 
-function ProjectCardLight({ title, client, phase, bullets }) {
+function ProjectCardLight({ image, title, client, phase, bullets }) {
   return (
     <article className="rounded-3xl border border-zinc-200 bg-white overflow-hidden shadow-sm hover:shadow-md transition">
-      <div className="relative h-44 bg-gradient-to-r from-zinc-900 to-[#6a0b14]">
-        <div className="absolute inset-0 bg-black/25" />
+      <div className="relative h-52">
+        <Image
+          src={image}
+          alt={title}
+          fill
+          className="object-cover"
+          sizes="(max-width: 1024px) 100vw, 50vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />
         <div className="absolute left-5 bottom-4">
-          <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs text-white">
+          <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs text-white backdrop-blur-sm">
             Project
           </span>
         </div>

@@ -29,8 +29,8 @@ export default function HeroSwiper({ slides = [] }) {
   };
 
   return (
-    <section className="relative w-full max-h-[85vh] overflow-hidden">
-      <div className="relative w-full aspect-[16/9] md:aspect-[21/9]">
+    <section className="relative w-full overflow-hidden bg-black">
+      <div className="relative w-full h-[42vh] min-h-[300px] sm:h-[65vh] lg:h-[72vh] xl:h-[78vh] max-h-[85vh]">
         <Swiper
           modules={[Autoplay, Pagination, EffectFade]}
           effect="fade"
@@ -52,14 +52,12 @@ export default function HeroSwiper({ slides = [] }) {
                   alt={`PD enterprises infrastructure project ${i + 1}`}
                   fill
                   priority={i === 0}
-                  className="object-cover"
+                  className="object-cover object-center"
                   sizes="100vw"
                 />
 
-                {/* overlay */}
-                <div className="absolute inset-0 bg-black/45" />
+                <div className="absolute inset-0 bg-black/35" />
 
-                {/* ✅ DESKTOP hover cards */}
                 <div className="hidden sm:block">
                   <HoverRevealCornerCard
                     side="left"
@@ -77,26 +75,24 @@ export default function HeroSwiper({ slides = [] }) {
                   />
                 </div>
 
-                {/* ✅ MOBILE buttons (moved up + higher z-index) */}
-                <div className="sm:hidden absolute inset-x-0 bottom-10 z-[80] px-4 pointer-events-none">
-                  <div className="relative w-full h-0">
-                    <div className="absolute left-0 pointer-events-auto">
-                      <MobileCornerLink label="PD Hub" href="/pd-hub" />
-                    </div>
-                    <div className="absolute right-0 pointer-events-auto">
-                      <MobileCornerLink label="PD Invest" href="/pd-invest" />
-                    </div>
+                <div className="sm:hidden absolute inset-x-0 bottom-16 z-[80] px-4">
+                  <div className="grid grid-cols-2 gap-2.5">
+                    <MobileCardLink label="PD Hub" href="/pd-hub" />
+                    <MobileCardLink label="PD Invest" href="/pd-invest" />
                   </div>
                 </div>
 
-                {/* ✅ stronger bottom fade so buttons blend */}
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 sm:h-32 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />
 
-                {/* ✅ Mobile-only CSS to move pagination up */}
                 <style jsx global>{`
                   @media (max-width: 640px) {
                     .heroSwiper .swiper-pagination {
-                      bottom: 52px !important; /* dots above buttons */
+                      bottom: 14px !important;
+                    }
+
+                    .heroSwiper .swiper-pagination-bullet {
+                      width: 8px;
+                      height: 8px;
                     }
                   }
                 `}</style>
@@ -109,14 +105,16 @@ export default function HeroSwiper({ slides = [] }) {
   );
 }
 
-/* =========================
-   DESKTOP: hover card
-   ========================= */
 function HoverRevealCornerCard({ side = 'left', label, href, title, subtitle }) {
   const isLeft = side === 'left';
 
   return (
-    <div className={['absolute bottom-8 sm:bottom-10 z-20', isLeft ? 'left-0' : 'right-0'].join(' ')}>
+    <div
+      className={[
+        'absolute bottom-8 sm:bottom-10 z-20',
+        isLeft ? 'left-0' : 'right-0',
+      ].join(' ')}
+    >
       <div className="group relative">
         <div
           className={[
@@ -132,7 +130,12 @@ function HoverRevealCornerCard({ side = 'left', label, href, title, subtitle }) 
             borderBottomRightRadius: !isLeft ? 0 : undefined,
           }}
         >
-          <span className={['absolute top-0 h-full w-[4px] bg-[#ff2a3a]', isLeft ? 'left-0' : 'right-0'].join(' ')} />
+          <span
+            className={[
+              'absolute top-0 h-full w-[4px] bg-[#ff2a3a]',
+              isLeft ? 'left-0' : 'right-0',
+            ].join(' ')}
+          />
           {label}
           <span className="opacity-80">›</span>
         </div>
@@ -148,8 +151,12 @@ function HoverRevealCornerCard({ side = 'left', label, href, title, subtitle }) 
         >
           <div className="pointer-events-auto rounded-3xl overflow-hidden border border-white/20 bg-black/35 backdrop-blur-md shadow-[0_14px_40px_rgba(0,0,0,0.45)]">
             <div className="p-5 sm:p-6">
-              <h3 className="mt-1 text-xl sm:text-2xl font-semibold text-white leading-tight">{title}</h3>
-              <p className="mt-3 text-sm text-white/80 leading-relaxed line-clamp-3">{subtitle}</p>
+              <h3 className="mt-1 text-xl sm:text-2xl font-semibold text-white leading-tight">
+                {title}
+              </h3>
+              <p className="mt-3 text-sm text-white/80 leading-relaxed line-clamp-3">
+                {subtitle}
+              </p>
               <div className="mt-5">
                 <Link
                   href={href}
@@ -170,27 +177,24 @@ function HoverRevealCornerCard({ side = 'left', label, href, title, subtitle }) 
   );
 }
 
-/* =========================
-   MOBILE: direct links
-   ========================= */
-function MobileCornerLink({ label, href }) {
+function MobileCardLink({ label, href }) {
   return (
     <Link
       href={href}
       className="
-        relative inline-flex items-center gap-2
-        h-11 px-5
-        rounded-2xl
-        border border-white/15
-        bg-black/35 backdrop-blur-md
-        text-white font-semibold text-sm
-        shadow-[0_12px_30px_rgba(0,0,0,0.35)]
-        active:scale-[0.99]
+        group relative flex h-12 items-center justify-between
+        rounded-2xl border border-[#ff2a3a]
+        bg-black/35 px-4
+        backdrop-blur-md
+        shadow-[0_10px_24px_rgba(0,0,0,0.28)]
+        overflow-hidden
       "
     >
-      <span className="absolute left-0 top-0 h-full w-[4px] bg-[#ff2a3a]" />
-      {label}
-      <span className="opacity-80">›</span>
+      <span className="text-sm font-semibold text-white">{label}</span>
+
+      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/8 text-white/75 transition-transform group-active:translate-x-0.5">
+        ›
+      </span>
     </Link>
   );
 }
