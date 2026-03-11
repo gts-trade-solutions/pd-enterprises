@@ -16,6 +16,7 @@ import {
   Goal,
   UserCheck,
   Briefcase,
+  Linkedin,
 } from 'lucide-react';
 
 export default function AboutClient() {
@@ -37,6 +38,7 @@ export default function AboutClient() {
       icon: Briefcase,
       image: '/images/49.jpg',
       imageAlt: 'Portrait of Mziwandile Eric Tshwele',
+      linkedin: 'https://www.linkedin.com/in/eric-tshwele-94912a167/',
     },
   ];
 
@@ -108,7 +110,7 @@ export default function AboutClient() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <div className="animate-slide-up">
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6">
-              About PD enterprises
+              About PD Enterprises
             </h1>
             <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto">
               Building infrastructure for a sustainable future since 2016
@@ -126,7 +128,6 @@ export default function AboutClient() {
             <div className="prose prose-lg max-w-none">
               <p className="text-xl text-gray-700 leading-relaxed mb-6">
                 Hello dear readers, and welcome to our webpage. Whether you are a first-time visitor or a returning friend, we are delighted to share our development enthusiasm with you. Our webpage seeks to give a snippet of our activities, and it remains your esteemed prerogative to engage us further should you need more information to advance your business. We invite you to further explore other business services and products that we deem complementary to our development agenda. We have a selection of Business-to-Business (B-2-B) and Business-to-Customer (B-2-C) products/services that we find crucial for either business and/or energy efficiency initiatives.
- 
               </p>
               <p className="text-lg text-gray-600 leading-relaxed mb-6">
                 Private Development enterprises is a group of companies aimed at providing a one stop shop for clients who wish to conduct a full-scale test on the viability of large infrastructure projects. The group was formed in 2016 by experienced engineering professionals with the vision of creating a combined skills platform for the delivery of the project services mentioned and caters to international and local clients in both the public and private sectors. Two group entities have been established with a third ‘supplementary service’ leg to be incorporated in the very near future. PD Hub is the group entity where the project development work is conducted. All professional resources are arranged and managed through this entity. PD Invest is used merely to hold the group's investment interest in the developments. It will also be used later for Development Finance purposes.
@@ -182,7 +183,6 @@ export default function AboutClient() {
         </div>
       </AnimatedSection>
 
-      {/* Leadership */}
       <AnimatedSection className="py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -213,15 +213,35 @@ export default function AboutClient() {
 
                   <div className="flex items-center justify-between mb-4 gap-4">
                     <div>
-                      <h3 className="text-2xl font-bold text-gray-900">{leader.name}</h3>
+                      <div className="flex flex-wrap items-center gap-3">
+                        <h3 className="text-2xl font-bold text-gray-900">
+                          {leader.name}
+                        </h3>
+
+                        {leader.linkedin && (
+                          <a
+                            href={leader.linkedin}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 rounded-full bg-[#0A66C2] px-3 py-1 text-sm font-medium text-white transition hover:opacity-90"
+                          >
+                            <Linkedin className="h-4 w-4" />
+                            <span>LinkedIn</span>
+                          </a>
+                        )}
+                      </div>
+
                       <p className="text-crimson font-semibold">{leader.role}</p>
                     </div>
+
                     <div className="w-12 h-12 bg-gradient-to-br from-crimson to-primary-700 rounded-xl flex items-center justify-center">
                       <leader.icon className="w-6 h-6 text-white" />
                     </div>
                   </div>
 
-                  <p className="text-gray-600 leading-relaxed">{leader.description}</p>
+                  <p className="text-gray-600 leading-relaxed">
+                    {leader.description}
+                  </p>
                 </article>
               </AnimatedSection>
             ))}
@@ -247,8 +267,12 @@ export default function AboutClient() {
                   <div className="w-16 h-16 bg-crimson rounded-xl flex items-center justify-center mb-6">
                     <value.icon className="w-8 h-8 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-4">{value.title}</h3>
-                  <p className="text-gray-200 leading-relaxed">{value.description}</p>
+                  <h3 className="text-2xl font-bold text-white mb-4">
+                    {value.title}
+                  </h3>
+                  <p className="text-gray-200 leading-relaxed">
+                    {value.description}
+                  </p>
                 </div>
               </AnimatedSection>
             ))}
@@ -263,7 +287,8 @@ export default function AboutClient() {
               Group Entities
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Specialized divisions serving different aspects of infrastructure development
+              Specialized divisions serving different aspects of infrastructure
+              development
             </p>
           </div>
 
@@ -275,14 +300,18 @@ export default function AboutClient() {
                     <entity.icon className="w-8 h-8 text-white" />
                   </div>
                   <div className="flex items-center mb-4">
-                    <h3 className="text-2xl font-bold text-gray-900">{entity.name}</h3>
+                    <h3 className="text-2xl font-bold text-gray-900">
+                      {entity.name}
+                    </h3>
                     {entity.status && (
                       <span className="ml-3 px-3 py-1 bg-crimson/10 text-crimson text-xs font-semibold rounded-full">
                         {entity.status}
                       </span>
                     )}
                   </div>
-                  <p className="text-gray-600 leading-relaxed">{entity.description}</p>
+                  <p className="text-gray-600 leading-relaxed">
+                    {entity.description}
+                  </p>
                 </div>
               </AnimatedSection>
             ))}
@@ -298,9 +327,13 @@ export default function AboutClient() {
               <p className="text-2xl md:text-3xl font-serif text-gray-800 mb-6 italic">
                 Failure is the condiment that gives success its flavour
               </p>
-              <p className="text-lg text-gray-600 font-semibold mb-8">- Truman Capote</p>
+              <p className="text-lg text-gray-600 font-semibold mb-8">
+                - Truman Capote
+              </p>
               <p className="text-lg text-gray-600 leading-relaxed">
-                This philosophy guides our approach to infrastructure development, where we embrace calculated risks and learn from every challenge to deliver exceptional results.
+                This philosophy guides our approach to infrastructure
+                development, where we embrace calculated risks and learn from
+                every challenge to deliver exceptional results.
               </p>
             </div>
           </div>
@@ -313,10 +346,11 @@ export default function AboutClient() {
             Our Approach
           </h2>
           <p className="text-xl text-gray-200 mb-10 max-w-3xl mx-auto">
-            As a group we are proactive in identifying economically viable projects in the following key sectors:
-            Energy (Including renewables and Oil & Gas)
-            Food Production (Including primary agriculture, aquaculture & agro-processing)
-            Buildings & Housing (Including low cost residential, factories and industry works)
+            As a group we are proactive in identifying economically viable
+            projects in the following key sectors: Energy (Including renewables
+            and Oil & Gas) Food Production (Including primary agriculture,
+            aquaculture & agro-processing) Buildings & Housing (Including low
+            cost residential, factories and industry works)
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
@@ -327,7 +361,7 @@ export default function AboutClient() {
             </Link>
             <Link
               href="/contact"
-              className="inline-block  border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-crimson transition-all duration-300 hover:scale-105"
+              className="inline-block border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-crimson transition-all duration-300 hover:scale-105"
             >
               Get In Touch
             </Link>

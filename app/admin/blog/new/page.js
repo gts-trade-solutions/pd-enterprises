@@ -26,7 +26,6 @@ export default function AdminBlogPage() {
 
   const [editingId, setEditingId] = useState(null);
 
-  // form
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [excerpt, setExcerpt] = useState('');
@@ -34,27 +33,19 @@ export default function AdminBlogPage() {
   const [content, setContent] = useState('');
   const [rating, setRating] = useState(0);
 
-  // ✅ linkedin url
   const [linkedinUrl, setLinkedinUrl] = useState('');
-
-  // ✅ media
-  const [media, setMedia] = useState([]); // [{type,url,path,name,mime,size}]
+  const [media, setMedia] = useState([]);
   const [uploading, setUploading] = useState(false);
 
-  // list + ui
   const [savedPosts, setSavedPosts] = useState([]);
   const [loadingPosts, setLoadingPosts] = useState(true);
   const [saving, setSaving] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
-  // filters
   const [q, setQ] = useState('');
   const [catFilter, setCatFilter] = useState('all');
 
-  // toast
-  const [toast, setToast] = useState(null); // { type, message }
-
-  // delete modal
+  const [toast, setToast] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
 
   const computedSlug = useMemo(() => {
@@ -96,7 +87,6 @@ export default function AdminBlogPage() {
     setRefreshing(true);
 
     try {
-      // ✅ no status filter (because you said no status column)
       const res = await fetch('/api/admin/blog', { cache: 'no-store' });
       const json = await res.json();
 
@@ -153,7 +143,6 @@ export default function AdminBlogPage() {
     });
   }, [savedPosts, q, catFilter]);
 
-  // ✅ upload (photos + videos)
   const uploadSelectedFiles = async (fileList) => {
     const files = Array.from(fileList || []);
     if (!files.length) return;
@@ -216,8 +205,8 @@ export default function AdminBlogPage() {
           content: content || null,
           rating,
           post_date: date,
-          media, // ✅ save media list
-          linkedin_url: linkedinUrl?.trim() || null, // ✅ save linkedin url
+          media,
+          linkedin_url: linkedinUrl?.trim() || null,
         }),
       });
 
@@ -258,8 +247,8 @@ export default function AdminBlogPage() {
     const d = post.post_date
       ? String(post.post_date)
       : post.created_at
-        ? String(post.created_at).slice(0, 10)
-        : new Date().toISOString().slice(0, 10);
+      ? String(post.created_at).slice(0, 10)
+      : new Date().toISOString().slice(0, 10);
     setDate(d);
 
     showToast('success', 'Loaded into editor');
@@ -309,20 +298,18 @@ export default function AdminBlogPage() {
   };
 
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-900">
-      {/* Top bar */}
-      <div className="sticky top-0 z-30 border-b border-slate-200 bg-white/80 backdrop-blur-md">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col gap-3">
-          <div className="flex items-start sm:items-center justify-between gap-3">
+    <main className="min-h-screen bg-slate-50 text-slate-900 pt-[120px] sm:pt-[68px]">
+      {/* Header only */}
+      <section className="relative overflow-hidden bg-gradient-to-r from-black via-zinc-950 to-[#6a0b14]">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex items-start sm:items-center justify-between gap-4 mb-4">
+            
             <div>
-              <p className="text-xs font-semibold tracking-[0.22em] uppercase text-slate-400">
-                Admin Studio
-              </p>
-              <h1 className="text-xl sm:text-2xl font-semibold text-slate-900">Blog Posts</h1>
+              <h1 className="text-xl sm:text-2xl font-semibold text-white">Blog Posts</h1>
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="hidden sm:inline-flex text-xs px-3 py-1 rounded-full border border-slate-200 bg-slate-50 text-slate-700">
+              <span className="hidden sm:inline-flex text-xs px-3 py-1 rounded-full border border-white/20 bg-white/10 text-white">
                 Posts: {savedPosts.length}
               </span>
 
@@ -332,7 +319,7 @@ export default function AdminBlogPage() {
                   resetForm();
                   showToast('success', 'New post');
                 }}
-                className="inline-flex items-center gap-2 rounded-full bg-slate-900 text-white px-4 py-2 text-sm hover:bg-slate-800"
+                className="inline-flex items-center gap-2 rounded-full bg-white text-[#7a0012] px-4 py-2 text-sm font-semibold hover:bg-slate-100"
               >
                 <FileText className="w-4 h-4" />
                 New Post
@@ -340,32 +327,31 @@ export default function AdminBlogPage() {
             </div>
           </div>
 
-          {/* Controls */}
           <div className="grid gap-2 sm:grid-cols-[1fr_220px_auto] items-center">
             <div className="relative">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-white/60 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
                 placeholder="Search posts by title, excerpt, category..."
-                className="w-full rounded-xl border border-slate-200 bg-white pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300"
+                className="w-full rounded-xl border border-white/20 bg-white/10 text-white placeholder:text-white/60 pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white/30"
               />
             </div>
 
             <div className="relative">
-              <Tag className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Tag className="w-4 h-4 text-white/60 absolute left-3 top-1/2 -translate-y-1/2" />
               <select
                 value={catFilter}
                 onChange={(e) => setCatFilter(e.target.value)}
-                className="w-full appearance-none rounded-xl border border-slate-200 bg-white pl-9 pr-8 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300"
+                className="w-full appearance-none rounded-xl border border-white/20 bg-white/10 text-white pl-9 pr-8 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-white/30"
               >
                 {categories.map((c) => (
-                  <option key={c} value={c}>
+                  <option key={c} value={c} className="text-slate-900">
                     {c === 'all' ? 'All categories' : c}
                   </option>
                 ))}
               </select>
-              <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-400">
+              <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white/60">
                 ▾
               </div>
             </div>
@@ -373,7 +359,7 @@ export default function AdminBlogPage() {
             <button
               type="button"
               onClick={() => loadDrafts({ soft: true })}
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm hover:bg-slate-50"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/10 text-white px-4 py-2 text-sm hover:bg-white/15"
               disabled={refreshing}
               title="Refresh"
             >
@@ -382,9 +368,8 @@ export default function AdminBlogPage() {
             </button>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Toast */}
       {toast && (
         <div className="fixed right-4 top-20 z-50">
           <div
@@ -414,9 +399,7 @@ export default function AdminBlogPage() {
         </div>
       )}
 
-      {/* Layout */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 grid gap-10 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
-        {/* Left: editor */}
         <section className="space-y-4">
           <div className="rounded-3xl border border-slate-200 bg-white shadow-lg overflow-hidden">
             <div className="px-6 py-5 border-b border-slate-100 flex items-start justify-between gap-3">
@@ -435,7 +418,6 @@ export default function AdminBlogPage() {
             </div>
 
             <form onSubmit={handleSubmit} className="px-6 py-5 space-y-4">
-              {/* Title */}
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold text-slate-600">Title</label>
                 <input
@@ -448,7 +430,6 @@ export default function AdminBlogPage() {
                 />
               </div>
 
-              {/* Settings row */}
               <div className="grid gap-3 sm:grid-cols-3">
                 <div className="space-y-1.5">
                   <label className="text-xs font-semibold text-slate-600">Category</label>
@@ -496,7 +477,6 @@ export default function AdminBlogPage() {
                 </div>
               </div>
 
-              {/* Slug + Excerpt */}
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="space-y-1.5">
                   <label className="text-xs font-semibold text-slate-600">Slug (auto)</label>
@@ -518,7 +498,6 @@ export default function AdminBlogPage() {
                 </div>
               </div>
 
-              {/* ✅ LinkedIn URL */}
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold text-slate-600">LinkedIn URL (optional)</label>
                 <div className="relative">
@@ -533,7 +512,6 @@ export default function AdminBlogPage() {
                 </div>
               </div>
 
-              {/* Content */}
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold text-slate-600">Content</label>
                 <textarea
@@ -545,7 +523,6 @@ export default function AdminBlogPage() {
                 />
               </div>
 
-              {/* ✅ Media upload */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <p className="text-xs font-semibold text-slate-600">Media (Photos / Videos)</p>
@@ -578,7 +555,6 @@ export default function AdminBlogPage() {
                   </div>
                 </div>
 
-                {/* preview grid */}
                 {media.length > 0 && (
                   <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                     {media.map((m) => (
@@ -613,7 +589,6 @@ export default function AdminBlogPage() {
                 )}
               </div>
 
-              {/* Actions */}
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-2">
                 <button
                   type="button"
@@ -639,9 +614,7 @@ export default function AdminBlogPage() {
           </div>
         </section>
 
-        {/* Right: preview + list */}
-        <section className="space-y-6 lg:sticky lg:top-28 self-start">
-          {/* Preview */}
+        <section className="space-y-6 lg:sticky lg:top-[190px] self-start">
           <div className="rounded-3xl border border-slate-200 bg-white shadow-lg overflow-hidden">
             <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between">
               <div>
@@ -666,7 +639,6 @@ export default function AdminBlogPage() {
                 </span>
               </div>
 
-              {/* ✅ LinkedIn button preview */}
               {linkedinUrl?.trim() && (
                 <a
                   href={linkedinUrl.trim()}
@@ -727,7 +699,6 @@ export default function AdminBlogPage() {
             </div>
           </div>
 
-          {/* Posts list */}
           <div className="rounded-3xl border border-slate-200 bg-white shadow-lg overflow-hidden">
             <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between">
               <div>
@@ -862,7 +833,6 @@ export default function AdminBlogPage() {
         </section>
       </div>
 
-      {/* Delete confirm modal */}
       {deleteId && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/35 p-4">
           <div className="w-full max-w-md rounded-3xl bg-white shadow-2xl border border-slate-200 overflow-hidden">
@@ -900,3 +870,5 @@ export default function AdminBlogPage() {
     </main>
   );
 }
+
+

@@ -1,4 +1,3 @@
-// app/blog/page.js
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
@@ -16,6 +15,8 @@ import {
   Image as ImageIcon,
   Video as VideoIcon,
   MessageCircle,
+  Sparkles,
+  RefreshCw,
 } from 'lucide-react';
 
 export default function BlogPage() {
@@ -25,7 +26,7 @@ export default function BlogPage() {
   const [q, setQ] = useState('');
   const [loadError, setLoadError] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
-  const [sortBy, setSortBy] = useState('latest'); // latest | oldest | rating
+  const [sortBy, setSortBy] = useState('latest');
 
   const [selectedId, setSelectedId] = useState(null);
 
@@ -40,7 +41,7 @@ export default function BlogPage() {
     comment: '',
   });
 
-  const [files, setFiles] = useState(null); // UI only
+  const [files, setFiles] = useState(null);
   const [editId, setEditId] = useState(null);
   const [editText, setEditText] = useState('');
   const [editBusy, setEditBusy] = useState(false);
@@ -51,7 +52,11 @@ export default function BlogPage() {
     if (!iso) return '';
     const d = new Date(iso);
     if (Number.isNaN(d.getTime())) return '';
-    return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+    return d.toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    });
   };
 
   const readTime = (text = '') => {
@@ -61,7 +66,6 @@ export default function BlogPage() {
 
   const getPostDate = (p) => p?.post_date || p?.created_at || null;
 
-  // ✅ Turn plain URLs into clickable links (https://, www., linkedin.com/)
   const linkify = (text) => {
     const s = safeText(text);
     if (!s) return null;
@@ -77,7 +81,6 @@ export default function BlogPage() {
 
       if (start > last) nodes.push(s.slice(last, start));
 
-      // strip trailing punctuation (keep it as normal text)
       let url = raw;
       let trail = '';
       while (url && /[)\],.!;:]/.test(url.slice(-1))) {
@@ -96,7 +99,7 @@ export default function BlogPage() {
           target="_blank"
           rel="noopener noreferrer nofollow"
           className="text-blue-600 hover:underline break-all"
-          onClick={(e) => e.stopPropagation()} // ✅ don’t trigger card open
+          onClick={(e) => e.stopPropagation()}
         >
           {url}
         </a>
@@ -111,7 +114,6 @@ export default function BlogPage() {
     return nodes;
   };
 
-  // ✅ Extract first URL / LinkedIn URL
   const getFirstUrl = (text) => {
     const s = safeText(text);
     const m = s.match(/(?:https?:\/\/|www\.|linkedin\.com\/)[^\s<]+/i);
@@ -138,7 +140,6 @@ export default function BlogPage() {
     }
   };
 
-  // media can be array OR json string
   const parseMediaArray = (raw) => {
     if (Array.isArray(raw)) return raw;
     if (typeof raw === 'string') {
@@ -152,7 +153,6 @@ export default function BlogPage() {
     return [];
   };
 
-  // infer type if "type" missing
   const inferType = (m) => {
     const t = String(m?.type || '').toLowerCase();
     if (t === 'image' || t === 'video') return t;
@@ -196,7 +196,6 @@ export default function BlogPage() {
       .filter(Boolean);
   };
 
-  // fetch ALL posts
   const loadPosts = async () => {
     setLoading(true);
     setLoadError('');
@@ -249,9 +248,9 @@ export default function BlogPage() {
 
     if (query) {
       arr = arr.filter((p) => {
-        const hay = `${safeText(p.title)} ${safeText(p.category)} ${safeText(p.excerpt)} ${safeText(
-          p.content
-        )}`.toLowerCase();
+        const hay = `${safeText(p.title)} ${safeText(p.category)} ${safeText(
+          p.excerpt
+        )} ${safeText(p.content)}`.toLowerCase();
         return hay.includes(query);
       });
     }
@@ -317,7 +316,7 @@ export default function BlogPage() {
     return null;
   };
 
-  /* ------------------------- COMMENTS functions ------------------------- */
+  /* ------------------------- COMMENTS ------------------------- */
 
   const onPickFiles = (e) => setFiles(e.target.files || null);
 
@@ -472,109 +471,121 @@ export default function BlogPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white text-slate-900 pt-0 pb-16">
-      {/* HERO HEADER (black → red gradient, premium controls) */}
-      <div className="relative overflow-hidden border-b border-slate-200">
+    <main className="min-h-screen bg-[linear-gradient(to_bottom,#f8fafc_0%,#ffffff_32%,#f8fafc_100%)] text-slate-900 pt-0 pb-16">
+      {/* HERO */}
+      <section className="relative overflow-hidden border-b border-slate-200">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-black via-zinc-950 to-[#6a0b14]" />
-          <div className="absolute -top-24 -right-24 h-80 w-80 rounded-full bg-[#b10f23]/30 blur-3xl" />
-          <div className="absolute -bottom-28 -left-28 h-96 w-96 rounded-full bg-[#7a0c18]/25 blur-3xl" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/60" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-[#0f0f14] to-[#6a0b14]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,40,80,0.25),transparent_24%),radial-gradient(circle_at_bottom_left,rgba(180,20,40,0.18),transparent_22%)]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/45" />
         </div>
 
-        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <div className="max-w-2xl mt-10">
-              <p className="text-xs font-medium tracking-[0.25em] uppercase text-white/70">
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+          <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
+            <div className="max-w-3xl pt-6">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-medium uppercase tracking-[0.25em] text-white/80">
+                <Sparkles className="h-3.5 w-3.5" />
                 Blog
-              </p>
+              </div>
 
-              <h1 className="text-3xl sm:text-4xl font-semibold text-white mt-2">
+              <h1 className="mt-5 text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl">
                 Insights & Updates
               </h1>
 
-              <p className="text-sm sm:text-base text-white/80 mt-3">
-                Click any post to read it inside this page (reader shows photos/videos too).
+              <p className="mt-4 max-w-2xl text-sm leading-7 text-white/80 sm:text-base">
+                Explore the latest posts, industry observations, and project updates. Open any card
+                to read the full article with photos, videos, and discussion threads.
               </p>
 
-              <div className="mt-5 flex flex-wrap items-center gap-2 text-xs">
-                <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-white/80">
+              <div className="mt-6 flex flex-wrap gap-2 text-xs">
+                <span className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-white">
                   Total: <span className="font-semibold text-white">{posts.length}</span>
                 </span>
-
-                <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-white/80">
+                <span className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-white">
                   Showing: <span className="font-semibold text-white">{processed.length}</span>
                 </span>
-
                 {activeCategory !== 'All' && (
                   <button
                     onClick={() => setActiveCategory('All')}
-                    className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-white hover:bg-white/15"
+                    className="rounded-full border border-white bg-white/10 px-4 py-2 text-white hover:bg-white/15"
                     type="button"
                   >
-                    Clear category ✕
+                    Clear filter ✕
                   </button>
                 )}
               </div>
             </div>
 
-            <div className="w-full lg:w-[520px]">
-              <div className="rounded-3xl border border-white/15 bg-white/5 p-4 backdrop-blur-md shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
-                <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
-                  <div className="relative flex-1">
-                    <Search className="w-4 h-4 text-white/55 absolute left-3 top-1/2 -translate-y-1/2" />
+            <div className="lg:justify-self-end w-full max-w-xl">
+              <div className="rounded-[28px] border border-white/15 bg-white/8 p-4 shadow-[0_18px_60px_rgba(0,0,0,0.28)] backdrop-blur-md">
+                <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
+                  <div className="relative">
+                    <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/50" />
                     <input
                       value={q}
                       onChange={(e) => setQ(e.target.value)}
-                      placeholder="Search posts..."
-                      className="w-full rounded-2xl border border-white/15 bg-black/25 pl-9 pr-3 py-2.5 text-sm text-white placeholder:text-white/45
-                                 outline-none focus:ring-2 focus:ring-[#ff2a3a]/30 focus:border-[#ff2a3a]/40"
+                      placeholder="Search posts by title, excerpt, or content..."
+                      className="w-full rounded-2xl border border-white/15 bg-black/20 py-3 pl-11 pr-4 text-sm text-white placeholder:text-white/45 outline-none focus:border-[#ff2a3a]/40 focus:ring-2 focus:ring-[#ff2a3a]/25"
                     />
                   </div>
 
-                  <div className="flex items-center gap-2">
-                    <div className="inline-flex items-center gap-2 rounded-2xl border border-white/15 bg-black/25 px-3 py-2.5">
-                      <SlidersHorizontal className="w-4 h-4 text-white/70" />
-                      <select
-                        value={sortBy}
-                        onChange={(e) => setSortBy(e.target.value)}
-                        className="text-sm bg-transparent text-white outline-none"
-                      >
-                        <option className="text-slate-900" value="latest">
-                          Latest
-                        </option>
-                        <option className="text-slate-900" value="oldest">
-                          Oldest
-                        </option>
-                        <option className="text-slate-900" value="rating">
-                          Top rated
-                        </option>
-                      </select>
-                    </div>
+                  <button
+                    type="button"
+                    onClick={loadPosts}
+                    className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/10 px-4 py-3 text-sm text-white transition hover:bg-white/15"
+                  >
+                    <RefreshCw className="h-4 w-4" />
+                    Refresh
+                  </button>
+                </div>
 
-                    <button
-                      type="button"
-                      onClick={loadPosts}
-                      className="text-sm px-4 py-2.5 rounded-2xl border border-white/15 bg-white/10 text-white
-                                 hover:bg-white/15 hover:border-white/25 transition"
+                <div className="mt-3 grid gap-3 sm:grid-cols-[1fr_1fr]">
+                  <div className="inline-flex items-center gap-2 rounded-2xl border border-white/15 bg-black/20 px-4 py-3">
+                    <SlidersHorizontal className="h-4 w-4 text-white" />
+                    <select
+                      value={sortBy}
+                      onChange={(e) => setSortBy(e.target.value)}
+                      className="w-full bg-transparent text-sm text-white outline-none"
                     >
-                      Refresh
-                    </button>
+                      <option className="text-slate-900" value="latest">
+                        Latest
+                      </option>
+                      <option className="text-slate-900" value="oldest">
+                        Oldest
+                      </option>
+                      <option className="text-slate-900" value="rating">
+                        Top rated
+                      </option>
+                    </select>
+                  </div>
+
+                  <div className="inline-flex items-center gap-2 rounded-2xl border border-white/15 bg-black/20 px-4 py-3">
+                    <MessageCircle className="h-4 w-4 text-white" />
+                    <select
+                      value={activeCategory}
+                      onChange={(e) => setActiveCategory(e.target.value)}
+                      className="w-full bg-transparent text-sm text-white outline-none"
+                    >
+                      {categories.map((c) => (
+                        <option key={c} value={c} className="text-slate-900">
+                          {c}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
 
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {categories.map((c) => {
+                  {categories.slice(0, 6).map((c) => {
                     const active = c === activeCategory;
-
                     return (
                       <button
                         key={c}
                         type="button"
                         onClick={() => setActiveCategory(c)}
-                        className={`rounded-full px-5 py-2 text-xs border transition font-semibold ${active
-                          ? 'border-[#ff2a3a] bg-[#ff2a3a]/20 text-white shadow-[0_0_0_3px_rgba(255,42,58,0.18)]'
-                          : 'border-white/30 bg-black/25 text-white hover:bg-white/10 hover:border-white/45'
+                        className={`rounded-full px-4 py-2 text-xs font-semibold transition ${active
+                            ? 'border border-[#ff2a3a] bg-[#ff2a3a]/20 text-white shadow-[0_0_0_3px_rgba(255,42,58,0.15)]'
+                            : 'border border-white/15 bg-white/8 text-white hover:bg-white/12'
                           }`}
                       >
                         {c}
@@ -586,43 +597,43 @@ export default function BlogPage() {
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-10">
         {loadError ? (
-          <div className="rounded-3xl border border-amber-200 bg-amber-50 p-5 text-sm text-amber-900 flex gap-3">
-            <AlertTriangle className="w-5 h-5 mt-0.5" />
+          <div className="flex gap-3 rounded-3xl border border-amber-200 bg-amber-50 p-5 text-sm text-amber-900">
+            <AlertTriangle className="mt-0.5 h-5 w-5" />
             <div>
               <div className="font-semibold">Could not load posts</div>
               <div className="mt-1 text-xs opacity-90">{loadError}</div>
             </div>
           </div>
         ) : loading ? (
-          <div className="grid gap-4 lg:grid-cols-3">
+          <div className="grid gap-5 lg:grid-cols-3">
             {[...Array(9)].map((_, i) => (
-              <div key={i} className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
-                <div className="h-32 w-full bg-slate-100 rounded-2xl mb-4" />
-                <div className="h-4 w-24 bg-slate-100 rounded mb-3" />
-                <div className="h-6 w-4/5 bg-slate-100 rounded mb-2" />
-                <div className="h-4 w-full bg-slate-100 rounded mb-2" />
-                <div className="h-4 w-5/6 bg-slate-100 rounded" />
+              <div key={i} className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-sm">
+                <div className="mb-4 h-40 w-full rounded-2xl bg-slate-100" />
+                <div className="mb-3 h-4 w-24 rounded bg-slate-100" />
+                <div className="mb-2 h-6 w-4/5 rounded bg-slate-100" />
+                <div className="mb-2 h-4 w-full rounded bg-slate-100" />
+                <div className="h-4 w-5/6 rounded bg-slate-100" />
               </div>
             ))}
           </div>
         ) : processed.length === 0 ? (
-          <div className="rounded-3xl border border-slate-200 bg-white p-6 text-sm text-slate-600">
+          <div className="rounded-[28px] border border-slate-200 bg-white p-8 text-sm text-slate-600 shadow-sm">
             No posts found.
           </div>
         ) : (
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,440px)]">
-            <section className="space-y-6">
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,460px)]">
+            <section className="space-y-8">
               {featured && (
                 <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <h2 className="text-sm font-semibold text-slate-700 uppercase tracking-[0.2em]">
+                  <div className="mb-4 flex items-center justify-between">
+                    <h2 className="text-sm font-semibold uppercase tracking-[0.22em] text-slate-600">
                       Featured
                     </h2>
-                    <span className="text-xs text-slate-500">Click to open</span>
+                    <span className="text-xs text-slate-500">Open to read</span>
                   </div>
 
                   <div
@@ -630,13 +641,13 @@ export default function BlogPage() {
                     tabIndex={0}
                     onClick={() => openPost(featured)}
                     onKeyDown={(e) => onKeyOpen(e, () => openPost(featured))}
-                    className={`w-full text-left rounded-3xl border bg-white shadow-sm hover:shadow-lg transition-all overflow-hidden cursor-pointer ${selectedId === featured.id
-                      ? 'border-slate-900 ring-2 ring-slate-200'
-                      : 'border-slate-200'
+                    className={`group overflow-hidden rounded-[32px] border bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-xl cursor-pointer ${selectedId === featured.id
+                        ? 'border-slate-900 ring-2 ring-slate-200'
+                        : 'border-slate-200'
                       }`}
                   >
-                    <div className="grid lg:grid-cols-[1fr_1fr]">
-                      <div className="relative min-h-[220px] bg-slate-900">
+                    <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
+                      <div className="relative min-h-[260px] bg-slate-900">
                         {(() => {
                           const t = getThumb(featured);
                           if (t?.type === 'image' && t.url) {
@@ -644,7 +655,7 @@ export default function BlogPage() {
                               <img
                                 src={t.url}
                                 alt=""
-                                className="absolute inset-0 h-full w-full object-cover opacity-90"
+                                className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.02]"
                                 loading="lazy"
                               />
                             );
@@ -652,8 +663,8 @@ export default function BlogPage() {
                           if (t?.type === 'video') {
                             return (
                               <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="rounded-full bg-white/10 border border-white/15 px-4 py-2 inline-flex items-center gap-2 text-white text-sm">
-                                  <Play className="w-4 h-4" />
+                                <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-2.5 text-sm text-white">
+                                  <Play className="h-4 w-4" />
                                   Featured video
                                 </div>
                               </div>
@@ -662,41 +673,42 @@ export default function BlogPage() {
                           return (
                             <div className="absolute inset-0 flex items-center justify-center text-white/80">
                               <div className="inline-flex items-center gap-2 text-sm">
-                                <ImageIcon className="w-4 h-4" />
+                                <ImageIcon className="h-4 w-4" />
                                 No cover media
                               </div>
                             </div>
                           );
                         })()}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/15 to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
                       </div>
 
-                      <div className="p-6">
-                        <p className="text-xs tracking-[0.22em] uppercase text-slate-500">
+                      <div className="p-6 sm:p-7">
+                        <p className="text-[11px] uppercase tracking-[0.24em] text-slate-500">
                           {featured.category || 'General'}
                         </p>
-                        <h3 className="mt-2 text-2xl font-semibold text-slate-900 leading-snug">
+
+                        <h3 className="mt-3 text-2xl font-semibold leading-snug text-slate-900">
                           {featured.title || 'Untitled'}
                         </h3>
 
-                        <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-slate-500">
+                        <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-slate-500">
                           <span className="inline-flex items-center gap-1">
-                            <Calendar className="w-3 h-3" />
+                            <Calendar className="h-3 w-3" />
                             {formatDate(getPostDate(featured))}
                           </span>
                           <span className="inline-flex items-center gap-1">
-                            <Clock className="w-3 h-3" />
+                            <Clock className="h-3 w-3" />
                             {readTime(featured.content || featured.excerpt || '')} min read
                           </span>
                           {Number(featured.rating || 0) > 0 && (
                             <span className="inline-flex items-center gap-1">
-                              <Star className="w-3 h-3 fill-[#fbbc04] text-[#fbbc04]" />
+                              <Star className="h-3 w-3 fill-[#fbbc04] text-[#fbbc04]" />
                               {Number(featured.rating || 0).toFixed(1)}
                             </span>
                           )}
                         </div>
 
-                        <p className="mt-4 text-sm text-slate-700 leading-relaxed line-clamp-4">
+                        <p className="mt-5 line-clamp-4 text-sm leading-7 text-slate-700">
                           {linkify(featured.excerpt || featured.content || 'No description available.')}
                         </p>
 
@@ -707,12 +719,12 @@ export default function BlogPage() {
                           if (!li) return null;
 
                           return (
-                            <div className="mt-2 text-xs">
+                            <div className="mt-3 text-xs">
                               <a
                                 href={li}
                                 target="_blank"
                                 rel="noopener noreferrer nofollow"
-                                className="text-blue-600 hover:underline break-all"
+                                className="break-all text-blue-600 hover:underline"
                                 onClick={(e) => e.stopPropagation()}
                               >
                                 {li}
@@ -721,13 +733,13 @@ export default function BlogPage() {
                           );
                         })()}
 
-                        <div className="mt-4 flex items-center gap-2 text-xs text-slate-600">
-                          <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 px-3 py-1 bg-white">
-                            <ImageIcon className="w-3.5 h-3.5" />
+                        <div className="mt-5 flex items-center gap-2 text-xs text-slate-600">
+                          <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1.5">
+                            <ImageIcon className="h-3.5 w-3.5" />
                             {(featured._media || []).filter((m) => m.type === 'image').length}
                           </span>
-                          <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 px-3 py-1 bg-white">
-                            <VideoIcon className="w-3.5 h-3.5" />
+                          <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1.5">
+                            <VideoIcon className="h-3.5 w-3.5" />
                             {(featured._media || []).filter((m) => m.type === 'video').length}
                           </span>
                         </div>
@@ -738,13 +750,13 @@ export default function BlogPage() {
               )}
 
               <div>
-                <div className="flex items-center justify-between mb-3">
-                  <h2 className="text-sm font-semibold text-slate-700 uppercase tracking-[0.2em]">
+                <div className="mb-4 flex items-center justify-between">
+                  <h2 className="text-sm font-semibold uppercase tracking-[0.22em] text-slate-600">
                     All posts
                   </h2>
                 </div>
 
-                <div className="grid gap-4 sm:grid-cols-2">
+                <div className="grid gap-5 sm:grid-cols-2">
                   {processed.map((post) => {
                     const dt = getPostDate(post);
                     const minutes = readTime(post.content || post.excerpt || '');
@@ -762,7 +774,7 @@ export default function BlogPage() {
                         tabIndex={0}
                         onClick={() => openPost(post)}
                         onKeyDown={(e) => onKeyOpen(e, () => openPost(post))}
-                        className={`text-left rounded-3xl border bg-white shadow-sm hover:shadow-lg transition-all overflow-hidden cursor-pointer ${active ? 'border-slate-900 ring-2 ring-slate-200' : 'border-slate-200'
+                        className={`group overflow-hidden rounded-[28px] border bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-xl cursor-pointer ${active ? 'border-slate-900 ring-2 ring-slate-200' : 'border-slate-200'
                           }`}
                       >
                         <div className="relative aspect-[16/9] bg-slate-100">
@@ -770,53 +782,55 @@ export default function BlogPage() {
                             <img
                               src={thumb.url}
                               alt=""
-                              className="absolute inset-0 h-full w-full object-cover"
+                              className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.02]"
                               loading="lazy"
                             />
                           ) : thumb?.type === 'video' ? (
-                            <div className="absolute inset-0 bg-slate-900 flex items-center justify-center">
-                              <div className="rounded-full bg-white/10 border border-white/15 px-4 py-2 inline-flex items-center gap-2 text-white text-sm">
-                                <Play className="w-4 h-4" />
+                            <div className="absolute inset-0 flex items-center justify-center bg-slate-900">
+                              <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-white">
+                                <Play className="h-4 w-4" />
                                 Video
                               </div>
                             </div>
                           ) : (
-                            <div className="absolute inset-0 flex items-center justify-center text-slate-500 text-sm">
+                            <div className="absolute inset-0 flex items-center justify-center text-sm text-slate-500">
                               No media
                             </div>
                           )}
 
-                          <div className="absolute left-3 bottom-3 flex gap-2">
-                            <span className="rounded-full bg-white/90 border border-slate-200 px-2.5 py-1 text-[11px] text-slate-700 inline-flex items-center gap-1">
-                              <ImageIcon className="w-3.5 h-3.5" />
-                              {imgCount}
-                            </span>
-                            <span className="rounded-full bg-white/90 border border-slate-200 px-2.5 py-1 text-[11px] text-slate-700 inline-flex items-center gap-1">
-                              <VideoIcon className="w-3.5 h-3.5" />
-                              {vidCount}
-                            </span>
+                          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/45 to-transparent p-3">
+                            <div className="flex gap-2">
+                              <span className="inline-flex items-center gap-1 rounded-full border border-white/15 bg-white/90 px-2.5 py-1 text-[11px] text-slate-700">
+                                <ImageIcon className="h-3.5 w-3.5" />
+                                {imgCount}
+                              </span>
+                              <span className="inline-flex items-center gap-1 rounded-full border border-white/15 bg-white/90 px-2.5 py-1 text-[11px] text-slate-700">
+                                <VideoIcon className="h-3.5 w-3.5" />
+                                {vidCount}
+                              </span>
+                            </div>
                           </div>
                         </div>
 
                         <div className="p-5">
-                          <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
+                          <div className="mb-2 flex items-center justify-between text-xs text-slate-500">
                             <span className="inline-flex items-center gap-1">
-                              <Calendar className="w-3 h-3" />
+                              <Calendar className="h-3 w-3" />
                               {formatDate(dt)}
                             </span>
                             <span className="inline-flex items-center gap-1">
-                              <Clock className="w-3 h-3" />
+                              <Clock className="h-3 w-3" />
                               {minutes} min
                             </span>
                           </div>
 
                           {post.category && (
-                            <p className="text-[11px] uppercase tracking-[0.2em] text-slate-600 mb-1">
+                            <p className="mb-2 text-[11px] uppercase tracking-[0.2em] text-slate-600">
                               {post.category}
                             </p>
                           )}
 
-                          <h3 className="text-lg font-semibold text-slate-900 line-clamp-2">
+                          <h3 className="line-clamp-2 text-lg font-semibold text-slate-900">
                             {post.title || 'Untitled'}
                           </h3>
 
@@ -825,21 +839,21 @@ export default function BlogPage() {
                               {[1, 2, 3, 4, 5].map((v) => (
                                 <Star
                                   key={v}
-                                  className={`w-3.5 h-3.5 ${v <= rating ? 'fill-[#fbbc04] text-[#fbbc04]' : 'text-slate-300'
+                                  className={`h-3.5 w-3.5 ${v <= rating ? 'fill-[#fbbc04] text-[#fbbc04]' : 'text-slate-300'
                                     }`}
                                 />
                               ))}
-                              <span className="text-[11px] text-slate-600 ml-1">
+                              <span className="ml-1 text-[11px] text-slate-600">
                                 {rating.toFixed(1)}
                               </span>
                             </div>
                           )}
 
-                          <p className="mt-3 text-sm text-slate-700 line-clamp-3">
+                          <p className="mt-3 line-clamp-3 text-sm leading-7 text-slate-700">
                             {linkify(post.excerpt || post.content || 'No short description.')}
                           </p>
 
-                          <div className="mt-4 text-xs text-slate-500">
+                          <div className="mt-4 text-xs font-medium text-slate-500">
                             {active ? 'Reading now' : 'Open in reader'}
                           </div>
                         </div>
@@ -850,41 +864,42 @@ export default function BlogPage() {
               </div>
             </section>
 
-            <aside id="blog-reader" className="lg:sticky lg:top-24 self-start">
+            <aside id="blog-reader" className="self-start lg:sticky lg:top-24">
               {!selected ? (
-                <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-                  <div className="text-xs font-medium tracking-[0.25em] uppercase text-slate-400">
+                <div className="rounded-[28px] border border-slate-200 bg-white p-7 shadow-sm">
+                  <div className="text-xs font-medium uppercase tracking-[0.25em] text-slate-400">
                     Reader
                   </div>
-                  <h3 className="mt-2 text-lg font-semibold text-slate-900">Select a post</h3>
-                  <p className="mt-2 text-sm text-slate-600">
-                    Click any post card to open it here. Media (photos/videos) will show here too.
+                  <h3 className="mt-3 text-xl font-semibold text-slate-900">Select a post</h3>
+                  <p className="mt-3 text-sm leading-7 text-slate-600">
+                    Choose any post card to open the article here. Images, videos, and discussion
+                    threads will appear in this panel.
                   </p>
                 </div>
               ) : (
-                <div className="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-                  <div className="p-5 border-b border-slate-100 bg-gradient-to-b from-white to-slate-50">
+                <div className="overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-[0_10px_40px_rgba(15,23,42,0.08)]">
+                  <div className="border-b border-slate-100 bg-gradient-to-b from-white to-slate-50 p-5">
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0">
                         <p className="text-[11px] uppercase tracking-[0.2em] text-slate-500">
                           {selected.category || 'General'}
                         </p>
-                        <h3 className="mt-1 text-xl font-semibold text-slate-900 leading-snug">
+                        <h3 className="mt-2 text-xl font-semibold leading-snug text-slate-900">
                           {selected.title || 'Untitled'}
                         </h3>
 
                         <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-slate-500">
                           <span className="inline-flex items-center gap-1">
-                            <Calendar className="w-3 h-3" />
+                            <Calendar className="h-3 w-3" />
                             {formatDate(getPostDate(selected))}
                           </span>
                           <span className="inline-flex items-center gap-1">
-                            <Clock className="w-3 h-3" />
+                            <Clock className="h-3 w-3" />
                             {readTime(selected.content || selected.excerpt || '')} min read
                           </span>
                           {Number(selected.rating || 0) > 0 && (
                             <span className="inline-flex items-center gap-1">
-                              <Star className="w-3 h-3 fill-[#fbbc04] text-[#fbbc04]" />
+                              <Star className="h-3 w-3 fill-[#fbbc04] text-[#fbbc04]" />
                               {Number(selected.rating || 0).toFixed(1)}
                             </span>
                           )}
@@ -894,21 +909,21 @@ export default function BlogPage() {
                       <button
                         type="button"
                         onClick={() => setSelectedId(null)}
-                        className="p-2 rounded-full border border-slate-200 hover:bg-white"
+                        className="rounded-full border border-slate-200 p-2 hover:bg-white"
                         title="Close reader"
                       >
-                        <X className="w-4 h-4 text-slate-700" />
+                        <X className="h-4 w-4 text-slate-700" />
                       </button>
                     </div>
 
-                    <div className="mt-4 flex items-center justify-between">
+                    <div className="mt-5 flex items-center justify-between">
                       <button
                         type="button"
                         onClick={goPrev}
                         disabled={selectedIndex <= 0}
                         className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-2 text-xs text-slate-700 hover:bg-slate-50 disabled:opacity-50"
                       >
-                        <ChevronLeft className="w-4 h-4" />
+                        <ChevronLeft className="h-4 w-4" />
                         Prev
                       </button>
 
@@ -923,15 +938,15 @@ export default function BlogPage() {
                         className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-2 text-xs text-slate-700 hover:bg-slate-50 disabled:opacity-50"
                       >
                         Next
-                        <ChevronRight className="w-4 h-4" />
+                        <ChevronRight className="h-4 w-4" />
                       </button>
                     </div>
                   </div>
 
-                  <div className="p-5 max-h-[70vh] overflow-auto">
+                  <div className="max-h-[72vh] overflow-auto p-5">
                     {Array.isArray(selected._media) && selected._media.length > 0 && (
-                      <div className="mb-4">
-                        <div className="text-xs font-semibold tracking-[0.18em] uppercase text-slate-400">
+                      <div className="mb-5">
+                        <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
                           Media
                         </div>
 
@@ -943,7 +958,7 @@ export default function BlogPage() {
                               .map((m, idx) => (
                                 <div
                                   key={idx}
-                                  className="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-100"
+                                  className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-100"
                                 >
                                   <img
                                     src={m.url}
@@ -964,13 +979,13 @@ export default function BlogPage() {
                               .map((m, idx) => (
                                 <div
                                   key={idx}
-                                  className="rounded-2xl overflow-hidden border border-slate-200 bg-black"
+                                  className="overflow-hidden rounded-2xl border border-slate-200 bg-black"
                                 >
                                   <video
                                     src={m.url}
                                     poster={m.posterUrl || undefined}
                                     controls
-                                    className="w-full h-56 object-contain bg-black"
+                                    className="h-56 w-full bg-black object-contain"
                                     preload="metadata"
                                   />
                                 </div>
@@ -981,7 +996,7 @@ export default function BlogPage() {
                     )}
 
                     {selected.excerpt && (
-                      <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">
+                      <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm leading-7 text-slate-700">
                         {linkify(selected.excerpt)}
                       </div>
                     )}
@@ -990,12 +1005,12 @@ export default function BlogPage() {
                       {linkify(selected.content || 'No content.')}
                     </div>
 
-                    {/* -------------------- COMMENTS -------------------- */}
+                    {/* COMMENTS */}
                     <div className="mt-8">
-                      <div className="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-                        <div className="px-5 py-4 border-b border-slate-100">
+                      <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-sm">
+                        <div className="border-b border-slate-100 px-5 py-4">
                           <div className="flex items-center justify-between">
-                            <h4 className="text-lg font-semibold text-slate-900">All Discussions</h4>
+                            <h4 className="text-lg font-semibold text-slate-900">Discussion</h4>
                             <button
                               type="button"
                               onClick={() => loadComments(selected.id)}
@@ -1008,12 +1023,12 @@ export default function BlogPage() {
 
                         <div className="p-5">
                           {cErr && (
-                            <div className="mb-3 text-sm text-rose-700 bg-rose-50 border border-rose-200 rounded-2xl p-3">
+                            <div className="mb-3 rounded-2xl border border-rose-200 bg-rose-50 p-3 text-sm text-rose-700">
                               {cErr}
                             </div>
                           )}
                           {cOk && (
-                            <div className="mb-3 text-sm text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-2xl p-3">
+                            <div className="mb-3 rounded-2xl border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-700">
                               {cOk}
                             </div>
                           )}
@@ -1025,7 +1040,7 @@ export default function BlogPage() {
                                 setCommentForm((p) => ({ ...p, comment: e.target.value }))
                               }
                               placeholder="Write your thoughts..."
-                              className="w-full min-h-[110px] rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-slate-200"
+                              className="min-h-[110px] w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-slate-200"
                             />
 
                             <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
@@ -1092,7 +1107,7 @@ export default function BlogPage() {
                                             {email ? (
                                               <a
                                                 href={`mailto:${email}`}
-                                                className="text-blue-600 hover:underline break-all"
+                                                className="break-all text-blue-600 hover:underline"
                                               >
                                                 {email}
                                               </a>
@@ -1100,7 +1115,7 @@ export default function BlogPage() {
                                               <span className="text-slate-900">{header}</span>
                                             )}
                                           </div>
-                                          <div className="text-xs text-slate-500 mt-1">
+                                          <div className="mt-1 text-xs text-slate-500">
                                             {formatDate(c.created_at)}
                                           </div>
                                         </div>
@@ -1128,13 +1143,13 @@ export default function BlogPage() {
                                           <textarea
                                             value={editText}
                                             onChange={(e) => setEditText(e.target.value)}
-                                            className="w-full min-h-[90px] rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none"
+                                            className="min-h-[90px] w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none"
                                           />
                                           <div className="flex items-center justify-end gap-2">
                                             <button
                                               type="button"
                                               onClick={cancelEdit}
-                                              className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm hover:bg-slate-50"
+                                              className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm hover:bg-slate-50"
                                             >
                                               Cancel
                                             </button>
@@ -1142,14 +1157,14 @@ export default function BlogPage() {
                                               type="button"
                                               onClick={saveEdit}
                                               disabled={editBusy}
-                                              className="rounded-lg bg-slate-900 text-white px-4 py-2 text-sm hover:bg-slate-800 disabled:opacity-60"
+                                              className="rounded-xl bg-slate-900 px-4 py-2 text-sm text-white hover:bg-slate-800 disabled:opacity-60"
                                             >
                                               {editBusy ? 'Saving...' : 'Save'}
                                             </button>
                                           </div>
                                         </div>
                                       ) : (
-                                        <div className="mt-3 text-sm text-slate-700 whitespace-pre-line">
+                                        <div className="mt-3 whitespace-pre-line text-sm leading-7 text-slate-700">
                                           {linkify(msg)}
                                         </div>
                                       )}
@@ -1161,9 +1176,9 @@ export default function BlogPage() {
                           </div>
                         </div>
 
-                        <div className="px-5 py-4 border-t border-slate-100 bg-slate-50 flex items-center justify-between">
-                          <div className="text-xs text-slate-500 inline-flex items-center gap-2">
-                            <MessageCircle className="w-4 h-4" />
+                        <div className="flex items-center justify-between border-t border-slate-100 bg-slate-50 px-5 py-4">
+                          <div className="inline-flex items-center gap-2 text-xs text-slate-500">
+                            <MessageCircle className="h-4 w-4" />
                             {comments.length} comment(s)
                           </div>
                           <button
@@ -1176,15 +1191,14 @@ export default function BlogPage() {
                         </div>
                       </div>
                     </div>
-                    {/* ------------------ END COMMENTS ------------------ */}
                   </div>
 
-                  <div className="p-4 border-t border-slate-100 bg-slate-50 flex items-center justify-between">
+                  <div className="flex items-center justify-between border-t border-slate-100 bg-slate-50 p-4">
                     <div className="text-xs text-slate-500">Reader</div>
                     <button
                       type="button"
                       onClick={() => setSelectedId(null)}
-                      className="rounded-full bg-slate-900 text-white px-4 py-2 text-sm hover:bg-slate-800"
+                      className="rounded-full bg-slate-900 px-4 py-2 text-sm text-white hover:bg-slate-800"
                     >
                       Close
                     </button>

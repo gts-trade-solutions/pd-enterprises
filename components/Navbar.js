@@ -48,7 +48,8 @@ export default function Navbar() {
     { name: 'About', href: '/about' },
     { name: 'Services', href: '/services' },
     { name: 'Contact', href: '/contact' },
-    { name: 'Blog', href: '/post' },
+    { name: 'Blogs', href: '/post' },
+    
   ];
 
   const isActive = (href) => {
@@ -72,6 +73,11 @@ export default function Navbar() {
       name: ' Business Efficiency Measures',
       sub: '',
       href: '',
+    },
+    {
+      name: ' IT Services',
+      sub: '',
+      href: '/it-services',
     },
   ];
 
@@ -100,7 +106,7 @@ export default function Navbar() {
         ${
           isScrolled
             ? 'bg-black/80 backdrop-blur shadow-lg border-b border-crimson/25'
-            : 'bg-transparent'
+            : 'bg-gradient-to-r from-black via-zinc-950 to-[#6a0b14]'
         }
       `}
     >

@@ -183,13 +183,13 @@ export default function ModelDetails({ model }) {
             to calculate it before ordering.
           </p>
           <p>
-            Remember,{" "}
+            Please ,{" "}
             <a className="text-green-700 underline" href="#">
-              Avrame provides only the house kit
+              Note that Avrame supplies the house kit only
             </a>
-            ; finishes are sourced locally.
+            ; while all finishes are sourced locally.
           </p>
-          <p>Kits are available in USA / non-USA standards at different price points.</p>
+         
         </div>
       </section>
 
