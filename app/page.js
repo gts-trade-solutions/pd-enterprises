@@ -1,6 +1,6 @@
 // app/page.js
 import dynamic from "next/dynamic";
-import AnimatedSection from "@/components/AnimatedSection";
+import AnimatedSection from "../components/AnimatedSection";
 import {
   Building2,
   FileSearch,
@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 
 // Hero slider (client-side only)
-const HeroSwiper = dynamic(() => import("@/components/HeroSwiper"), { ssr: false });
+const HeroSwiper = dynamic(() => import("../components/HeroSwiper"), { ssr: false });
 
 export const metadata = {
   title: "Infrastructure Development Company in South Africa | PD enterprises",

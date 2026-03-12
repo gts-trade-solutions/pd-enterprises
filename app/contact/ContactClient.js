@@ -2,7 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import AnimatedSection from '@/components/AnimatedSection';
+import AnimatedSection from '../../components/AnimatedSection';
 import { Mail, Phone, MapPin, Send, Building2 } from 'lucide-react';
 
 export default function ContactClient() {

@@ -1,6 +1,6 @@
 // app/services/page.jsx
 import Link from 'next/link';
-import AnimatedSection from '@/components/AnimatedSection';
+import AnimatedSection from '../../components/AnimatedSection';
 import {
   FileSearch, TrendingUp, ClipboardCheck, Wrench, PenTool, Building2,
   Zap, Factory, Chrome as HomeIcon, CircleCheck as CheckCircle2,

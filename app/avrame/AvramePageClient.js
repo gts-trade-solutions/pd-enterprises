@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import AnimatedSection from "@/components/AnimatedSection";
+import AnimatedSection from "../../components/AnimatedSection";
 import dynamic from "next/dynamic";
 import {
   Home,

@@ -59,11 +59,12 @@
 // app/layout.js
 import "./globals.css";
 import { Inter } from "next/font/google";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+
+import Footer from "../components/Footer";
 import Script from "next/script";
 import { Suspense } from "react";
 import GAReporter from "./ga-reporter";
+import Navbar from "../components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 

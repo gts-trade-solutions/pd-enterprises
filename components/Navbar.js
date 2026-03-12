@@ -67,18 +67,14 @@ export default function Navbar() {
     {
       name: ' Energy Efficient Lighting Systems',
       sub: '',
-      href: '',
+      href: '/hpwinner-lighting',
     },
     {
-      name: ' Business Efficiency Measures',
-      sub: '',
-      href: '',
-    },
-    {
-      name: ' IT Services',
+      name: ' Business Efficiency Measures (IT Services)',
       sub: '',
       href: '/it-services',
     },
+   
   ];
 
   // ✅ B2C (Avrame)
