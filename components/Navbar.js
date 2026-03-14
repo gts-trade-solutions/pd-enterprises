@@ -241,7 +241,7 @@ export default function Navbar() {
                   isPdSection ? desktopDropdownBtnActive : ''
                 }`}
               >
-                <span>PD Ecosystem</span>
+                <span>PD Groups</span>
                 <ChevronDown className="w-4 h-4" />
               </button>
 
