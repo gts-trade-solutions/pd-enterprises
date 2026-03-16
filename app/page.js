@@ -1,6 +1,6 @@
-// app/page.js
 import dynamic from "next/dynamic";
 import AnimatedSection from "../components/AnimatedSection";
+import VisitHitTracker from "../components/VisitHitTracker";
 import {
   Building2,
   FileSearch,
@@ -147,9 +147,8 @@ const values = [
   { icon: Leaf, name: "Commitment", description: "Sustainable, long-term infrastructure impact" },
 ];
 
-// Allows using <h1> or <h2> while keeping styles
 function SectionHeader({ title, subtitle, invert = false, as = "h2" }) {
-  const HeadingTag = as; // 'h1' or 'h2'
+  const HeadingTag = as;
 
   return (
     <div className={invert ? "text-center mb-16 text-white" : "text-center mb-16"}>
@@ -165,7 +164,9 @@ function SectionHeader({ title, subtitle, invert = false, as = "h2" }) {
       {subtitle && (
         <p
           className={
-            invert ? "text-xl text-gray-200 max-w-3xl mx-auto" : "text-xl text-gray-600 max-w-3xl mx-auto"
+            invert
+              ? "text-xl text-gray-200 max-w-3xl mx-auto"
+              : "text-xl text-gray-600 max-w-3xl mx-auto"
           }
         >
           {subtitle}
@@ -178,20 +179,18 @@ function SectionHeader({ title, subtitle, invert = false, as = "h2" }) {
 export default function Home() {
   return (
     <div className="overflow-hidden">
-      {/* Hero Swiper (client-side) */}
+      <VisitHitTracker />
+
       <HeroSwiper slides={slides} />
 
-      {/* Services */}
       <AnimatedSection className="py-20 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Main H1 for SEO */}
           <SectionHeader
             as="h1"
             title="Infrastructure Development Company in South Africa"
             subtitle="Infrastructure development services, business planning, feasibility studies, engineering design, and project & construction management delivered by experienced infrastructure development consultants."
           />
 
-          {/* Intro paragraph with targeted keywords */}
           <p className="text-lg text-gray-700 max-w-4xl mx-auto mb-10 text-center">
             PD enterprises is an infrastructure development company and consulting firm based in South Africa.
             We provide end-to-end infrastructure development and business planning support, including due diligence,
@@ -222,7 +221,6 @@ export default function Home() {
         </div>
       </AnimatedSection>
 
-      {/* Sectors */}
       <AnimatedSection className="py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
@@ -247,7 +245,6 @@ export default function Home() {
         </div>
       </AnimatedSection>
 
-      {/* Values */}
       <AnimatedSection className="py-20 gradient-red-black">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader

@@ -1,112 +1,48 @@
-// // app/layout.js
-// import "./globals.css";
-// import { Inter } from "next/font/google";
-// import Navbar from "@/components/Navbar";
-// import Footer from "@/components/Footer";
-// import Script from "next/script";
-// import { Suspense } from "react";            // ✅ add this
-// import GAReporter from "./ga-reporter";
-
-// const inter = Inter({ subsets: ["latin"] });
-
-// const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "G-HWRH0W93YX";
-// const ENABLE_GA = !!GA_ID && process.env.NODE_ENV === "production";
-
-// export const metadata = { /* ...as you have... */ };
-
-// export default function RootLayout({ children }) {
-//   const orgLd = { /* ...as you have... */ };
-
-//   return (
-//     <html lang="en-ZA">
-//       <head>
-//         <Script id="org-jsonld" type="application/ld+json" strategy="beforeInteractive">
-//           {JSON.stringify(orgLd)}
-//         </Script>
-
-//         {ENABLE_GA && (
-//           <>
-//             <Script
-//               src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-//               strategy="beforeInteractive"
-//             />
-//             <Script id="gtag-init" strategy="beforeInteractive">
-//               {`
-//                 window.dataLayer = window.dataLayer || [];
-//                 function gtag(){dataLayer.push(arguments);}
-//                 gtag('js', new Date());
-//                 gtag('config', '${GA_ID}', { anonymize_ip: true, send_page_view: false });
-//               `}
-//             </Script>
-//           </>
-//         )}
-//       </head>
-//       <body className={inter.className}>
-//         <Navbar />
-//         {ENABLE_GA && (
-//           <Suspense fallback={null}>
-//             <GAReporter gaId={GA_ID} />   {/* ✅ wrapped in Suspense */}
-//           </Suspense>
-//         )}
-//         <main className="min-h-screen">{children}</main>
-//         <Footer />
-//       </body>
-//     </html>
-//   );
-// }
-
-
-// app/layout.js
 import "./globals.css";
 import { Inter } from "next/font/google";
-
-import Footer from "../components/Footer";
 import Script from "next/script";
 import { Suspense } from "react";
-import GAReporter from "./ga-reporter";
+
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import GAReporter from "./ga-reporter";
 
 const inter = Inter({ subsets: ["latin"] });
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "G-HWRH0W93YX";
-const ENABLE_GA = !!GA_ID && process.env.NODE_ENV === "production";
+const ENABLE_GA = Boolean(GA_ID) && process.env.NODE_ENV === "production";
 
 export const metadata = {
-  metadataBase: new URL("https://pdenterprises.co.za"),
-
+  metadataBase: new URL("https://pdenterprise.co.za"),
   title: {
-    default: "PD enterprises",
-    template: "%s | PD enterprises",
+    default: "PD Enterprises",
+    template: "%s | PD Enterprises",
   },
-
-  description: "PD enterprises — Professional supply and project services in South Africa.",
-
-  // OPEN GRAPH (Facebook, LinkedIn, WhatsApp)
+  description:
+    "PD Enterprises — Professional supply and project services in South Africa.",
   openGraph: {
-    title: "PD enterprises",
-    description: "PD enterprises — Professional supply and project services in South Africa.",
-    url: "https://pdenterprises.co.za",
-    siteName: "PD enterprises",
+    title: "PD Enterprises",
+    description:
+      "PD Enterprises — Professional supply and project services in South Africa.",
+    url: "https://pdenterprise.co.za",
+    siteName: "PD Enterprises",
     type: "website",
     images: [
       {
-        url: "/images/og.png", // place this image in /public
+        url: "/images/og.png",
         width: 1200,
         height: 630,
-        alt: "PD enterprises",
+        alt: "PD Enterprises",
       },
     ],
   },
-
-  // TWITTER CARD
   twitter: {
     card: "summary_large_image",
-    title: "PD enterprises",
-    description: "PD enterprises — Professional supply and project services in South Africa.",
-    images: ["/og-image.jpg"],
+    title: "PD Enterprises",
+    description:
+      "PD Enterprises — Professional supply and project services in South Africa.",
+    images: ["/images/og.png"],
   },
-
-  // FAVICONS (optional but good SEO)
   icons: {
     icon: "/favicon.ico",
     apple: "/apple-touch-icon.png",
@@ -117,19 +53,23 @@ export default function RootLayout({ children }) {
   const orgLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "PD enterprises",
-    url: "https://pdenterprises.co.za",
-    logo: "https://pdenterprises.co.za/logo.png",
+    name: "PD Enterprises",
+    url: "https://pdenterprise.co.za",
+    logo: "https://pdenterprise.co.za/logo.png",
   };
 
   return (
     <html lang="en-ZA">
       <head>
-        <Script id="org-jsonld" type="application/ld+json" strategy="beforeInteractive">
+        <Script
+          id="org-jsonld"
+          type="application/ld+json"
+          strategy="beforeInteractive"
+        >
           {JSON.stringify(orgLd)}
         </Script>
 
-        {ENABLE_GA && (
+        {ENABLE_GA ? (
           <>
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
@@ -140,21 +80,24 @@ export default function RootLayout({ children }) {
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
-                gtag('config', '${GA_ID}', { anonymize_ip: true, send_page_view: false });
+                gtag('config', '${GA_ID}', {
+                  anonymize_ip: true,
+                  send_page_view: false
+                });
               `}
             </Script>
           </>
-        )}
+        ) : null}
       </head>
 
       <body className={inter.className}>
         <Navbar />
 
-        {ENABLE_GA && (
+        {ENABLE_GA ? (
           <Suspense fallback={null}>
             <GAReporter gaId={GA_ID} />
           </Suspense>
-        )}
+        ) : null}
 
         <main className="min-h-screen">{children}</main>
 
