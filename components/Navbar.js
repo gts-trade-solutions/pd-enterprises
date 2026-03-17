@@ -49,7 +49,7 @@ export default function Navbar() {
     { name: 'Services', href: '/services' },
     { name: 'Contact', href: '/contact' },
     { name: 'Blogs', href: '/post' },
-    
+
   ];
 
   const isActive = (href) => {
@@ -61,7 +61,7 @@ export default function Navbar() {
   const b2bLinks = [
     {
       name: ' Energy Optimization & Emergency Systems',
-      
+
       href: '',
     },
     {
@@ -74,7 +74,7 @@ export default function Navbar() {
       sub: '',
       href: '/it-services',
     },
-   
+
   ];
 
   // ✅ B2C (Avrame)
@@ -99,10 +99,9 @@ export default function Navbar() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300
-        ${
-          isScrolled
-            ? 'bg-black/80 backdrop-blur shadow-lg border-b border-crimson/25'
-            : 'bg-gradient-to-r from-black via-zinc-950 to-[#6a0b14]'
+        ${isScrolled
+          ? 'bg-black/80 backdrop-blur shadow-lg border-b border-crimson/25'
+          : 'bg-gradient-to-r from-black via-zinc-950 to-[#6a0b14]'
         }
       `}
     >
@@ -133,10 +132,9 @@ export default function Navbar() {
                   href={link.href}
                   className={`
                     font-medium transition-colors
-                    ${
-                      active
-                        ? 'text-crimson border-b-2 border-crimson'
-                        : `${isScrolled ? 'text-gray-200' : 'text-white'} hover:text-crimson`
+                    ${active
+                      ? 'text-crimson border-b-2 border-crimson'
+                      : `${isScrolled ? 'text-gray-200' : 'text-white'} hover:text-crimson`
                     }
                   `}
                 >
@@ -153,9 +151,8 @@ export default function Navbar() {
                   setIsB2CDropdownOpen(false);
                   setIsPdDropdownOpen(false);
                 }}
-                className={`${desktopDropdownBtnBase} ${
-                  isB2BSection ? desktopDropdownBtnActive : ''
-                }`}
+                className={`${desktopDropdownBtnBase} ${isB2BSection ? desktopDropdownBtnActive : ''
+                  }`}
               >
                 <span>B2B</span>
                 <ChevronDown className="w-4 h-4" />
@@ -169,10 +166,9 @@ export default function Navbar() {
                       href={item.href}
                       className={`
                         block px-4 py-3 text-sm
-                        ${
-                          pathname.startsWith(item.href)
-                            ? 'bg-crimson/35 text-white font-semibold'
-                            : 'text-gray-100 hover:bg-crimson/15'
+                        ${pathname.startsWith(item.href)
+                          ? 'bg-crimson/35 text-white font-semibold'
+                          : 'text-gray-100 hover:bg-crimson/15'
                         }
                       `}
                       onClick={() => setIsB2BDropdownOpen(false)}
@@ -195,9 +191,8 @@ export default function Navbar() {
                   setIsB2BDropdownOpen(false);
                   setIsPdDropdownOpen(false);
                 }}
-                className={`${desktopDropdownBtnBase} ${
-                  isB2CSection ? desktopDropdownBtnActive : ''
-                }`}
+                className={`${desktopDropdownBtnBase} ${isB2CSection ? desktopDropdownBtnActive : ''
+                  }`}
               >
                 <span>B2C</span>
                 <ChevronDown className="w-4 h-4" />
@@ -211,10 +206,9 @@ export default function Navbar() {
                       href={item.href}
                       className={`
                         block px-4 py-3 text-sm
-                        ${
-                          pathname.startsWith(item.href)
-                            ? 'bg-crimson/35 text-white font-semibold'
-                            : 'text-gray-100 hover:bg-crimson/15'
+                        ${pathname.startsWith(item.href)
+                          ? 'bg-crimson/35 text-white font-semibold'
+                          : 'text-gray-100 hover:bg-crimson/15'
                         }
                       `}
                       onClick={() => setIsB2CDropdownOpen(false)}
@@ -237,11 +231,19 @@ export default function Navbar() {
                   setIsB2BDropdownOpen(false);
                   setIsB2CDropdownOpen(false);
                 }}
-                className={`${desktopDropdownBtnBase} ${
-                  isPdSection ? desktopDropdownBtnActive : ''
-                }`}
+                className={`${desktopDropdownBtnBase} ${isPdSection ? desktopDropdownBtnActive : ''
+                  }`}
               >
-                <span>PD group</span>
+                <span className='text-white italic font-semibold leading-none' style={{fontSize:"22px"}}> pd</span>
+                <span
+                  className="text-white italic  leading-none"
+                  style={{
+                    fontFamily: '"Brush Script MT", "Segoe Script", cursive',
+                    fontSize: "30px",
+                  }}
+                >
+                  Group
+                </span>
                 <ChevronDown className="w-4 h-4" />
               </button>
 
@@ -251,10 +253,9 @@ export default function Navbar() {
                     href="/pd-hub"
                     className={`
                       block px-4 py-3 text-sm
-                      ${
-                        pathname.startsWith('/pd-hub')
-                          ? 'bg-crimson/35 text-white font-semibold'
-                          : 'text-gray-100 hover:bg-crimson/15'
+                      ${pathname.startsWith('/pd-hub')
+                        ? 'bg-crimson/35 text-white font-semibold'
+                        : 'text-gray-100 hover:bg-crimson/15'
                       }
                     `}
                     onClick={() => setIsPdDropdownOpen(false)}
@@ -266,10 +267,9 @@ export default function Navbar() {
                     href="/pd-invest"
                     className={`
                       block px-4 py-3 text-sm
-                      ${
-                        pathname.startsWith('/pd-invest')
-                          ? 'bg-crimson/35 text-white font-semibold'
-                          : 'text-gray-100 hover:bg-crimson/15'
+                      ${pathname.startsWith('/pd-invest')
+                        ? 'bg-crimson/35 text-white font-semibold'
+                        : 'text-gray-100 hover:bg-crimson/15'
                       }
                     `}
                     onClick={() => setIsPdDropdownOpen(false)}
@@ -310,9 +310,8 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`block font-medium ${
-                  active ? 'text-crimson' : 'text-gray-200 hover:text-crimson'
-                }`}
+                className={`block font-medium ${active ? 'text-crimson' : 'text-gray-200 hover:text-crimson'
+                  }`}
                 onClick={() => {
                   setIsMobileMenuOpen(false);
                   setIsPdDropdownOpen(false);
@@ -334,10 +333,9 @@ export default function Navbar() {
                 setIsPdDropdownOpen(false);
               }}
               className={`w-full flex items-center justify-between px-4 py-2 rounded-xl text-left transition-all border-2
-                ${
-                  isB2BSection
-                    ? 'border-crimson text-crimson font-semibold bg-white'
-                    : 'border-crimson text-gray-900 bg-white'
+                ${isB2BSection
+                  ? 'border-crimson text-crimson font-semibold bg-white'
+                  : 'border-crimson text-gray-900 bg-white'
                 }`}
             >
               <span>B2B</span>
@@ -375,10 +373,9 @@ export default function Navbar() {
                 setIsPdDropdownOpen(false);
               }}
               className={`w-full flex items-center justify-between px-4 py-2 rounded-xl text-left transition-all border-2
-                ${
-                  isB2CSection
-                    ? 'border-crimson text-crimson font-semibold bg-white'
-                    : 'border-crimson text-gray-900 bg-white'
+                ${isB2CSection
+                  ? 'border-crimson text-crimson font-semibold bg-white'
+                  : 'border-crimson text-gray-900 bg-white'
                 }`}
             >
               <span>B2C</span>
@@ -413,10 +410,9 @@ export default function Navbar() {
                 setIsB2CDropdownOpen(false);
               }}
               className={`w-full flex items-center justify-between px-4 py-2 rounded-xl text-left transition-all border-2
-                ${
-                  isPdSection
-                    ? 'border-crimson text-crimson font-semibold bg-white'
-                    : 'border-crimson text-gray-900 bg-white'
+                ${isPdSection
+                  ? 'border-crimson text-crimson font-semibold bg-white'
+                  : 'border-crimson text-gray-900 bg-white'
                 }`}
             >
               <span>PD Ecosystem</span>

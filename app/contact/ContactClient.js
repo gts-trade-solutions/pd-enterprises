@@ -12,25 +12,52 @@ export default function ContactClient() {
     company: '',
     phone: '',
     service: '',
-    message: ''
+    message: '',
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitStatus(null);
 
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const payload = {
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim(),
+        subject: formData.service.trim() || 'General Inquiry',
+        message: `
+Company: ${formData.company?.trim() || 'N/A'}
+Service: ${formData.service?.trim() || 'N/A'}
+
+${formData.message.trim()}
+        `.trim(),
+      };
+
+      const res = await fetch('/api/enquiries', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data?.success) {
+        throw new Error(data?.message || 'Failed to submit enquiry');
+      }
+
       setSubmitStatus('success');
       setFormData({
         name: '',
@@ -38,26 +65,31 @@ export default function ContactClient() {
         company: '',
         phone: '',
         service: '',
-        message: ''
+        message: '',
       });
 
       setTimeout(() => {
         setSubmitStatus(null);
       }, 5000);
-    }, 1500);
+    } catch (error) {
+      console.error('Contact form submit error:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const offices = [
     {
       name: 'Edenburg Office',
       address: ['356 Rivonia Boulevard', 'Edenburg', 'Johannesburg'],
-      icon: Building2
+      icon: Building2,
     },
     {
       name: 'Sandton Office',
       address: ['14 Howick Street', 'Paulshof', 'Sandton'],
-      icon: Building2
-    }
+      icon: Building2,
+    },
   ];
 
   const contactMethods = [
@@ -65,24 +97,14 @@ export default function ContactClient() {
       icon: Phone,
       title: 'Call Us',
       details: ['+27 79-289-2609'],
-      color: 'from-crimson to-primary-700'
+      color: 'from-crimson to-primary-700',
     },
     {
       icon: Mail,
       title: 'Email Us',
       details: ['info@pdenterprise.co.za', 'eric@pdserve.co.za'],
-      color: 'from-primary-700 to-crimson'
-    }
-  ];
-
-  const services = [
-    'Due Diligence',
-    'Business Planning',
-    'Feasibility Studies',
-    'Infrastructure Engineering',
-    'Architectural System Design',
-    'Project & Construction Management',
-    'General Inquiry'
+      color: 'from-primary-700 to-crimson',
+    },
   ];
 
   return (
@@ -100,7 +122,7 @@ export default function ContactClient() {
               Get In Touch
             </h1>
             <p className="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto">
-              Let's discuss how we can help bring your infrastructure project to life
+              Let&apos;s discuss how we can help bring your infrastructure project to life
             </p>
           </AnimatedSection>
         </div>
@@ -162,7 +184,13 @@ export default function ContactClient() {
 
                   {submitStatus === 'success' && (
                     <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
-                      Thank you for your message! We'll get back to you within 24 hours.
+                      Thank you for your message! We&apos;ll get back to you within 24 hours.
+                    </div>
+                  )}
+
+                  {submitStatus === 'error' && (
+                    <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+                      Failed to send your message. Please try again.
                     </div>
                   )}
 
@@ -246,19 +274,13 @@ export default function ContactClient() {
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson focus:border-transparent transition-all"
                       >
                         <option value="">Select a service</option>
-                        {[
-                          'Due Diligence',
-                          'Business Planning',
-                          'Feasibility Studies',
-                          'Infrastructure Engineering',
-                          'Architectural System Design',
-                          'Project & Construction Management',
-                          'General Inquiry'
-                        ].map((service, index) => (
-                          <option key={index} value={service}>
-                            {service}
-                          </option>
-                        ))}
+                        <option value="Due Diligence">Due Diligence</option>
+                        <option value="Business Planning">Business Planning</option>
+                        <option value="Feasibility Studies">Feasibility Studies</option>
+                        <option value="Infrastructure Engineering">Infrastructure Engineering</option>
+                        <option value="Architectural System Design">Architectural System Design</option>
+                        <option value="Project & Construction Management">Project & Construction Management</option>
+                        <option value="General Inquiry">General Inquiry</option>
                       </select>
                     </div>
 
@@ -272,7 +294,7 @@ export default function ContactClient() {
                         value={formData.message}
                         onChange={handleChange}
                         required
-                        rows="6"
+                        rows={6}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-crimson focus:border-transparent transition-all resize-none"
                         placeholder="Tell us about your infrastructure project or requirements..."
                       ></textarea>

@@ -1,5 +1,5 @@
 
-import modelsData from '@/data/models.json';
+import modelsData from '../../../data/models.json';
 import { notFound } from 'next/navigation';
 import ModelDetails from './ModelDetails';
 

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
+import { getSupabaseAdmin } from "../../../../lib/supabaseAdmin";
 
 const BUCKET = process.env.SUPABASE_BLOG_MEDIA_BUCKET || "blog-media";
 
