@@ -50,7 +50,7 @@ export default function Footer() {
               </a>
 
               <a
-                href="https://www.youtube.com/@pdenterprisesza"  // ← update after you create the channel
+                href="https://www.youtube.com/@pdenterprise-c6m"  // ← update after you create the channel
                 aria-label="YouTube"
                 title="YouTube"
                 target="_blank"
