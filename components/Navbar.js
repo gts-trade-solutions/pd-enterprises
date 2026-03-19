@@ -60,9 +60,9 @@ export default function Navbar() {
   // ✅ B2B services (as you asked)
   const b2bLinks = [
     {
-      name: ' Energy Optimization & Emergency Systems',
+      name: ' Energy Management Advisory Services',
 
-      href: '',
+      href: '/energy-management',
     },
     {
       name: ' Energy Efficient Lighting Systems',
