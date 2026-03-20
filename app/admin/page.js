@@ -24,6 +24,12 @@ export default function VisitCountPage() {
       href: "/admin/enquiries",
       icon: Mail,
     },
+    {
+      title: "Email Template Builder",
+      description: "Create and manage email templates",
+      href: "/admin/email-templates",
+      icon: Mail,
+    },
   ];
 
   return (

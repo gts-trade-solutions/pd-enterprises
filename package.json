@@ -21,6 +21,7 @@
     "postcss": "8.4.30",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-email-editor": "^1.7.11",
     "react-player": "^3.3.3",
     "react-toastify": "^11.0.5",
     "resend": "^6.7.0",
