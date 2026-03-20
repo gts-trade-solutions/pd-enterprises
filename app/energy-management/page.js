@@ -304,7 +304,7 @@ export default function EnergyAdvisoryPage() {
 
                                 <div className="relative aspect-[4/3] overflow-hidden rounded-[1.5rem]">
                                     <Image
-                                        src="/images/pv.avif"
+                                        src="/images/mv.jpeg"
                                         alt="HV and MV utility substation infrastructure"
                                         fill
                                         className="object-cover"
