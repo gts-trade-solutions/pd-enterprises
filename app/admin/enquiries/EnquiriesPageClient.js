@@ -2,6 +2,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   Mail,
   Phone,
@@ -13,6 +14,7 @@ import {
   Tag,
   CheckCircle2,
   Clock3,
+  ArrowLeft,
 } from 'lucide-react';
 
 function formatDate(value) {
@@ -24,12 +26,17 @@ function formatDate(value) {
   }
 }
 
+const STATUS_OPTIONS = ['new', 'read', 'delivered'];
+
 export default function EnquiriesPageClient() {
+  const router = useRouter();
+
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState('');
   const [search, setSearch] = useState('');
+  const [updatingId, setUpdatingId] = useState(null);
 
   const fetchEnquiries = async (isRefresh = false) => {
     try {
@@ -43,7 +50,8 @@ export default function EnquiriesPageClient() {
         cache: 'no-store',
       });
 
-      const data = await res.json();
+      const text = await res.text();
+      const data = text ? JSON.parse(text) : {};
 
       if (!res.ok || !data?.success) {
         throw new Error(data?.message || 'Failed to fetch enquiries');
@@ -63,6 +71,46 @@ export default function EnquiriesPageClient() {
     fetchEnquiries();
   }, []);
 
+  const updateStatus = async (id, status) => {
+    const previousRows = rows;
+
+    try {
+      setUpdatingId(id);
+
+      setRows((prev) =>
+        prev.map((row) =>
+          row.id === id
+            ? {
+                ...row,
+                status,
+              }
+            : row
+        )
+      );
+
+      const res = await fetch('/api/enquiries', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id, status }),
+      });
+
+      const text = await res.text();
+      const data = text ? JSON.parse(text) : {};
+
+      if (!res.ok || !data?.success) {
+        throw new Error(data?.message || 'Failed to update status');
+      }
+    } catch (err) {
+      console.error('Update status error:', err);
+      setRows(previousRows);
+      alert(err.message || 'Failed to update status');
+    } finally {
+      setUpdatingId(null);
+    }
+  };
+
   const filteredRows = useMemo(() => {
     const q = search.trim().toLowerCase();
     if (!q) return rows;
@@ -81,6 +129,24 @@ export default function EnquiriesPageClient() {
     });
   }, [rows, search]);
 
+  const newCount = rows.filter(
+    (r) => String(r.status || '').toLowerCase() === 'new'
+  ).length;
+
+  const getStatusClasses = (status) => {
+    const s = String(status || 'new').toLowerCase();
+
+    if (s === 'read') {
+      return 'bg-amber-50 text-amber-700 border-amber-200';
+    }
+
+    if (s === 'delivered') {
+      return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+    }
+
+    return 'bg-red-50 text-red-700 border-red-200';
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 mt-20">
       <section className="relative overflow-hidden bg-gradient-to-r from-[#4b0014] via-[#7b001f] to-[#c8102e] text-white">
@@ -88,6 +154,15 @@ export default function EnquiriesPageClient() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
             <div>
+              <button
+                type="button"
+                onClick={() => router.back()}
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white hover:bg-white/15 mb-4"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Back
+              </button>
+
               <p className="text-white/80 text-sm font-medium uppercase tracking-[0.2em]">
                 Admin Dashboard
               </p>
@@ -110,9 +185,7 @@ export default function EnquiriesPageClient() {
               </div>
               <div className="rounded-2xl bg-white/10 backdrop-blur border border-white/15 p-4">
                 <p className="text-sm text-white/80">New Status</p>
-                <p className="text-2xl font-bold mt-1">
-                  {rows.filter((r) => String(r.status || '').toLowerCase() === 'new').length}
-                </p>
+                <p className="text-2xl font-bold mt-1">{newCount}</p>
               </div>
             </div>
           </div>
@@ -166,18 +239,36 @@ export default function EnquiriesPageClient() {
                   </thead>
                   <tbody>
                     {filteredRows.map((item) => (
-                      <tr key={item.id} className="border-t border-gray-200 align-top hover:bg-gray-50">
-                        <td className="px-6 py-4 text-gray-900 font-medium">{item.name || '-'}</td>
-                        <td className="px-6 py-4 text-gray-700 break-all">{item.email || '-'}</td>
+                      <tr
+                        key={item.id}
+                        className="border-t border-gray-200 align-top hover:bg-gray-50"
+                      >
+                        <td className="px-6 py-4 text-gray-900 font-medium">
+                          {item.name || '-'}
+                        </td>
+                        <td className="px-6 py-4 text-gray-700 break-all">
+                          {item.email || '-'}
+                        </td>
                         <td className="px-6 py-4 text-gray-700">{item.phone || '-'}</td>
                         <td className="px-6 py-4 text-gray-700">{item.subject || '-'}</td>
                         <td className="px-6 py-4 text-gray-700 max-w-md whitespace-pre-wrap">
                           {item.message || '-'}
                         </td>
                         <td className="px-6 py-4">
-                          <span className="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold bg-red-50 text-red-700 border border-red-200">
-                            {item.status || 'new'}
-                          </span>
+                          <select
+                            value={item.status || 'new'}
+                            onChange={(e) => updateStatus(item.id, e.target.value)}
+                            disabled={updatingId === item.id}
+                            className={`rounded-full px-3 py-2 text-xs font-semibold border focus:outline-none focus:ring-2 focus:ring-red-500 disabled:opacity-60 ${getStatusClasses(
+                              item.status
+                            )}`}
+                          >
+                            {STATUS_OPTIONS.map((status) => (
+                              <option key={status} value={status}>
+                                {status}
+                              </option>
+                            ))}
+                          </select>
                         </td>
                         <td className="px-6 py-4 text-gray-700 whitespace-nowrap">
                           {formatDate(item.created_at)}
@@ -210,25 +301,42 @@ export default function EnquiriesPageClient() {
                         </p>
                       </div>
 
-                      <span className="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold bg-red-50 text-red-700 border border-red-200">
-                        {item.status || 'new'}
-                      </span>
+                      <select
+                        value={item.status || 'new'}
+                        onChange={(e) => updateStatus(item.id, e.target.value)}
+                        disabled={updatingId === item.id}
+                        className={`rounded-full px-3 py-2 text-xs font-semibold border focus:outline-none focus:ring-2 focus:ring-red-500 disabled:opacity-60 ${getStatusClasses(
+                          item.status
+                        )}`}
+                      >
+                        {STATUS_OPTIONS.map((status) => (
+                          <option key={status} value={status}>
+                            {status}
+                          </option>
+                        ))}
+                      </select>
                     </div>
 
                     <div className="mt-4 space-y-3">
                       <p className="text-sm text-gray-700 flex items-start gap-2">
                         <Tag className="w-4 h-4 text-red-600 mt-0.5" />
-                        <span><strong>Subject:</strong> {item.subject || '-'}</span>
+                        <span>
+                          <strong>Subject:</strong> {item.subject || '-'}
+                        </span>
                       </p>
 
                       <p className="text-sm text-gray-700 flex items-start gap-2 whitespace-pre-wrap">
                         <MessageSquare className="w-4 h-4 text-red-600 mt-0.5" />
-                        <span><strong>Message:</strong> {item.message || '-'}</span>
+                        <span>
+                          <strong>Message:</strong> {item.message || '-'}
+                        </span>
                       </p>
 
                       <p className="text-sm text-gray-700 flex items-start gap-2">
                         <CalendarDays className="w-4 h-4 text-red-600 mt-0.5" />
-                        <span><strong>Created:</strong> {formatDate(item.created_at)}</span>
+                        <span>
+                          <strong>Created:</strong> {formatDate(item.created_at)}
+                        </span>
                       </p>
                     </div>
                   </div>
@@ -253,9 +361,7 @@ export default function EnquiriesPageClient() {
               <CheckCircle2 className="w-5 h-5 text-red-600" />
               <h3 className="text-lg font-bold text-gray-900">New Enquiries</h3>
             </div>
-            <p className="text-3xl font-bold text-gray-900">
-              {rows.filter((r) => String(r.status || '').toLowerCase() === 'new').length}
-            </p>
+            <p className="text-3xl font-bold text-gray-900">{newCount}</p>
             <p className="text-sm text-gray-500 mt-1">Pending follow-up</p>
           </div>
 

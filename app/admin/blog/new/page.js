@@ -1,10 +1,12 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   Calendar,
   Clock,
   ArrowRight,
+  ArrowLeft,
   Star,
   Image as ImageIcon,
   Video,
@@ -22,6 +24,7 @@ import {
 } from 'lucide-react';
 
 export default function AdminBlogPage() {
+  const router = useRouter();
   const fileRef = useRef(null);
 
   const [editingId, setEditingId] = useState(null);
@@ -299,13 +302,22 @@ export default function AdminBlogPage() {
 
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900 pt-[120px] sm:pt-[68px]">
-      {/* Header only */}
       <section className="relative overflow-hidden bg-gradient-to-r from-black via-zinc-950 to-[#6a0b14]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-start sm:items-center justify-between gap-4 mb-4">
-            
-            <div>
-              <h1 className="text-xl sm:text-2xl font-semibold text-white">Blog Posts</h1>
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => router.back()}
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white hover:bg-white/15"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Back
+              </button>
+
+              <div>
+                <h1 className="text-xl sm:text-2xl font-semibold text-white">Blog Posts</h1>
+              </div>
             </div>
 
             <div className="flex items-center gap-2">
@@ -691,7 +703,9 @@ export default function AdminBlogPage() {
 
               <div className="border-t border-slate-200 pt-4">
                 <div className="text-sm text-slate-800 whitespace-pre-line">
-                  {content ? content : (
+                  {content ? (
+                    content
+                  ) : (
                     <p className="text-slate-500">Start typing your blog content to see how it will look.</p>
                   )}
                 </div>
@@ -870,5 +884,3 @@ export default function AdminBlogPage() {
     </main>
   );
 }
-
-

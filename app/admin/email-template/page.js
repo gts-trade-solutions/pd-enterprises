@@ -2,6 +2,8 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 import { supabase } from "../../../lib/supabaseClient";
 
 const EmailEditor = dynamic(
@@ -10,6 +12,7 @@ const EmailEditor = dynamic(
 );
 
 export default function Page() {
+  const router = useRouter();
   const unlayerRef = useRef(null);
 
   const [mounted, setMounted] = useState(false);
@@ -160,7 +163,17 @@ export default function Page() {
     return (
       <div className="p-6 bg-gray-100 min-h-screen mt-20">
         <div className="max-w-[1400px] mx-auto">
-          <h1 className="text-3xl font-bold mb-4">Email Builder (Unlayer)</h1>
+          <div className="flex items-center gap-3 mb-4">
+            <button
+              type="button"
+              onClick={() => router.back()}
+              className="inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back
+            </button>
+            <h1 className="text-3xl font-bold">Email Builder (Unlayer)</h1>
+          </div>
           <div className="bg-white border rounded p-6">Loading editor...</div>
         </div>
       </div>
@@ -170,7 +183,19 @@ export default function Page() {
   return (
     <div className="p-6 bg-gray-100 min-h-screen mt-20">
       <div className="max-w-[1400px] mx-auto">
-        <h1 className="text-3xl font-bold mb-4">Email Builder (Unlayer)</h1>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => router.back()}
+              className="inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back
+            </button>
+            <h1 className="text-3xl font-bold">Email Builder (Unlayer)</h1>
+          </div>
+        </div>
 
         <div className="flex gap-3 mb-4">
           <input

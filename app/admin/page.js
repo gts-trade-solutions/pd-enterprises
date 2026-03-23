@@ -27,7 +27,7 @@ export default function VisitCountPage() {
     {
       title: "Email Template Builder",
       description: "Create and manage email templates",
-      href: "/admin/email-templates",
+      href: "/admin/email-template",
       icon: Mail,
     },
   ];
