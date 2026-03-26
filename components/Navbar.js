@@ -239,7 +239,7 @@ export default function Navbar() {
                   className="text-white italic  leading-none"
                   style={{
                     fontFamily: '"Brush Script MT", "Segoe Script", cursive',
-                    fontSize: "30px",
+                    fontSize: "23px",
                   }}
                 >
                   Group
