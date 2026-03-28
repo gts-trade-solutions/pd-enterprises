@@ -88,7 +88,7 @@ export default function Navbar() {
 
   // ✅ Strong border style (desktop buttons)
   const desktopDropdownBtnBase =
-    'flex items-center gap-2 px-5 py-2.5 rounded-full transition-all duration-300 border-2 ' +
+    'flex items-center gap-2 px-5 py-1.5 rounded-full transition-all duration-300 border-2 ' +
     'border-crimson shadow-[0_0_0_1px_rgba(220,38,38,0.95),0_0_18px_rgba(220,38,38,0.40)] ' +
     'hover:shadow-[0_0_0_2px_rgba(220,38,38,1),0_0_26px_rgba(220,38,38,0.55)] ' +
     'text-white hover:bg-crimson/15';
