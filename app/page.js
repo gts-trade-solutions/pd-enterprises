@@ -23,9 +23,10 @@ import {
 const HeroSwiper = dynamic(() => import("../components/HeroSwiper"), { ssr: false });
 
 export const metadata = {
-  title: "Infrastructure Development Company in South Africa | PD enterprises",
+  title: "Infrastructure Development South Africa | PD Enterprises",
   description:
-    "PD enterprises is an infrastructure development company in South Africa providing infrastructure development consulting, business planning, feasibility studies, engineering design, and project & construction management for bankable infrastructure projects.",
+    "Infrastructure development consulting, feasibility studies, engineering design and project management for bankable projects across South Africa.",
+  alternates: { canonical: "/" },
   keywords: [
     "infrastructure development company in South Africa",
     "infrastructure development company",
@@ -177,8 +178,59 @@ function SectionHeader({ title, subtitle, invert = false, as = "h2" }) {
 }
 
 export default function Home() {
+  const homeLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://pdenterprise.co.za/#organization",
+        name: "PD Enterprises",
+        url: "https://pdenterprise.co.za",
+        logo: "https://pdenterprise.co.za/images/pd-logo.png",
+        sameAs: [
+          "https://www.linkedin.com/company/pdenterprises",
+          "https://www.instagram.com/pd_enterprises_01",
+          "https://www.youtube.com/@pdenterprise-c6m",
+        ],
+        contactPoint: [
+          {
+            "@type": "ContactPoint",
+            telephone: "+27-79-289-2609",
+            email: "info@pdenterprise.co.za",
+            contactType: "customer service",
+            areaServed: "ZA",
+            availableLanguage: ["English"],
+          },
+        ],
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://pdenterprise.co.za/#website",
+        url: "https://pdenterprise.co.za",
+        name: "PD Enterprises",
+        publisher: { "@id": "https://pdenterprise.co.za/#organization" },
+        inLanguage: "en-ZA",
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://pdenterprise.co.za/#webpage",
+        url: "https://pdenterprise.co.za",
+        name: "Infrastructure Development South Africa | PD Enterprises",
+        description:
+          "Infrastructure development consulting, feasibility studies, engineering design and project management for bankable projects across South Africa.",
+        isPartOf: { "@id": "https://pdenterprise.co.za/#website" },
+        about: { "@id": "https://pdenterprise.co.za/#organization" },
+        inLanguage: "en-ZA",
+      },
+    ],
+  };
+
   return (
     <div className="overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeLd) }}
+      />
       <VisitHitTracker />
 
       <HeroSwiper slides={slides} />

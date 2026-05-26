@@ -61,13 +61,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en-ZA">
       <head>
-        <Script
-          id="org-jsonld"
+        <script
           type="application/ld+json"
-          strategy="afterInteractive"
-        >
-          {JSON.stringify(orgLd)}
-        </Script>
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgLd) }}
+        />
 
         {ENABLE_GA ? (
           <>
