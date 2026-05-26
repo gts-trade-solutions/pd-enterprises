@@ -305,9 +305,12 @@ export default function BlogPage() {
                           return (
                             <img
                               src={t.url}
-                              alt=""
+                              alt={featured.title || ''}
+                              width={1600}
+                              height={900}
                               className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.02]"
                               loading="lazy"
+                              decoding="async"
                             />
                           );
                         }
@@ -395,9 +398,12 @@ export default function BlogPage() {
                         {thumb?.type === 'image' && thumb.url ? (
                           <img
                             src={thumb.url}
-                            alt=""
+                            alt={post.title || ''}
+                            width={1600}
+                            height={900}
                             className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.02]"
                             loading="lazy"
+                            decoding="async"
                           />
                         ) : thumb?.type === 'video' ? (
                           <div className="absolute inset-0 flex items-center justify-center bg-slate-900">

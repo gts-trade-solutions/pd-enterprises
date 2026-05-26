@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Mail, Phone, MapPin, Linkedin, Instagram, Youtube } from 'lucide-react';
 import Image from 'next/image';
+import ObfuscatedEmail from './ObfuscatedEmail';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -103,9 +104,17 @@ export default function Footer() {
               <li className="flex items-start space-x-3">
                 <Mail className="w-5 h-5 text-crimson flex-shrink-0 mt-0.5" />
                 <div className="text-sm">
-                  <a href="mailto:info@pdenterprise.co.za" className="hover:text-crimson transition-colors">info@pdenterprise.co.za</a>
+                  <ObfuscatedEmail
+                    user="info"
+                    domain="pdenterprise.co.za"
+                    className="hover:text-crimson transition-colors"
+                  />
                   <div className="mt-1">
-                    <a href="mailto:eric@pdserve.co.za" className="hover:text-crimson transition-colors">eric@pdserve.co.za</a>
+                    <ObfuscatedEmail
+                      user="eric"
+                      domain="pdserve.co.za"
+                      className="hover:text-crimson transition-colors"
+                    />
                   </div>
                 </div>
               </li>

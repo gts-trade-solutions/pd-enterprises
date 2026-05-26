@@ -1,4 +1,6 @@
 // app/privacy-policy/page.jsx
+import ObfuscatedEmail from "../../components/ObfuscatedEmail";
+
 export const metadata = {
   title: "Privacy Policy",
   description:
@@ -38,7 +40,7 @@ export default function PrivacyPolicyPage() {
           <li><strong>Website:</strong> pdenterprises.co.za</li>
           <li>
             <strong>Email:</strong>{" "}
-            <a href="mailto:info@pdenterprise.co.za">info@pdenterprise.co.za</a>
+            <ObfuscatedEmail user="info" domain="pdenterprise.co.za" />
           </li>
           <li>
             <strong>Phone:</strong>{" "}
@@ -148,7 +150,7 @@ export default function PrivacyPolicyPage() {
         <p>Questions or requests? We’d love to help.</p>
         <ul>
           <li>
-            <a href="mailto:info@pdenterprise.co.za">info@pdenterprise.co.za</a>
+            <ObfuscatedEmail user="info" domain="pdenterprise.co.za" />
           </li>
           <li>
             <a href="tel:+27792892609">079 289 2609</a>

@@ -64,7 +64,7 @@ export default function RootLayout({ children }) {
         <Script
           id="org-jsonld"
           type="application/ld+json"
-          strategy="beforeInteractive"
+          strategy="afterInteractive"
         >
           {JSON.stringify(orgLd)}
         </Script>
@@ -73,9 +73,9 @@ export default function RootLayout({ children }) {
           <>
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-              strategy="beforeInteractive"
+              strategy="lazyOnload"
             />
-            <Script id="gtag-init" strategy="beforeInteractive">
+            <Script id="gtag-init" strategy="lazyOnload">
               {`
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}

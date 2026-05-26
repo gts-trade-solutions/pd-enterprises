@@ -773,8 +773,11 @@ export default function BlogPage() {
                                 <img
                                   src={m.url}
                                   alt={m.caption || `Image ${idx + 1}`}
+                                  width={1200}
+                                  height={700}
                                   className="max-h-[700px] w-full object-contain bg-white"
                                   loading="lazy"
+                                  decoding="async"
                                 />
                               </div>
                             ))}

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
     ArrowRight,
     Lightbulb,
@@ -223,12 +224,14 @@ export default function HPWinnerLightingPage() {
                                 className="group overflow-hidden rounded-[28px] border border-[#e9e9e9] bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
                             >
                                 <div className="relative h-64 overflow-hidden bg-[#f5f5f5]">
-                                    <img
+                                    <Image
                                         src={item.image}
                                         alt={item.title}
-                                        className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, 50vw"
+                                        className="object-cover transition duration-500 group-hover:scale-105"
                                     />
-                                    <div className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-red-200 bg-white/90 px-3 py-1.5 text-xs font-medium text-[#111111] backdrop-blur">
+                                    <div className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-red-200 bg-white/90 px-3 py-1.5 text-xs font-medium text-[#111111] backdrop-blur z-10">
                                         <Icon className="h-4 w-4 text-red-600" />
                                         {item.tag}
                                     </div>
